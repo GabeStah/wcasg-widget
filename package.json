@@ -1,0 +1,24 @@
+{
+  "name": "wcasg-ada-app",
+  "version": "0.0.1",
+  "description": "JavaScript widget providing optional accessibility improvements for web pages.",
+  "main": "index.js",
+  "repository": "git@gitlab.solarixdigital.com:solarix/wcasg-ada-app.git",
+  "author": "Gabe Wyatt <gabe@solarixdigital.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "scripts": {
+    "bump": "npm version patch",
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-private-methods": "^7.8.3",
+    "postcss-modules": "^1.5.0",
+    "rollup": "^1.29.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-html": "^0.2.1",
+    "rollup-plugin-postcss": "^2.0.3"
+  }
+}

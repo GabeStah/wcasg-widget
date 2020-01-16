@@ -1,0 +1,11 @@
+# WebStorm
+.idea
+
+# Project docs
+docs
+
+# Distribution
+dist
+
+# Node
+node_modules
