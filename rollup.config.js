@@ -49,6 +49,8 @@ export default {
       ]
     }),
     preact(),
-    sass()
+    sass({
+      include: [`src/components/**/*.scss`]
+    })
   ]
 };
