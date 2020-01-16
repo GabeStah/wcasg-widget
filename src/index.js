@@ -1,10 +1,39 @@
-import ModalComponent from './components/modal.html';
-import './styles/styles.css';
+import habitat from 'preact-habitat';
+import Widget from './components/widget';
 
-const bodies = document.getElementsByTagName('body');
-if (bodies.length > 0) {
-  const body = bodies.item(0);
-  body.appendChild(ModalComponent);
-} else {
-  // TODO: Add support for invalid HTML docs
+function init() {
+  let niceLogin = habitat(Widget);
+  /**
+   * option 1: render inline
+   */
+  // niceLogin.render({
+  //   inline: true,
+  //   clean: false
+  // });
+
+  /**
+   * option 2: render in selector
+   */
+  niceLogin.render({
+    selector: 'body',
+    inline: false,
+    clean: false
+  });
+
+  /**
+   * option 3: render in cleinet specified
+   */
+  // niceLogin.render({
+  //   clientSpecified: true
+  //   inline: false,
+  //   clean: false
+  // });
 }
+
+// in development, set up HMR:
+// if (module.hot) {
+//   require('preact/devtools'); // enables React DevTools, be careful on IE
+//   module.hot.accept('./components/widget', () => requestAnimationFrame(init));
+// }
+
+init();

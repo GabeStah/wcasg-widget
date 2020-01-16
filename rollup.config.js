@@ -3,6 +3,8 @@ import html from 'rollup-plugin-html';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 import postcssModules from 'postcss-modules';
+import preact from 'rollup-plugin-preact';
+import sass from 'rollup-plugin-sass';
 
 export default {
   input: 'src/index.js',
@@ -29,7 +31,14 @@ export default {
       exclude: 'node_modules/**',
       plugins: [
         ['@babel/plugin-proposal-class-properties', { loose: true }],
-        ['@babel/plugin-proposal-private-methods', { loose: true }]
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        [
+          'babel-plugin-transform-react-jsx',
+          {
+            pragma: 'h',
+            pragmaFrag: 'Fragment'
+          }
+        ]
       ]
     }),
     postcss({
@@ -38,6 +47,8 @@ export default {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         })
       ]
-    })
+    }),
+    preact(),
+    sass()
   ]
 };
