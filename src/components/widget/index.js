@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { Component } from 'preact';
 import styled from 'styled-components';
 import React from 'preact/compat';
 import FontSize from '../font-size';
@@ -13,7 +13,9 @@ const Modal = styled.div`
   left: 5%;
 `;
 
-const Header = styled.h3``;
+const Header = styled.h1`
+  font-size: 24px;
+`;
 
 const InnerContainer = styled.div``;
 

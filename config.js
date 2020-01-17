@@ -1,13 +1,17 @@
+const guid =
+  Math.random()
+    .toString(36)
+    .substring(2, 15) +
+  Math.random()
+    .toString(36)
+    .substring(2, 15);
+
+// const guid = 'QeXySdYQckKxJohdrUXbeg';
+
 const config = {
   // Ensure globally unique id
-  widgetId:
-    'wcasg-ada-app-' +
-    Math.random()
-      .toString(36)
-      .substring(2, 15) +
-    Math.random()
-      .toString(36)
-      .substring(2, 15),
+  widgetId: `wcasg-ada-app-${guid}`,
+  guid: guid,
   plugins: {
     fontSize: {
       id: 'font-size',
