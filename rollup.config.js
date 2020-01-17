@@ -2,9 +2,11 @@
 import html from 'rollup-plugin-html';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
-import postcssModules from 'postcss-modules';
+// import postcssModules from 'postcss-modules';
 import preact from 'rollup-plugin-preact';
 import sass from 'rollup-plugin-sass';
+
+import autoprefixer from 'autoprefixer';
 
 export default {
   input: 'src/index.js',
@@ -38,19 +40,24 @@ export default {
             pragma: 'h',
             pragmaFrag: 'Fragment'
           }
-        ]
-      ]
-    }),
-    postcss({
-      plugins: [
-        postcssModules({
-          generateScopedName: '[name]__[local]___[hash:base64:5]'
-        })
+        ],
+        ['babel-plugin-react-css-modules']
       ]
     }),
     preact(),
     sass({
       include: [`src/components/**/*.scss`]
+    }),
+    postcss({
+      // extensions: ['.css'],
+      modules: {
+        // Randomize class names to ensure no overlap with source CSS
+        generateScopedName: '[name]__[local]___[hash:base64:7]'
+      },
+      plugins: [
+        // Add relevant vendor prefixes
+        autoprefixer()
+      ]
     })
   ]
 };

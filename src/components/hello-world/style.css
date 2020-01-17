@@ -3,6 +3,10 @@ html, body {
   font-weight: 400;
 }
 
+.test {
+  background-color: blue;
+}
+
 h1 {
   text-align: center;
   color: #ff0000;
