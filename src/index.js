@@ -1,12 +1,8 @@
-import habitat from 'preact-habitat';
-
 import Widget from './components/modal';
+import { h, render } from 'preact';
+import $ from 'cash-dom';
 
-let _habitat = habitat(Widget);
+$('html').append('<div id="wcasg-ada-app"></div>');
+const main = document.getElementById('wcasg-ada-app');
 
-_habitat.render({
-  // selector: 'main',
-  // clean: false,
-  // Use parent node
-  inline: true
-});
+render(h(Widget), main);
