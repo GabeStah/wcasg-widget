@@ -1,0 +1,10 @@
+/* Name must NOT contain hyphen */
+.widgetContainer {
+  position: fixed;
+  top: 10%;
+  left: 0;
+  height: 50%;
+  width: 30%;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.7);
+}

@@ -18,7 +18,7 @@ module.exports = {
     extensions: ['.jsx', '.js'],
     alias: {
       components: path.resolve(__dirname, 'src/components'),
-      style: path.resolve(__dirname, 'src/style'),
+      style: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat'

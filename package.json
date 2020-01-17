@@ -18,9 +18,7 @@
     "build": "cross-env NODE_ENV=production webpack -p --progress",
     "build:dev": "cross-env NODE_ENV=development webpack -p --progress",
     "prebuild": "mkdirp build",
-    "test": "npm run lint && npm run -s test:karma",
-    "test:karma": "karma start test/karma.conf.js --single-run",
-    "lint": "eslint ./src/ || true"
+    "test": ""
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -34,6 +32,7 @@
     "cross-env": "^6.0.3",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
+    "linkstate": "^1.1.1",
     "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
     "postcss-modules": "^1.5.0",
