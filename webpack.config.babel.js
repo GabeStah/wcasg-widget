@@ -1,4 +1,5 @@
 import path from 'path';
+import CompressionPlugin from 'compression-webpack-plugin';
 
 const environment = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const isDev = environment === 'development';
@@ -20,9 +21,6 @@ module.exports = {
       components: path.resolve(__dirname, 'src/components'),
       style: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
-      // Not necessary unless you consume a module using `createClass`
-      'create-react-class': 'preact/compat/lib/create-react-class',
-      createClass: 'preact/compat/lib/create-react-class',
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat'
     }
@@ -89,5 +87,8 @@ module.exports = {
   optimization: {
     // Disable minification for dev
     minimize: !isDev
-  }
+  },
+
+  // Add gzip output
+  plugins: [new CompressionPlugin()]
 };
