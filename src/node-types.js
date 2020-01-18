@@ -1,0 +1,22 @@
+export const text = [
+  'p',
+  'li',
+  'label',
+  'input',
+  'select',
+  'textarea',
+  'legend',
+  'code',
+  'pre',
+  'dd',
+  'dt',
+  'span',
+  'blockquote',
+  'a',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6'
+];

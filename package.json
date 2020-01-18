@@ -1,5 +1,5 @@
 {
-  "title": "wcasg-ada-app",
+  "name": "wcasg-ada-app",
   "version": "0.0.1",
   "description": "JavaScript widget providing optional accessibility improvements for web pages.",
   "main": "index.js",

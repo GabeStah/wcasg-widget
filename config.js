@@ -1,3 +1,5 @@
+import { text as textNodeTypes } from './src/node-types';
+
 const guid =
   Math.random()
     .toString(36)
@@ -30,8 +32,22 @@ const config = {
       title: 'Hightlight Links',
       defaults: {
         enabled: true,
-        // 'block' or 'border'
+        // 'block', 'border', or 'both'
         style: 'block'
+      }
+    },
+    letterSpacing: {
+      id: 'letter-spacing',
+      title: 'Scale Letter Spacing',
+      propertyName: 'letter-spacing',
+      propertyUnit: 'px',
+      type: 'scalable',
+      nodeTypes: textNodeTypes,
+      defaults: {
+        increment: 0.1,
+        minimum: 0.5,
+        maximum: 3.0,
+        adjustment: 1.0
       }
     }
   }

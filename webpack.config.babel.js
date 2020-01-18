@@ -20,6 +20,9 @@ module.exports = {
       components: path.resolve(__dirname, 'src/components'),
       style: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
+      // Not necessary unless you consume a module using `createClass`
+      'create-react-class': 'preact/compat/lib/create-react-class',
+      createClass: 'preact/compat/lib/create-react-class',
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat'
     }
