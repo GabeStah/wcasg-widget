@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { h, Component } from 'preact';
 import styled from 'styled-components';
 import React from 'preact/compat';
 import FontSize from '../font-size';
