@@ -12,16 +12,26 @@ const config = {
   // Ensure globally unique id
   widgetId: `wcasg-ada-app-${guid}`,
   guid: guid,
+  widgetTitle: 'WCASG ADA Widget',
   plugins: {
     fontSize: {
       id: 'font-size',
-      name: 'Adjust Font Size',
+      title: 'Adjust Font Size',
       defaults: {
         // Percentage step change of font sizes
         increment: 0.1,
         minimum: 0.5,
         maximum: 3.0,
-        adjustment: 1.0
+        adjustment: 1.5
+      }
+    },
+    hightlightLinks: {
+      id: 'hightlight-links',
+      title: 'Hightlight Links',
+      defaults: {
+        enabled: true,
+        // 'block' or 'border'
+        style: 'block'
       }
     }
   }

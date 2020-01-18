@@ -1,7 +1,7 @@
 import { h, render } from 'preact';
 
 import config from '../config';
-import styles from './styles/global.css';
+import styles from './styles/global.scss';
 import Widget from './components/widget';
 
 // Create modal div to contain widget

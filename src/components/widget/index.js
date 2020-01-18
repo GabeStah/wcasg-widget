@@ -1,33 +1,20 @@
 import { h, Component } from 'preact';
-import styled from 'styled-components';
 import React from 'preact/compat';
 import FontSize from '../font-size';
+import HightlightLinks from '../highlight-links';
+import styles from './styles.scss';
 import config from '../../../config';
-
-const Modal = styled.div`
-  background-color: hsla(0, 0%, 100%, 0.9);
-  position: absolute;
-  top: 5%;
-  right: 5%;
-  bottom: 5%;
-  left: 5%;
-`;
-
-const Header = styled.h1`
-  font-size: 24px;
-`;
-
-const InnerContainer = styled.div``;
 
 export default class Widget extends Component {
   render(props) {
     return (
-      <Modal>
-        <Header>Widget Header</Header>
-        <InnerContainer>
-          <FontSize name={config.plugins.fontSize.name} />
-        </InnerContainer>
-      </Modal>
+      <div className={styles.modal}>
+        <h1>{config.widgetTitle}</h1>
+        <div className={styles.modalContainer}>
+          <FontSize />
+          <HightlightLinks />
+        </div>
+      </div>
     );
   }
 }

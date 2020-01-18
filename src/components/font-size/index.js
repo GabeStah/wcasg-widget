@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import React from 'preact/compat';
 import config from '../../../config';
 import { tags } from './tags';
+import styles from './styles.scss';
 
 const plugin = config.plugins.fontSize;
 
@@ -12,11 +13,12 @@ export default class FontSize extends Component {
   };
 
   get dataAttributeName() {
-    return `data-${config.widgetId}-original-font-size`;
+    return `data-${config.widgetId}-original-${plugin.id}`;
   }
 
   componentWillMount() {
-    this.setDataAttributes();
+    this.updateDataAttributes();
+    this.update();
   }
 
   /**
@@ -29,7 +31,7 @@ export default class FontSize extends Component {
       {
         adjustment: diff < this.state.minimum ? this.state.minimum : diff
       },
-      this.setProperties
+      this.update
     );
   };
 
@@ -43,14 +45,14 @@ export default class FontSize extends Component {
       {
         adjustment: diff > this.state.maximum ? this.state.maximum : diff
       },
-      this.setProperties
+      this.update
     );
   };
 
   /**
    * Assign data attributes to retain original font-size.
    */
-  setDataAttributes = () => {
+  updateDataAttributes = () => {
     // Add attribute
     if (this.state.nodes && this.state.nodes.length > 0) {
       this.state.nodes.forEach(node => {
@@ -69,7 +71,7 @@ export default class FontSize extends Component {
    * Assign updated font-size property to all selected nodes.
    * Font-size calculated based on node's original font size and current adjustment %.
    */
-  setProperties = () => {
+  update = () => {
     if (this.state.nodes && this.state.nodes.length > 0) {
       this.state.nodes.forEach(node => {
         const original = node.getAttribute(this.dataAttributeName);
@@ -84,8 +86,8 @@ export default class FontSize extends Component {
 
   render(props) {
     return (
-      <div>
-        <h1>{props.name}</h1>
+      <div id={plugin.id} className={styles.container}>
+        <h1>{plugin.title}</h1>
         <p>
           Current Adjustment:{' '}
           {(parseFloat(this.state.adjustment) * 100).toFixed(0) + '%'}

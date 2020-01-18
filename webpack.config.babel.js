@@ -52,7 +52,7 @@ module.exports = {
                 mode: 'local',
                 // Provide path and class info in dev
                 localIdentName: isDev
-                  ? '[path][name]__[local]--[hash:base64:5]'
+                  ? '[path][title]__[local]--[hash:base64:5]'
                   : '[hash:base64]',
                 context: path.resolve(__dirname, 'src')
               }
