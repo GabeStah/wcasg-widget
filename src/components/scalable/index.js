@@ -1,11 +1,21 @@
-import { h, Component } from 'preact';
-import config from '../../../../config';
+// @flow
+import React from 'react';
+
+import config from 'config';
+import type { IScalable, IScalableState } from 'plugins/scalable';
+
 import styles from './styles.scss';
 
-export default class ScalablePlugin extends Component {
+export default class ScalableComponent extends React.Component<
+  IScalable,
+  IScalableState
+> {
   state = {
-    nodes: document.querySelectorAll(this.props.nodeTypes.join(', ')),
-    ...this.props.defaults
+    nodes: this.props.nodeTypes.nodes(),
+    adjustment: this.props.defaults.adjustment,
+    increment: this.props.defaults.increment,
+    minimum: this.props.defaults.minimum,
+    maximum: this.props.defaults.maximum
   };
 
   get dataAttributeName() {

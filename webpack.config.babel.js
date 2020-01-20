@@ -18,8 +18,12 @@ module.exports = {
   resolve: {
     extensions: ['.jsx', '.js'],
     alias: {
+      '@': path.resolve(__dirname, 'src'),
+      classes: path.resolve(__dirname, 'src/classes'),
+      config: path.resolve(__dirname, 'config.js'),
       components: path.resolve(__dirname, 'src/components'),
-      style: path.resolve(__dirname, 'src/styles'),
+      plugins: path.resolve(__dirname, 'src/plugins'),
+      styles: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat'
@@ -68,8 +72,7 @@ module.exports = {
 
   node: {
     global: true,
-    __filename: false,
-    __dirname: false
+    __filename: false
   },
 
   devtool: isDev ? 'source-map' : false,

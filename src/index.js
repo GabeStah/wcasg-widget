@@ -1,8 +1,10 @@
+// @flow
 import { h, render } from 'preact';
 
-import config from '../config';
-import styles from './styles/global.scss';
-import Widget from './components/widget';
+import config from 'config';
+import Widget from 'components/widget';
+
+import styles from 'styles/global.scss';
 
 // Create modal div to contain widget
 const modal = document.createElement(`div`);

@@ -1,12 +1,12 @@
-import { h, Component } from 'preact';
-import React from 'preact/compat';
-import config from '../../../config';
+import React from 'react';
+
+import config from 'config';
 import { tags } from './tags';
 import styles from './styles.scss';
 
 const plugin = config.plugins.fontSize;
 
-export default class FontSize extends Component {
+export default class FontSize extends React.Component {
   state = {
     nodes: document.querySelectorAll(tags.join(', ')),
     ...plugin.defaults

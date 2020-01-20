@@ -1,4 +1,4 @@
-const Utilities = {
+const utilities = {
   /**
    * Adds className to node.
    * IE compatible.
@@ -43,4 +43,4 @@ const Utilities = {
   }
 };
 
-export default Utilities;
+export default utilities;

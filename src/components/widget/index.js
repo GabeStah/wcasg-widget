@@ -1,19 +1,37 @@
-import { h, Component } from 'preact';
-import React from 'preact/compat';
-import filter from 'lodash/filter';
+// @flow
+import React from 'react';
+// import filter from 'lodash/filter';
 
-import FontSize from '../font-size';
-import HightlightLinks from '../highlight-links';
+import config from 'config';
+
+import TextNodeType from 'classes/node-types/TextNodeType';
+import FontSize from 'components/font-size';
+import HightlightLinks from 'components/highlight-links';
+import Scalable from 'plugins/scalable';
+
 import styles from './styles.scss';
-import config from '../../../config';
-import ScalablePlugin from '../prototypes/scalable';
 
-const scalablePlugins = filter(
-  config.plugins,
-  plugin => plugin.type === 'scalable'
-);
+// const scalablePlugins = filter(
+//   config.plugins,
+//   plugin => plugin.type === 'scalable'
+// );
 
-export default class Widget extends Component {
+const letterSpacing = new Scalable({
+  id: 'letter-spacing',
+  title: 'Scale Letter Spacing',
+  propertyName: 'letter-spacing',
+  propertyUnit: 'px',
+  type: 'scalable',
+  nodeTypes: new TextNodeType(),
+  defaults: {
+    increment: 0.1,
+    minimum: 0.5,
+    maximum: 3.0,
+    adjustment: 1.0
+  }
+});
+
+export default class Widget extends React.Component {
   render(props) {
     return (
       <div className={styles.modal}>
@@ -21,9 +39,7 @@ export default class Widget extends Component {
         <div className={styles.modalContainer}>
           <FontSize />
           <HightlightLinks />
-          {scalablePlugins.map(plugin => {
-            return <ScalablePlugin {...plugin} />;
-          })}
+          {letterSpacing.component}
         </div>
       </div>
     );

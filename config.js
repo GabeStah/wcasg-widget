@@ -1,4 +1,5 @@
-import { text as textNodeTypes } from './src/node-types';
+import TextNodeType from 'classes/node-types/TextNodeType';
+import Scalable from 'plugins/scalable';
 
 const guid =
   Math.random()
@@ -7,8 +8,6 @@ const guid =
   Math.random()
     .toString(36)
     .substring(2, 15);
-
-// const guid = 'QeXySdYQckKxJohdrUXbeg';
 
 const config = {
   // Ensure globally unique id
@@ -36,20 +35,20 @@ const config = {
         style: 'block'
       }
     },
-    letterSpacing: {
+    letterSpacing: new Scalable({
       id: 'letter-spacing',
       title: 'Scale Letter Spacing',
       propertyName: 'letter-spacing',
       propertyUnit: 'px',
       type: 'scalable',
-      nodeTypes: textNodeTypes,
+      nodeTypes: new TextNodeType(),
       defaults: {
         increment: 0.1,
         minimum: 0.5,
         maximum: 3.0,
         adjustment: 1.0
       }
-    }
+    })
   }
 };
 

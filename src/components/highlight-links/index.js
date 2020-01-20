@@ -1,13 +1,13 @@
-import { h, Component } from 'preact';
-import React from 'preact/compat';
-import config from '../../../config';
-import Utilities from '../../utilities';
+import React from 'react';
+
+import config from 'config';
+import utilities from '@/utilities';
 
 import styles from './styles.scss';
 
 const plugin = config.plugins.hightlightLinks;
 
-export default class HightlightLinks extends Component {
+export default class HightlightLinks extends React.Component {
   state = {
     ...plugin.defaults
   };
@@ -51,7 +51,7 @@ export default class HightlightLinks extends Component {
    */
   resetClasses = () => {
     for (const key in this.classNames) {
-      Utilities.removeClass(this.body, this.classNames[key]);
+      utilities.removeClass(this.body, this.classNames[key]);
     }
   };
 
@@ -74,7 +74,7 @@ export default class HightlightLinks extends Component {
     this.resetClasses();
 
     if (this.state.enabled) {
-      Utilities.addClass(this.body, this.className);
+      utilities.addClass(this.body, this.className);
     }
   };
 

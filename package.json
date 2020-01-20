@@ -2,10 +2,16 @@
   "name": "wcasg-ada-app",
   "version": "0.0.1",
   "description": "JavaScript widget providing optional accessibility improvements for web pages.",
-  "main": "index.js",
+  "main": "build/index.js",
   "repository": "git@gitlab.solarixdigital.com:solarix/wcasg-ada-app.git",
   "author": "Gabe Wyatt <gabe@solarixdigital.com>",
   "license": "MIT",
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not IE_Mob 11",
+    "maintained node versions"
+  ],
   "dependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/node": "^7.8.3"
@@ -26,12 +32,15 @@
     "@babel/plugin-proposal-private-methods": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
+    "@babel/preset-flow": "^7.8.3",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "compression-webpack-plugin": "^3.1.0",
     "cross-env": "^6.0.3",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
+    "empty": "^0.10.1",
+    "flow-bin": "^0.116.1",
     "linkstate": "^1.1.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
