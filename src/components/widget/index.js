@@ -31,8 +31,8 @@ const letterSpacing = new Scalable({
   }
 });
 
-export default class Widget extends React.Component {
-  render(props) {
+export default class Widget extends React.Component<{}> {
+  render() {
     return (
       <div className={styles.modal}>
         <h1>{config.widgetTitle}</h1>

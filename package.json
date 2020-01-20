@@ -19,6 +19,7 @@
   "scripts": {
     "bump": "npm version patch",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
+    "flow": "flow",
     "start": "serve build -s -c 1",
     "prestart": "npm run build",
     "build": "cross-env NODE_ENV=production webpack -p --progress",

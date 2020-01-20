@@ -1,5 +1,13 @@
 ## WCASG ADA Widget
 
+### Type Checking with Flow
+
+[Flow](https://flow.org/en/) is a static type checker that runs as a background process and analyzes project code on the fly, alerting you to any issues.  Anyone that has used TypeScript will find Flow quite similar and easy to use.
+
+Run `npm run flow` to start the flow server and scan for issues.
+
+For more info see: https://flow.org/en/
+
 ### Manual Testing
 
 1. Visit a web page to be tested.
