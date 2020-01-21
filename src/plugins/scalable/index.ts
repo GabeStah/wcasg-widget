@@ -1,13 +1,11 @@
 import mapValues from 'lodash/mapValues';
 
-import { IPlugin } from 'plugins/base';
-import { InitialStateType } from 'state/initialState';
+import BasePlugin, { IPlugin } from 'plugins/base';
+import initialState, { InitialStateType } from 'state/initialState';
 
 import TextNodeType from 'classes/node-types/TextNodeType';
-import BasePlugin from 'plugins/base';
-
-import initialState from 'state/initialState';
 import { ScalableComponentProps } from 'components/scalable';
+import { DOMManipulationType } from '@/plugins';
 
 export interface IScalableState {
   id: string;
@@ -34,9 +32,10 @@ export interface ScalableDefaultsType {
 
 export interface ScalableConstructorParams {
   id: string;
+  domManipulationType?: DOMManipulationType;
   title: string;
   propertyName: string;
-  propertyUnit: string;
+  propertyUnit?: string;
   nodeTypes: TextNodeType;
   defaults: ScalableDefaultsType;
   displayValue: (plugin: IScalable, props: any) => string;
@@ -72,23 +71,18 @@ export default class Scalable extends BasePlugin implements IScalable {
     });
   };
 
-  public static mapStateToProps = (state: any, { id }: any) => {
-    // Extract reducers from combined state.
-    const { plugins } = state.plugins;
-    const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
-
-    return { current: statePlugin.current };
-  };
   public id: string;
   public title: string;
   public propertyName: string;
-  public propertyUnit: string;
+  public propertyUnit: string = 'px';
   public nodeTypes: TextNodeType;
   public defaults: ScalableDefaultsType;
   public state: IScalableState;
   public nodes: NodeList | null | undefined;
   public displayValue: (plugin: IScalable, props: any) => string;
   public onUpdate: (plugin: IScalable, props: any) => void;
+  public domManipulationType: DOMManipulationType =
+    DOMManipulationType.NodeQuery;
 
   public reducers = {
     decrement: (
@@ -129,12 +123,17 @@ export default class Scalable extends BasePlugin implements IScalable {
     this.id = params.id;
     this.title = params.title;
     this.propertyName = params.propertyName;
-    this.propertyUnit = params.propertyUnit;
+    if (params.propertyUnit) {
+      this.propertyUnit = params.propertyUnit;
+    }
     this.nodeTypes = params.nodeTypes;
     this.defaults = params.defaults;
     this.state = this.initialState;
     this.displayValue = params.displayValue;
     this.onUpdate = params.onUpdate;
+    if (params.domManipulationType) {
+      this.domManipulationType = params.domManipulationType;
+    }
 
     // Parse nodes from DOM tree
     this.nodes = this.nodeTypes.nodes();

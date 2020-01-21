@@ -1,12 +1,14 @@
 import config from 'config';
 import mapValues from 'lodash/mapValues';
+import { DOMManipulationType } from '@/plugins';
 
 export interface IPlugin {
   id: string;
   title: string;
   dataAttributeName: string;
+  domManipulationType: DOMManipulationType;
   initialState: object;
-  onMount(props?: object): void;
+  onMount(props: object): void;
 }
 
 export interface BasePluginParamsType {
@@ -33,7 +35,7 @@ export default class BasePlugin implements IPlugin {
     });
   };
 
-  public static mapStateToProps = (state: any, { id }: any) => {
+  public static mapStateToProps = (state: any, { id }: any): any => {
     // Extract reducers from combined state.
     const { plugins } = state.plugins;
     const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
@@ -43,6 +45,8 @@ export default class BasePlugin implements IPlugin {
 
   public id: string;
   public title: string;
+  public domManipulationType: DOMManipulationType =
+    DOMManipulationType.BodyClass;
 
   constructor(params: BasePluginParamsType) {
     this.id = params.id;

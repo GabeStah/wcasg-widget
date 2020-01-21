@@ -2,13 +2,18 @@ import React from 'react';
 import config from 'config';
 
 import TextNodeType from 'classes/node-types/TextNodeType';
-import Scalable from 'plugins/scalable';
+import Scalable, { IScalable } from 'plugins/scalable';
 import ScalableComponent, { ScalableComponentProps } from 'components/scalable';
 import PluginManager from 'classes/plugin-manager';
 import initialState from 'state/initialState';
-import { IScalable } from 'plugins/scalable';
 
 import styles from './styles.scss';
+import Toggleable, { IToggleable } from 'plugins/toggleable';
+import ToggleableComponent, {
+  ToggleableComponentProps
+} from 'components/toggleable';
+import { DOMManipulationType } from '@/plugins';
+import utilities from '@/utilities';
 
 const fontSize = new Scalable({
   id: 'font-size',
@@ -75,9 +80,6 @@ const letterSpacing = new Scalable({
       return;
     }
 
-    console.log(`letterSpacing: onUpdate, props`);
-    console.log(props);
-
     const { current } = props;
 
     if (self.nodes && self.nodes.length > 0) {
@@ -99,6 +101,59 @@ const letterSpacing = new Scalable({
 
 PluginManager.add(letterSpacing);
 
+const hightlightLinks = new Toggleable({
+  id: 'highlight-links',
+  title: 'Highlight Links',
+  domManipulationType: DOMManipulationType.BodyClass,
+  nodeTypes: new TextNodeType(),
+  propertyName: '',
+  propertyUnit: '',
+  defaults: {
+    enabled: false
+  },
+  displayValue: (
+    self: IToggleable,
+    props: ToggleableComponentProps
+  ): string => {
+    if (!self) {
+      return '';
+    }
+    return `${props.enabled}${self.propertyUnit}`;
+  },
+  onUpdate: (self: IToggleable, props: ToggleableComponentProps): void => {
+    if (!self) {
+      return;
+    }
+
+    const { enabled } = props;
+
+    if (self.domManipulationType === DOMManipulationType.BodyClass) {
+      const body = utilities.getBody();
+      utilities.removeClass({ node: body, className: self.style });
+      if (enabled) {
+        utilities.addClass({ node: body, className: self.style });
+      }
+    }
+
+    // if (self.nodes && self.nodes.length > 0) {
+    //   self.nodes.forEach(node => {
+    //     // @ts-ignore
+    //     let original = node.getAttribute(self.dataAttributeName);
+    //     if (isNaN(parseInt(original, 10))) {
+    //       original = self.defaults.current;
+    //     }
+    //     const newValue = `${parseInt(original, 10) + current}${
+    //       self.propertyUnit
+    //     }`;
+    //     // @ts-ignore
+    //     node.style.setProperty(self.propertyName, newValue);
+    //   });
+    // }
+  }
+});
+
+PluginManager.add(hightlightLinks);
+
 // Update initialState
 initialState.plugins = PluginManager.initialState;
 
@@ -112,6 +167,7 @@ export default class Widget extends React.Component<{}> {
           {/*<HightlightLinks />*/}
           <ScalableComponent id={letterSpacing.id} />
           <ScalableComponent id={fontSize.id} />
+          <ToggleableComponent id={hightlightLinks.id} />
         </div>
       </div>
     );

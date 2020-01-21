@@ -1,13 +1,13 @@
 import mapValues from 'lodash/mapValues';
 
-import { IPlugin } from 'plugins/base';
-import { InitialStateType } from 'state/initialState';
+import BasePlugin, { IPlugin } from 'plugins/base';
+import initialState, { InitialStateType } from 'state/initialState';
 
-import TextNodeType from 'classes/node-types/TextNodeType';
-import BasePlugin from 'plugins/base';
-
-import initialState from 'state/initialState';
+import BodyNodeType from 'classes/node-types/BodyNodeType';
 import { ToggleableComponentProps } from 'components/toggleable';
+import { DOMManipulationType } from '@/plugins';
+
+import styles from './styles.scss';
 
 export interface IToggleableState {
   id: string;
@@ -16,31 +16,39 @@ export interface IToggleableState {
 
 export interface IToggleable extends IPlugin {
   defaults: ToggleableDefaultsType;
-  displayValue: <T>(plugin: T, props: any) => string;
+  displayValue: (
+    plugin: IToggleable,
+    props: ToggleableComponentProps
+  ) => string;
   id: string;
   nodes: NodeList | null | undefined;
-  nodeTypes: TextNodeType;
-  onUpdate: <T>(plugin: T, props: any) => void;
+  nodeTypes: BodyNodeType;
+  onUpdate: (plugin: IToggleable, props: ToggleableComponentProps) => void;
   propertyName: string;
   propertyUnit: string;
   state: IToggleableState;
+  style: any;
   title: string;
   dataAttributeName: string;
 }
 
 export interface ToggleableDefaultsType {
-  enabled: true;
+  enabled: boolean;
 }
 
 export interface ToggleableConstructorParams {
   id: string;
   title: string;
+  domManipulationType: DOMManipulationType;
   propertyName: string;
   propertyUnit: string;
-  nodeTypes: TextNodeType;
+  nodeTypes: BodyNodeType;
   defaults: ToggleableDefaultsType;
-  displayValue: <T>(plugin: T, props: any) => string;
-  onUpdate: <T>(plugin: T, props: any) => void;
+  displayValue: (
+    plugin: IToggleable,
+    props: ToggleableComponentProps
+  ) => string;
+  onUpdate: (plugin: IToggleable, props: ToggleableComponentProps) => void;
 }
 
 export default class Toggleable extends BasePlugin implements IToggleable {
@@ -66,59 +74,52 @@ export default class Toggleable extends BasePlugin implements IToggleable {
     });
   };
 
-  public static mapStateToProps = (state: any, { id }: any) => {
-    // Extract reducers from combined state.
+  public static mapStateToProps = (state: any, { id }: any): any => {
     const { plugins } = state.plugins;
     const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
 
-    return { current: statePlugin.current };
+    return { enabled: statePlugin.enabled };
   };
+
   public id: string;
   public title: string;
   public propertyName: string;
   public propertyUnit: string;
-  public nodeTypes: TextNodeType;
+  public nodeTypes: BodyNodeType;
   public defaults: ToggleableDefaultsType;
   public state: IToggleableState;
   public nodes: NodeList | null | undefined;
-  public displayValue: <T>(plugin: T, props: any) => string;
-  public onUpdate: <T>(plugin: T, props: any) => void;
+  public domManipulationType: DOMManipulationType =
+    DOMManipulationType.BodyClass;
+  public displayValue: (
+    plugin: IToggleable,
+    props: ToggleableComponentProps
+  ) => string;
+  public onUpdate: (
+    plugin: IToggleable,
+    props: ToggleableComponentProps
+  ) => void;
 
   public reducers = {
-    decrement: (
+    toggle: (
       state: InitialStateType = initialState,
       action: { type: string; payload: any }
     ) => {
-      // const statePluginIndex = state.plugins.findIndex(
-      //   plugin => plugin.id === action.payload.id
-      // );
-      // const statePlugin = state.plugins[statePluginIndex];
-      // const diff = statePlugin.current - this.defaults.increment;
-      //
-      // statePlugin.current =
-      //   diff < this.defaults.minimum ? this.defaults.minimum : diff;
-
-      return Object.assign({}, state, { plugins: state.plugins });
-    },
-    increment: (
-      state: InitialStateType = initialState,
-      action: { type: string; payload: any }
-    ) => {
-      // const statePluginIndex = state.plugins.findIndex(
-      //   plugin => plugin.id === action.payload.id
-      // );
-      // const statePlugin = state.plugins[statePluginIndex];
-      // const diff = statePlugin.current + this.defaults.increment;
-      //
-      // statePlugin.current =
-      //   diff > this.defaults.maximum ? this.defaults.maximum : diff;
+      const statePluginIndex = state.plugins.findIndex(
+        plugin => plugin.id === action.payload.id
+      );
+      const statePlugin = state.plugins[statePluginIndex];
+      statePlugin.enabled = !statePlugin.enabled;
 
       return Object.assign({}, state, { plugins: state.plugins });
     }
   };
 
+  public get style(): any {
+    return styles.highlightLinksBorder;
+  }
+
   constructor(params: ToggleableConstructorParams) {
-    // super({ id: params.id, title: params.title, onUpdate: params.onUpdate<IToggleable> });
     super(params);
 
     this.id = params.id;
@@ -136,8 +137,6 @@ export default class Toggleable extends BasePlugin implements IToggleable {
   }
 
   public onMount(props: ToggleableComponentProps) {
-    // Update node attributes
-    this.setDataAttributes();
     // Intial DOM update
     this.onUpdate(this, props);
   }

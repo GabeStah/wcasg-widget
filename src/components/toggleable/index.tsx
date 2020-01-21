@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {IToggleable} from 'plugins/toggleable';
+import { IToggleable } from 'plugins/toggleable';
 
 import styles from './styles.scss';
 import Toggleable from 'plugins/toggleable';
@@ -17,7 +17,7 @@ export interface ToggleableComponentProps {
 class ToggleableComponent extends React.Component<ToggleableComponentProps> {
   public plugin: IToggleable = PluginManager.find<IToggleable>(this.props.id);
 
-  public componentDidUpdate(prevProps: { enabled: boolean; }, prevState: any) {
+  public componentDidUpdate(prevProps: { enabled: boolean }, prevState: any) {
     if (this.props.enabled !== prevProps.enabled) {
       this.plugin.onUpdate(this.plugin, this.props);
     }
@@ -25,7 +25,7 @@ class ToggleableComponent extends React.Component<ToggleableComponentProps> {
 
   public componentWillMount() {
     // Initialize plugin
-    this.plugin.onMount();
+    this.plugin.onMount(this.props);
   }
 
   public render() {
@@ -42,5 +42,5 @@ class ToggleableComponent extends React.Component<ToggleableComponentProps> {
 
 export default connect(
   Toggleable.mapStateToProps,
-  Toggleable.mapDispatchToProps,
+  Toggleable.mapDispatchToProps
 )(ToggleableComponent);

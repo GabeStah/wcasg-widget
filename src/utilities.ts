@@ -15,6 +15,13 @@ const utilities = {
   },
 
   /**
+   * Get the document body element.
+   */
+  getBody: () => {
+    return document.getElementsByTagName('body')[0];
+  },
+
+  /**
    * Determines if node has className.
    * IE compatible.
    *
@@ -39,12 +46,24 @@ const utilities = {
    * @param node
    * @param className
    */
-  removeClass: ({ node, className }: { node: any; className: any }) => {
-    if (node.classList) {
-      node.classList.remove(className);
-    } else if (utilities.hasClass({ node, className })) {
-      const reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-      node.className = node.className.replace(reg, ' ');
+  removeClass: ({
+    node,
+    className
+  }: {
+    node: any;
+    className: string | string[];
+  }) => {
+    if (Array.isArray(className)) {
+      className.forEach(name =>
+        utilities.removeClass({ node, className: name })
+      );
+    } else {
+      if (node.classList) {
+        node.classList.remove(className);
+      } else if (utilities.hasClass({ node, className })) {
+        const reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        node.className = node.className.replace(reg, ' ');
+      }
     }
   }
 };

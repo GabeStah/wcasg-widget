@@ -1,1 +1,4 @@
-// noop
+export enum DOMManipulationType {
+  BodyClass,
+  NodeQuery
+}
