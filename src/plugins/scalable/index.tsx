@@ -1,46 +1,16 @@
+import React from 'react';
 import mapValues from 'lodash/mapValues';
 
-import BasePlugin, { IPlugin } from 'plugins/base';
+import BasePlugin from 'plugins/base';
 import initialState, { InitialStateType } from 'state/initialState';
 
 import TextNodeType from 'classes/node-types/TextNodeType';
-import { ScalableComponentProps } from 'components/scalable';
+import ScalableComponent, { ScalableComponentProps } from 'components/scalable';
 import { DOMManipulationType } from '@/plugins';
-
-export interface IScalableState {
-  id: string;
-  current: number;
-}
-
-export interface IScalable extends IPlugin {
-  propertyName: string;
-  propertyUnit: string;
-  nodeTypes: TextNodeType;
-  defaults: ScalableDefaultsType;
-  state: IScalableState;
-  nodes: NodeList | null | undefined;
-  displayValue: (plugin: IScalable, props: any) => string;
-  onUpdate: (plugin: IScalable, props: any) => void;
-}
-
-export interface ScalableDefaultsType {
-  current: number;
-  increment: number;
-  minimum: number;
-  maximum: number;
-}
-
-export interface ScalableConstructorParams {
-  id: string;
-  domManipulationType?: DOMManipulationType;
-  title: string;
-  propertyName: string;
-  propertyUnit?: string;
-  nodeTypes: TextNodeType;
-  defaults: ScalableDefaultsType;
-  displayValue: (plugin: IScalable, props: any) => string;
-  onUpdate: (plugin: IScalable, props: any) => void;
-}
+import { IScalable } from 'plugins/scalable/IScalable';
+import { IScalableState } from 'plugins/scalable/IScalableState';
+import { ScalableDefaultsType } from 'plugins/scalable/ScalableDefaultsType';
+import { ScalableConstructorParams } from 'plugins/scalable/ScalableConstructorParams';
 
 export default class Scalable extends BasePlugin implements IScalable {
   get initialState() {
@@ -69,6 +39,13 @@ export default class Scalable extends BasePlugin implements IScalable {
     return mapValues(Scalable.actions, (action: (arg0: any) => any) => {
       return () => dispatch(action(props.id));
     });
+  };
+
+  public static mapStateToProps = (state: any, { id }: any): any => {
+    const { plugins } = state.plugins;
+    const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
+
+    return { current: statePlugin.current };
   };
 
   public id: string;
@@ -170,4 +147,8 @@ export default class Scalable extends BasePlugin implements IScalable {
       });
     }
   };
+
+  public toComponent(): any {
+    return <ScalableComponent id={this.id} />;
+  }
 }

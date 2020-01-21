@@ -1,4 +1,3 @@
-// React is not defined
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -9,7 +8,7 @@ import store from 'state/store';
 import styles from 'styles/global.scss';
 import config from 'config';
 
-// Create modal div to contain widget
+// Create modal div to contain widget and append to html doc
 const modal = document.createElement(`div`);
 modal.setAttribute('id', config.widgetId);
 modal.className = `${styles.widgetContainer}`;

@@ -1,4 +1,4 @@
-import { IPlugin } from 'plugins/base';
+import { IPlugin } from 'plugins/base/IPlugin';
 
 /**
  * Singleton class that handles active Plugins across app.
@@ -21,13 +21,17 @@ class PluginManager {
     return this;
   }
 
-  public add(plugin: IPlugin) {
-    if (this.exists(plugin.id)) {
-      throw new Error(
-        `Cannot add Plugin with ID: ${plugin.id} - Matching ID already exists.`
-      );
+  public add(plugin: IPlugin | IPlugin[]) {
+    if (Array.isArray(plugin)) {
+      plugin.forEach(p => this.add(p));
+    } else {
+      if (this.exists(plugin.id)) {
+        throw new Error(
+          `Cannot add Plugin with ID: ${plugin.id} - Matching ID already exists.`
+        );
+      }
+      this.plugins.push(plugin);
     }
-    this.plugins.push(plugin);
   }
 
   public delete(plugin: string | IPlugin) {

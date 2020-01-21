@@ -1,4 +1,4 @@
-const utilities = {
+const Utility = {
   /**
    * Adds className to node.
    * IE compatible.
@@ -9,7 +9,7 @@ const utilities = {
   addClass: ({ node, className }: { node: any; className: any }) => {
     if (node.classList) {
       node.classList.add(className);
-    } else if (!utilities.hasClass({ node, className })) {
+    } else if (!Utility.hasClass({ node, className })) {
       node.className += ' ' + className;
     }
   },
@@ -54,13 +54,11 @@ const utilities = {
     className: string | string[];
   }) => {
     if (Array.isArray(className)) {
-      className.forEach(name =>
-        utilities.removeClass({ node, className: name })
-      );
+      className.forEach(name => Utility.removeClass({ node, className: name }));
     } else {
       if (node.classList) {
         node.classList.remove(className);
-      } else if (utilities.hasClass({ node, className })) {
+      } else if (Utility.hasClass({ node, className })) {
         const reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
         node.className = node.className.replace(reg, ' ');
       }
@@ -68,4 +66,4 @@ const utilities = {
   }
 };
 
-export default utilities;
+export default Utility;

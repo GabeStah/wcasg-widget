@@ -23,6 +23,7 @@ module.exports = {
       config: path.resolve(__dirname, 'config.ts'),
       components: path.resolve(__dirname, 'src/components'),
       plugins: path.resolve(__dirname, 'src/plugins'),
+      root: path.resolve(__dirname),
       state: path.resolve(__dirname, 'src/state'),
       styles: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',

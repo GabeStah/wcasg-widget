@@ -1,55 +1,20 @@
 import mapValues from 'lodash/mapValues';
 
-import BasePlugin, { IPlugin } from 'plugins/base';
+import BasePlugin from 'plugins/base';
 import initialState, { InitialStateType } from 'state/initialState';
 
 import BodyNodeType from 'classes/node-types/BodyNodeType';
-import { ToggleableComponentProps } from 'components/toggleable';
+import ToggleableComponent, {
+  ToggleableComponentProps
+} from 'components/toggleable';
 import { DOMManipulationType } from '@/plugins';
+import { IToggleableState } from 'plugins/toggleable/IToggleableState';
+import { IToggleable } from 'plugins/toggleable/IToggleable';
+import { ToggleableDefaultsType } from 'plugins/toggleable/ToggleableDefaultsType';
+import { ToggleableConstructorParams } from 'plugins/toggleable/ToggleableConstructorParams';
 
 import styles from './styles.scss';
-
-export interface IToggleableState {
-  id: string;
-  enabled: boolean;
-}
-
-export interface IToggleable extends IPlugin {
-  defaults: ToggleableDefaultsType;
-  displayValue: (
-    plugin: IToggleable,
-    props: ToggleableComponentProps
-  ) => string;
-  id: string;
-  nodes: NodeList | null | undefined;
-  nodeTypes: BodyNodeType;
-  onUpdate: (plugin: IToggleable, props: ToggleableComponentProps) => void;
-  propertyName: string;
-  propertyUnit: string;
-  state: IToggleableState;
-  style: any;
-  title: string;
-  dataAttributeName: string;
-}
-
-export interface ToggleableDefaultsType {
-  enabled: boolean;
-}
-
-export interface ToggleableConstructorParams {
-  id: string;
-  title: string;
-  domManipulationType: DOMManipulationType;
-  propertyName: string;
-  propertyUnit: string;
-  nodeTypes: BodyNodeType;
-  defaults: ToggleableDefaultsType;
-  displayValue: (
-    plugin: IToggleable,
-    props: ToggleableComponentProps
-  ) => string;
-  onUpdate: (plugin: IToggleable, props: ToggleableComponentProps) => void;
-}
+import React from 'react';
 
 export default class Toggleable extends BasePlugin implements IToggleable {
   get initialState() {
@@ -165,4 +130,8 @@ export default class Toggleable extends BasePlugin implements IToggleable {
       });
     }
   };
+
+  public toComponent(): any {
+    return <ToggleableComponent id={this.id} />;
+  }
 }

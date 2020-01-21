@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { IScalable } from 'plugins/scalable';
-
 import styles from './styles.scss';
 import Scalable from 'plugins/scalable';
 
 import PluginManager from 'classes/plugin-manager';
+import { IScalable } from 'plugins/scalable/IScalable';
 
 export interface ScalableComponentProps {
   id: string;

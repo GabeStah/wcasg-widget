@@ -1,7 +1,7 @@
 // import React from 'react';
 //
 // import config from 'config';
-// import utilities from '@/utilities';
+// import Utility from '@/Utility';
 //
 // import styles from './styles.scss';
 //
@@ -51,7 +51,7 @@
 //    */
 //   resetClasses = () => {
 //     for (const key in this.classNames) {
-//       utilities.removeClass(this.body, this.classNames[key]);
+//       Utility.removeClass(this.body, this.classNames[key]);
 //     }
 //   };
 //
@@ -74,7 +74,7 @@
 //     this.resetClasses();
 //
 //     if (this.state.enabled) {
-//       utilities.addClass(this.body, this.className);
+//       Utility.addClass(this.body, this.className);
 //     }
 //   };
 //

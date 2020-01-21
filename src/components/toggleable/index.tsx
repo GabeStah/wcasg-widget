@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { IToggleable } from 'plugins/toggleable';
-
 import styles from './styles.scss';
 import Toggleable from 'plugins/toggleable';
 
 import PluginManager from 'classes/plugin-manager';
+import { IToggleable } from 'plugins/toggleable/IToggleable';
 
 export interface ToggleableComponentProps {
   id: string;

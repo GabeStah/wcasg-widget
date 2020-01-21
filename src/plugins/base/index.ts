@@ -1,22 +1,10 @@
 import config from 'config';
 import mapValues from 'lodash/mapValues';
 import { DOMManipulationType } from '@/plugins';
+import { IPlugin } from 'plugins/base/IPlugin';
+import { BasePluginParamsType } from 'plugins/base/BasePluginParamsType';
 
-export interface IPlugin {
-  id: string;
-  title: string;
-  dataAttributeName: string;
-  domManipulationType: DOMManipulationType;
-  initialState: object;
-  onMount(props: object): void;
-}
-
-export interface BasePluginParamsType {
-  id: string;
-  title: string;
-}
-
-export default class BasePlugin implements IPlugin {
+export default abstract class BasePlugin implements IPlugin {
   get dataAttributeName(): string {
     return `data-${config.widgetId}-original-${this.id}`;
   }
@@ -36,7 +24,6 @@ export default class BasePlugin implements IPlugin {
   };
 
   public static mapStateToProps = (state: any, { id }: any): any => {
-    // Extract reducers from combined state.
     const { plugins } = state.plugins;
     const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
 
@@ -48,10 +35,12 @@ export default class BasePlugin implements IPlugin {
   public domManipulationType: DOMManipulationType =
     DOMManipulationType.BodyClass;
 
-  constructor(params: BasePluginParamsType) {
+  protected constructor(params: BasePluginParamsType) {
     this.id = params.id;
     this.title = params.title;
   }
 
-  public onMount(props?: object) {}
+  public abstract onMount(props?: object): void;
+
+  public abstract toComponent(): any;
 }
