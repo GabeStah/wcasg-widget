@@ -1,20 +1,14 @@
-// @flow
 import React from 'react';
-// import filter from 'lodash/filter';
-
 import config from 'config';
 
 import TextNodeType from 'classes/node-types/TextNodeType';
-import FontSize from 'components/font-size';
-import HightlightLinks from 'components/highlight-links';
 import Scalable from 'plugins/scalable';
-
-import styles from './styles.scss';
-import ScalableComponent from 'components/scalable';
-
+import ScalableComponent, { ScalableComponentProps } from 'components/scalable';
 import PluginManager from 'classes/plugin-manager';
 import initialState from 'state/initialState';
-import type { IScalable } from 'plugins/scalable';
+import { IScalable } from 'plugins/scalable';
+
+import styles from './styles.scss';
 
 const fontSize = new Scalable({
   id: 'font-size',
@@ -28,22 +22,28 @@ const fontSize = new Scalable({
     maximum: 3.0,
     current: 1.0
   },
-  displayValue: (self: IScalable, props: any): string => {
-    if (!self) return '';
+  displayValue: (self: IScalable, props: ScalableComponentProps): string => {
+    if (!self) {
+      return '';
+    }
     const { current } = props;
-    return (parseFloat(current) * 100).toFixed(0) + '%';
+    return (parseFloat(String(current)) * 100).toFixed(0) + '%';
   },
-  onUpdate: (self: IScalable, props: any): void => {
-    if (!self) return;
+  onUpdate: (self: IScalable, props: ScalableComponentProps): void => {
+    if (!self) {
+      return;
+    }
     const { current } = props;
 
     if (self.nodes && self.nodes.length > 0) {
       self.nodes.forEach(node => {
+        // @ts-ignore
         const original = node.getAttribute(self.dataAttributeName);
         // Set font size based on current % of original
+        // @ts-ignore
         node.style.setProperty(
           self.propertyName,
-          `${parseInt(original) * current}${self.propertyUnit}`
+          `${parseInt(original, 10) * current}${self.propertyUnit}`
         );
       });
     }
@@ -64,21 +64,33 @@ const letterSpacing = new Scalable({
     maximum: 20,
     current: 0
   },
-  displayValue: (self: IScalable, props: any): string => {
-    if (!self) return '';
+  displayValue: (self: IScalable, props: ScalableComponentProps): string => {
+    if (!self) {
+      return '';
+    }
     return `${props.current}${self.propertyUnit}`;
   },
-  onUpdate: (self: IScalable, props: any): void => {
-    if (!self) return;
+  onUpdate: (self: IScalable, props: ScalableComponentProps): void => {
+    if (!self) {
+      return;
+    }
+
+    console.log(`letterSpacing: onUpdate, props`);
+    console.log(props);
+
     const { current } = props;
 
     if (self.nodes && self.nodes.length > 0) {
       self.nodes.forEach(node => {
+        // @ts-ignore
         let original = node.getAttribute(self.dataAttributeName);
-        if (isNaN(parseInt(original))) {
+        if (isNaN(parseInt(original, 10))) {
           original = self.defaults.current;
         }
-        const newValue = `${parseInt(original) + current}${self.propertyUnit}`;
+        const newValue = `${parseInt(original, 10) + current}${
+          self.propertyUnit
+        }`;
+        // @ts-ignore
         node.style.setProperty(self.propertyName, newValue);
       });
     }
@@ -91,13 +103,13 @@ PluginManager.add(letterSpacing);
 initialState.plugins = PluginManager.initialState;
 
 export default class Widget extends React.Component<{}> {
-  render() {
+  public render() {
     return (
       <div className={styles.modal}>
         <h1>{config.widgetTitle}</h1>
         <div className={styles.modalContainer}>
           {/*<FontSize />*/}
-          <HightlightLinks />
+          {/*<HightlightLinks />*/}
           <ScalableComponent id={letterSpacing.id} />
           <ScalableComponent id={fontSize.id} />
         </div>

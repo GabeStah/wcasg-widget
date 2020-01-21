@@ -6,7 +6,7 @@ const isDev = environment === 'development';
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: './index.js',
+  entry: './index.tsx',
 
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -16,11 +16,11 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.jsx', '.js'],
+    extensions: ['.tsx', '.ts', '.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
       classes: path.resolve(__dirname, 'src/classes'),
-      config: path.resolve(__dirname, 'config.js'),
+      config: path.resolve(__dirname, 'config.ts'),
       components: path.resolve(__dirname, 'src/components'),
       plugins: path.resolve(__dirname, 'src/plugins'),
       state: path.resolve(__dirname, 'src/state'),
@@ -34,19 +34,25 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          },
+          {
+            loader: 'ts-loader'
           }
-        }
+        ]
       },
       {
         test: /\.(scss|css)$/,
         use: [
           'style-loader',
+          { loader: 'css-modules-typescript-loader' },
           {
             loader: 'css-loader',
             options: {

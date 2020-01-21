@@ -12,7 +12,7 @@ const guid =
 const config = {
   // Ensure globally unique id
   widgetId: `wcasg-ada-app-${guid}`,
-  guid: guid,
+  guid,
   widgetTitle: 'WCASG ADA Widget',
   plugins: {
     fontSize: {
@@ -34,21 +34,20 @@ const config = {
         // 'block', 'border', or 'both'
         style: 'block'
       }
-    },
-    letterSpacing: new Scalable({
-      id: 'letter-spacing',
-      title: 'Scale Letter Spacing',
-      propertyName: 'letter-spacing',
-      propertyUnit: 'px',
-      type: 'scalable',
-      nodeTypes: new TextNodeType(),
-      defaults: {
-        increment: 0.1,
-        minimum: 0.5,
-        maximum: 3.0,
-        current: 1.0
-      }
-    })
+    }
+    // letterSpacing: new Scalable({
+    //   id: 'letter-spacing',
+    //   title: 'Scale Letter Spacing',
+    //   propertyName: 'letter-spacing',
+    //   propertyUnit: 'px',
+    //   nodeTypes: new TextNodeType(),
+    //   defaults: {
+    //     increment: 0.1,
+    //     minimum: 0.5,
+    //     maximum: 3.0,
+    //     current: 1.0
+    //   }
+    // })
   }
 };
 

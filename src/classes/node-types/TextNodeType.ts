@@ -1,9 +1,8 @@
-// @flow
 import NodeType from './';
 
 export default class TextNodeType extends NodeType {
-  id: string = 'text-node-type';
-  types: string[] = [
+  public id: string = 'text-node-type';
+  public types: string[] = [
     'p',
     'li',
     'label',

@@ -1,36 +1,35 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 
-import type { IScalable } from 'plugins/scalable';
+import { IScalable } from 'plugins/scalable';
 
 import styles from './styles.scss';
 import Scalable from 'plugins/scalable';
 
 import PluginManager from 'classes/plugin-manager';
 
-export type ScalableComponentProps = {
-  id: string,
-  current: number,
-  decrement: () => void,
-  increment: () => void
-};
+export interface ScalableComponentProps {
+  id: string;
+  current: number;
+  decrement: () => void;
+  increment: () => void;
+}
 
 class ScalableComponent extends React.Component<ScalableComponentProps> {
-  plugin: IScalable = PluginManager.find<IScalable>(this.props.id);
+  public plugin: IScalable = PluginManager.find<IScalable>(this.props.id);
 
-  componentDidUpdate(prevProps, prevState) {
+  public componentDidUpdate(prevProps: { current: number }, prevState: any) {
     if (this.props.current !== prevProps.current) {
       this.plugin.onUpdate(this.plugin, this.props);
     }
   }
 
-  componentWillMount() {
+  public componentWillMount() {
     // Initialize plugin
-    this.plugin.onMount();
+    this.plugin.onMount(this.props);
   }
 
-  render() {
+  public render() {
     return (
       <div id={this.plugin.id} className={styles.container}>
         <h1>{this.plugin.title}</h1>
