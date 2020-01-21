@@ -29,6 +29,7 @@ module.name_mapper='^classes' ->'<PROJECT_ROOT>/src/classes'
 module.name_mapper='^components' ->'<PROJECT_ROOT>/src/components'
 module.name_mapper='^config' ->'<PROJECT_ROOT>/config.js'
 module.name_mapper='^plugins' ->'<PROJECT_ROOT>/src/plugins'
+module.name_mapper='^state' ->'<PROJECT_ROOT>/src/state'
 module.name_mapper='^styles' ->'<PROJECT_ROOT>/src/styles'
 
 [strict]

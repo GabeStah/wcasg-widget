@@ -1,113 +1,55 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
 
-import config from 'config';
-import type { IScalable, IScalableState } from 'plugins/scalable';
+import type { IScalable } from 'plugins/scalable';
 
 import styles from './styles.scss';
+import Scalable from 'plugins/scalable';
 
-export default class ScalableComponent extends React.Component<
-  IScalable,
-  IScalableState
-> {
-  state = {
-    nodes: this.props.nodeTypes.nodes(),
-    adjustment: this.props.defaults.adjustment,
-    increment: this.props.defaults.increment,
-    minimum: this.props.defaults.minimum,
-    maximum: this.props.defaults.maximum
-  };
+import PluginManager from 'classes/plugin-manager';
 
-  get dataAttributeName() {
-    return `data-${config.widgetId}-original-${this.props.id}`;
+export type ScalableComponentProps = {
+  id: string,
+  current: number,
+  decrement: () => void,
+  increment: () => void
+};
+
+class ScalableComponent extends React.Component<ScalableComponentProps> {
+  plugin: IScalable = PluginManager.find<IScalable>(this.props.id);
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.current !== prevProps.current) {
+      this.plugin.onUpdate(this.plugin, this.props);
+    }
   }
 
   componentWillMount() {
-    this.updateDataAttributes();
-    this.update();
+    // Initialize plugin
+    this.plugin.onMount();
   }
-
-  /**
-   * Decrement or set to minimum
-   */
-  decrement = () => {
-    const diff = this.state.adjustment - this.state.increment;
-
-    this.setState(
-      {
-        adjustment: diff < this.state.minimum ? this.state.minimum : diff
-      },
-      this.update
-    );
-  };
-
-  /**
-   * Increment or set to maximum
-   */
-  increment = () => {
-    const diff = this.state.adjustment + this.state.increment;
-
-    this.setState(
-      {
-        adjustment: diff > this.state.maximum ? this.state.maximum : diff
-      },
-      this.update
-    );
-  };
-
-  /**
-   * Assign data attributes to retain original values.
-   */
-  updateDataAttributes = () => {
-    // Add attribute
-    if (this.state.nodes && this.state.nodes.length > 0) {
-      this.state.nodes.forEach(node => {
-        const prop = node.style.getPropertyValue(this.props.propertyName);
-        // Get computed value if property not explicitly assigned
-        const value =
-          prop && prop !== ''
-            ? prop
-            : window
-                .getComputedStyle(node)
-                .getPropertyValue(this.props.propertyName);
-        node.setAttribute(this.dataAttributeName, value);
-      });
-    }
-  };
-
-  /**
-   * Assign updated property to all selected nodes.
-   * Calculated based on node's original and current adjustment %.
-   */
-  update = () => {
-    if (this.state.nodes && this.state.nodes.length > 0) {
-      this.state.nodes.forEach(node => {
-        const original = node.getAttribute(this.dataAttributeName);
-        // Set property based on adjustment % of original
-        node.style.setProperty(
-          this.props.propertyName,
-          `${parseInt(original) * this.state.adjustment}${this.props
-            .propertyUnit || 'px'}`
-        );
-      });
-    }
-  };
 
   render() {
     return (
-      <div id={this.props.id} className={styles.container}>
-        <h1>{this.props.title}</h1>
+      <div id={this.plugin.id} className={styles.container}>
+        <h1>{this.plugin.title}</h1>
         <p>
           Current Adjustment:{' '}
-          {(parseFloat(this.state.adjustment) * 100).toFixed(0) + '%'}
+          {this.plugin.displayValue(this.plugin, this.props)}
         </p>
-        <button type={'button'} onClick={this.decrement}>
+        <button type={'button'} onClick={this.props.decrement}>
           -
         </button>
-        <button type={'button'} onClick={this.increment}>
+        <button type={'button'} onClick={this.props.increment}>
           +
         </button>
       </div>
     );
   }
 }
+
+export default connect(
+  Scalable.mapStateToProps,
+  Scalable.mapDispatchToProps
+)(ScalableComponent);

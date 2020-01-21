@@ -23,6 +23,7 @@ module.exports = {
       config: path.resolve(__dirname, 'config.js'),
       components: path.resolve(__dirname, 'src/components'),
       plugins: path.resolve(__dirname, 'src/plugins'),
+      state: path.resolve(__dirname, 'src/state'),
       styles: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
       'react-dom/test-utils': 'preact/test-utils',

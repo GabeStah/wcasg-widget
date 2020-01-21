@@ -69,13 +69,13 @@ export default class FontSize extends React.Component {
 
   /**
    * Assign updated font-size property to all selected nodes.
-   * Font-size calculated based on node's original font size and current adjustment %.
+   * Font-size calculated based on node's original font size and current current %.
    */
   update = () => {
     if (this.state.nodes && this.state.nodes.length > 0) {
       this.state.nodes.forEach(node => {
         const original = node.getAttribute(this.dataAttributeName);
-        // Set font size based on adjustment % of original
+        // Set font size based on current % of original
         node.style.setProperty(
           'font-size',
           `${parseInt(original) * this.state.adjustment}px`

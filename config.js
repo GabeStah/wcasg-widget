@@ -46,7 +46,7 @@ const config = {
         increment: 0.1,
         minimum: 0.5,
         maximum: 3.0,
-        adjustment: 1.0
+        current: 1.0
       }
     })
   }
