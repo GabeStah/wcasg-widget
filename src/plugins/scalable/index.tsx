@@ -2,7 +2,7 @@ import React from 'react';
 import mapValues from 'lodash/mapValues';
 
 import BasePlugin from 'plugins/base';
-import initialState, { InitialStateType } from 'state/initialState';
+import { InitialStateType } from '@/state';
 
 import TextNodeType from 'classes/node-types/TextNodeType';
 import ScalableComponent, { ScalableComponentProps } from 'components/scalable';
@@ -11,6 +11,7 @@ import { IScalable } from 'plugins/scalable/IScalable';
 import { IScalableState } from 'plugins/scalable/IScalableState';
 import { ScalableDefaultsType } from 'plugins/scalable/ScalableDefaultsType';
 import { ScalableConstructorParams } from 'plugins/scalable/ScalableConstructorParams';
+import { IReducerActionParams } from '@/state';
 
 export default class Scalable extends BasePlugin implements IScalable {
   get initialState() {
@@ -43,7 +44,10 @@ export default class Scalable extends BasePlugin implements IScalable {
 
   public static mapStateToProps = (state: any, { id }: any): any => {
     const { plugins } = state.plugins;
+    if (!plugins) return {};
+    console.log(`beforefindmapstatestoproptoggle`);
     const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
+    console.log(`afterfindmapstatestoproptoggle`);
 
     return { current: statePlugin.current };
   };
@@ -62,12 +66,9 @@ export default class Scalable extends BasePlugin implements IScalable {
     DOMManipulationType.NodeQuery;
 
   public reducers = {
-    decrement: (
-      state: InitialStateType = initialState,
-      action: { type: string; payload: any }
-    ) => {
+    decrement: (state: InitialStateType, action: IReducerActionParams) => {
       const statePluginIndex = state.plugins.findIndex(
-        plugin => plugin.id === action.payload.id
+        (plugin: { id: any }) => plugin.id === action.payload.id
       );
       const statePlugin = state.plugins[statePluginIndex];
       const diff = statePlugin.current - this.defaults.increment;
@@ -77,12 +78,9 @@ export default class Scalable extends BasePlugin implements IScalable {
 
       return Object.assign({}, state, { plugins: state.plugins });
     },
-    increment: (
-      state: InitialStateType = initialState,
-      action: { type: string; payload: any }
-    ) => {
+    increment: (state: InitialStateType, action: IReducerActionParams) => {
       const statePluginIndex = state.plugins.findIndex(
-        plugin => plugin.id === action.payload.id
+        (plugin: { id: any }) => plugin.id === action.payload.id
       );
       const statePlugin = state.plugins[statePluginIndex];
       const diff = statePlugin.current + this.defaults.increment;
@@ -112,7 +110,7 @@ export default class Scalable extends BasePlugin implements IScalable {
       this.domManipulationType = params.domManipulationType;
     }
 
-    // Parse nodes from DOM tree
+    // Parse node from DOM tree
     this.nodes = this.nodeTypes.nodes();
   }
 

@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import Widget from 'components/widget';
-import store from 'state/store';
+// import store from 'state/store';
+
+import { reducerInitializedStore } from '@/state';
 
 import styles from 'styles/global.scss';
 import config from 'config';
@@ -16,7 +18,7 @@ modal.className = `${styles.widgetContainer}`;
 document.getElementsByTagName('html')[0].append(modal);
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={reducerInitializedStore}>
     <Widget />
   </Provider>,
   modal

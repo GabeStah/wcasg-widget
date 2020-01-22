@@ -1,7 +1,7 @@
 import mapValues from 'lodash/mapValues';
 
 import BasePlugin from 'plugins/base';
-import initialState, { InitialStateType } from 'state/initialState';
+import { InitialStateType } from '@/state';
 
 import BodyNodeType from 'classes/node-types/BodyNodeType';
 import ToggleableComponent, {
@@ -15,6 +15,7 @@ import { ToggleableConstructorParams } from 'plugins/toggleable/ToggleableConstr
 
 import styles from './styles.scss';
 import React from 'react';
+import { IReducerActionParams } from '@/state';
 
 export default class Toggleable extends BasePlugin implements IToggleable {
   get initialState() {
@@ -41,6 +42,8 @@ export default class Toggleable extends BasePlugin implements IToggleable {
 
   public static mapStateToProps = (state: any, { id }: any): any => {
     const { plugins } = state.plugins;
+    if (!plugins) return {};
+    console.log(`beforefindmapstatestoproptoggle`);
     const statePlugin = plugins.find((plugin: { id: any }) => plugin.id === id);
 
     return { enabled: statePlugin.enabled };
@@ -66,10 +69,7 @@ export default class Toggleable extends BasePlugin implements IToggleable {
   ) => void;
 
   public reducers = {
-    toggle: (
-      state: InitialStateType = initialState,
-      action: { type: string; payload: any }
-    ) => {
+    toggle: (state: InitialStateType, action: IReducerActionParams) => {
       const statePluginIndex = state.plugins.findIndex(
         plugin => plugin.id === action.payload.id
       );
@@ -97,7 +97,7 @@ export default class Toggleable extends BasePlugin implements IToggleable {
     this.displayValue = params.displayValue;
     this.onUpdate = params.onUpdate;
 
-    // Parse nodes from DOM tree
+    // Parse node from DOM tree
     this.nodes = this.nodeTypes.nodes();
   }
 

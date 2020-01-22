@@ -74,6 +74,6 @@ class PluginManager {
   }
 }
 
-const pluginManagerInstance = new PluginManager();
+export const pluginManagerInstance = new PluginManager();
 
 export default pluginManagerInstance;

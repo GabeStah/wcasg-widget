@@ -117,9 +117,9 @@ const plugins = [
 
       if (self.domManipulationType === DOMManipulationType.BodyClass) {
         const body = Utility.getBody();
-        Utility.removeClass({ node: body, className: self.style });
+        Utility.removeClass({ node: body, klass: self.style });
         if (enabled) {
-          Utility.addClass({ node: body, className: self.style });
+          Utility.addClass({ node: body, klass: self.style });
         }
       }
     }

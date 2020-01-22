@@ -1,10 +1,6 @@
-const guid =
-  Math.random()
-    .toString(36)
-    .substring(2, 15) +
-  Math.random()
-    .toString(36)
-    .substring(2, 15);
+import Utility from '@/utility';
+
+const guid = Utility.generateGuid();
 
 const config = {
   // Ensure globally unique id

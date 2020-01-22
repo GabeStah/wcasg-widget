@@ -1,17 +1,49 @@
+import forEach from 'lodash/forEach';
+import isArrayLike from 'lodash/isArrayLike';
+import times from 'lodash/times';
+
 const Utility = {
   /**
-   * Adds className to node.
+   * Adds class(es) to node(s).
    * IE compatible.
    *
    * @param node
-   * @param className
+   * @param klass
    */
-  addClass: ({ node, className }: { node: any; className: any }) => {
-    if (node.classList) {
-      node.classList.add(className);
-    } else if (!Utility.hasClass({ node, className })) {
-      node.className += ' ' + className;
+  addClass: ({
+    node,
+    klass
+  }: {
+    node: NodeList | any;
+    klass: string | string[];
+  }): void => {
+    if (node instanceof NodeList) {
+      forEach(node, n => Utility.addClass({ node: n, klass }));
+    } else if (Array.isArray(klass)) {
+      forEach(klass, k => Utility.addClass({ node, klass: k }));
     }
+    if (typeof klass === 'string') {
+      if (node.classList) {
+        node.classList.add(klass);
+      } else if (!Utility.hasClass({ node, klass })) {
+        node.className += ' ' + klass;
+      }
+    }
+  },
+
+  /**
+   * Generates a psuedo-random guid.
+   * @returns {string}
+   */
+  generateGuid: (length: number = 32): string => {
+    const iterations = Math.ceil(length / 11);
+    const elements = times(iterations, (): string =>
+      Math.random()
+        .toString(36)
+        .substring(2, 15)
+    );
+
+    return elements.join('').substring(0, length);
   },
 
   /**
@@ -22,44 +54,45 @@ const Utility = {
   },
 
   /**
-   * Determines if node has className.
+   * Determines if node has class.
    * IE compatible.
    *
    * @param node
-   * @param className
+   * @param klass
    * @returns {boolean}
    */
-  hasClass: ({ node, className }: { node: any; className: any }) => {
+  hasClass: ({ node, klass }: { node: any; klass: string }) => {
     if (node.classList) {
-      return node.classList.contains(className);
+      return node.classList.contains(klass);
     } else {
-      return !!node.className.match(
-        new RegExp('(\\s|^)' + className + '(\\s|$)')
-      );
+      return !!node.className.match(new RegExp('(\\s|^)' + klass + '(\\s|$)'));
     }
   },
 
   /**
-   * Removes className from node.
+   * Removes class(es) from node(s).
    * IE compatible.
    *
    * @param node
-   * @param className
+   * @param klass
    */
   removeClass: ({
     node,
-    className
+    klass
   }: {
-    node: any;
-    className: string | string[];
-  }) => {
-    if (Array.isArray(className)) {
-      className.forEach(name => Utility.removeClass({ node, className: name }));
-    } else {
+    node: NodeList | any;
+    klass: string | string[];
+  }): void => {
+    if (node instanceof NodeList) {
+      forEach(node, n => Utility.removeClass({ node: n, klass }));
+    } else if (Array.isArray(klass)) {
+      forEach(klass, k => Utility.removeClass({ node, klass: k }));
+    }
+    if (typeof klass === 'string') {
       if (node.classList) {
-        node.classList.remove(className);
-      } else if (Utility.hasClass({ node, className })) {
-        const reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        node.classList.remove(klass);
+      } else if (Utility.hasClass({ node, klass })) {
+        const reg = new RegExp('(\\s|^)' + klass + '(\\s|$)');
         node.className = node.className.replace(reg, ' ');
       }
     }

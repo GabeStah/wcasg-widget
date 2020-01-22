@@ -17,15 +17,15 @@
 //   }
 //
 //   /**
-//    * Get currently active className.
+//    * Get currently active klass.
 //    *
 //    * @returns {*} - Default to 'block'.
 //    */
-//   get className() {
-//     return this.classNames[this.state.style] || this.classNames['block'];
+//   get klass() {
+//     return this.klass[this.state.style] || this.klass['block'];
 //   }
 //
-//   get classNames() {
+//   get klass() {
 //     return {
 //       block: styles.hightlightLinksBlock,
 //       border: styles.hightlightLinksBorder,
@@ -50,8 +50,8 @@
 //    * Removes all relevant classes from body.
 //    */
 //   resetClasses = () => {
-//     for (const key in this.classNames) {
-//       Utility.removeClass(this.body, this.classNames[key]);
+//     for (const key in this.klass) {
+//       Utility.removeClass(this.body, this.klass[key]);
 //     }
 //   };
 //
@@ -74,13 +74,13 @@
 //     this.resetClasses();
 //
 //     if (this.state.enabled) {
-//       Utility.addClass(this.body, this.className);
+//       Utility.addClass(this.body, this.klass);
 //     }
 //   };
 //
 //   render(props) {
 //     return (
-//       <div id={plugin.id} className={styles.container}>
+//       <div id={plugin.id} klass={styles.container}>
 //         <h1>{plugin.title}</h1>
 //         <button type={'button'} onClick={this.toggle}>
 //           {this.state.enabled ? 'Disable' : 'Enable'}
