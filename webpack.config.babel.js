@@ -50,6 +50,13 @@ module.exports = {
         ]
       },
       {
+        test: /\.svg$/,
+        use: {
+          loader: 'svg-url-loader',
+          options: {}
+        }
+      },
+      {
         test: /\.(scss|css)$/,
         use: [
           'style-loader',
@@ -70,6 +77,10 @@ module.exports = {
                 context: path.resolve(__dirname, 'src')
               }
             }
+          },
+          {
+            loader: 'resolve-url-loader',
+            options: {}
           },
           'postcss-loader',
           'sass-loader'

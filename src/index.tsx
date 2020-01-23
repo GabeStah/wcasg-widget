@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import Widget from 'components/widget';
-// import store from 'state/store';
 
 import { reducerInitializedStore } from '@/state';
 

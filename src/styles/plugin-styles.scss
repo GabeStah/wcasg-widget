@@ -1,0 +1,86 @@
+@import 'src/styles/variables';
+
+.largeCursor,
+.largeCursor * {
+  cursor: url("../assets/mouse-pointer-solid.svg"), default !important;
+}
+
+.emphasizeHover > *:not(#{$widget-prefix}) *:hover {
+  outline: solid 2px rgba($default-highlight-color-tertiary, 1) !important;
+  outline-offset: 1px !important;
+}
+
+.emphasizeTitles h1,
+.emphasizeTitles h2,
+.emphasizeTitles h3,
+.emphasizeTitles h4,
+.emphasizeTitles h5,
+.emphasizeTitles h6{
+  outline: 2px solid #daf900 !important;
+  outline-offset: 1px !important;
+}
+
+.hideImages img,
+.hideImages picture,
+.hideImages source {
+  visibility: hidden !important;
+}
+
+.highlightForms input,
+.highlightForms datalist,
+.highlightForms meter,
+.highlightForms select,
+.highlightForms textarea {
+  outline: 2px solid rgba($default-highlight-color-quaternary, 0.5) !important;
+  outline-offset: 1px !important;
+}
+
+.highlightLinksBlock a,
+.highlightLinksBlock button,
+.highlightLinksBlock input[type='submit'],
+.highlightLinksBlock input[type='image'],
+.highlightLinksBlock select {
+  background-color: rgba($default-highlight-color-secondary, 1) !important;
+}
+
+.highlightLinksBorder a,
+.highlightLinksBorder button,
+.highlightLinksBorder input[type='submit'],
+.highlightLinksBorder input[type='image'],
+.highlightLinksBorder select {
+  outline: 2px solid rgba($default-highlight-color-primary, 0.5) !important;
+  outline-offset: 1px !important;
+}
+
+.highlightLinksBoth a,
+.highlightLinksBoth button,
+.highlightLinksBoth input[type='submit'],
+.highlightLinksBoth input[type='image'],
+.highlightLinksBoth select {
+  background-color: rgba($default-highlight-color-secondary, 1) !important;
+  outline: 2px solid rgba($default-highlight-color-primary, 0.5) !important;
+  outline-offset: 1px !important;
+}
+
+.readableFonts p,
+.readableFonts li,
+.readableFonts label,
+.readableFonts input,
+.readableFonts select,
+.readableFonts textarea,
+.readableFonts legend,
+.readableFonts code,
+.readableFonts pre,
+.readableFonts dd,
+.readableFonts dt,
+.readableFonts span,
+.readableFonts blockquote,
+.readableFonts a,
+.readableFonts h1,
+.readableFonts h2,
+.readableFonts h3,
+.readableFonts h4,
+.readableFonts h5,
+.readableFonts h6 {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
