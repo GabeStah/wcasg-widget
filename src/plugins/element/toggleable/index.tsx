@@ -8,12 +8,6 @@ import {
   PluginElementType
 } from 'plugins/element';
 
-/**
- * Toggleable + Action.Class
- * Toggleable.Enabled = Apply Action(s)
- * Toggleable.Disabled = Remove Action(s)
- */
-
 interface IPluginElementToggleable extends IPluginElement {
   // Action(s) to execute when toggled
   actions: IPluginAction[];

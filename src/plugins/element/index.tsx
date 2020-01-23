@@ -1,5 +1,5 @@
 import React from 'react';
-import { InitialStateType, IReducerActionParams, ReducerType } from '@/state';
+import { ReducerType } from '@/state';
 import { IPluginAction } from 'plugins/action';
 import Utility from '@/utility';
 import { IPluginActionProperty } from 'plugins/action/property';
@@ -103,8 +103,5 @@ export class PluginElement implements IPluginElement {
         this.title = params.title;
       }
     }
-
-    // Initialize
-    // this.initialize();
   }
 }
