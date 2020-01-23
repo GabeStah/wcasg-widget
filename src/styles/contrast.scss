@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+.grayscale {
+  -webkit-filter: grayscale($filter-grayscale-amount);
+  -moz-filter: grayscale($filter-grayscale-amount);
+  -ms-filter: grayscale($filter-grayscale-amount);
+  -o-filter: grayscale($filter-grayscale-amount);
+  filter: grayscale($filter-grayscale-amount);
+}
+
+.invert {
+  -webkit-filter: invert($filter-inversion-amount);
+  -moz-filter: invert($filter-inversion-amount);
+  -ms-filter: invert($filter-inversion-amount);
+  -o-filter: invert($filter-inversion-amount);
+  filter: invert($filter-inversion-amount);
+}
+
+

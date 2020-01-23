@@ -1,5 +1,6 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
+import constrastStyles from 'styles/contrast.scss';
 import pluginStyles from 'styles/plugin-styles.scss';
 import { PluginActionClass } from 'plugins/action/class';
 import { PluginElementToggleable } from 'plugins/element/toggleable/';
@@ -145,6 +146,26 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [pluginStyles.largeCursor]
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Invert Colors',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        klass: [constrastStyles.invert],
+        node: 'html'
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Grayscale',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        klass: [constrastStyles.grayscale],
+        node: 'html'
       })
     ]
   })

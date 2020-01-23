@@ -3,6 +3,23 @@ $default-highlight-color-secondary: #56c69f;
 $default-highlight-color-tertiary: #ecaa17;
 $default-highlight-color-quaternary: #1cec00;
 
+//Color Invert (if possible)
+// filter: invert(x)
+$filter-inversion-amount: 100%;
+
+//Grayscale
+// filter: grayscale(x)
+$filter-grayscale-amount: 100%;
+
+//Dark Contrast
+// filter: invert(x)
+
+//Light Contrast
+// filter: invert(x)
+
+//Black & Yellow Only
+// filter: invert(x)
+
 // TODO: Dynamically assign from config
 $widget-prefix: "wcasg-ada-app-";
 

@@ -1,5 +1,6 @@
 /* Name must NOT contain hyphen */
 .widgetContainer {
+  background-color: rgba(0,0,0,0.7);
   position: fixed;
   top: 5%;
   left: 0;
@@ -7,7 +8,8 @@
   width: 20%;
   max-width: 300px;
   min-width: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
   z-index: 999;
-  background-color: rgba(0,0,0,0.7);
 }
 
