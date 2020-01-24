@@ -57,7 +57,7 @@ export class PluginElementToggleable extends PluginElement
       (state: any) => self.getFromState(state).enabled
     );
 
-    console.log(`toggleable/index:template()`);
+    console.log(`toggleable/index:template(), name: ${this.name}`);
     console.log(
       `toggleable/index:template(), self.update, enabled: ${enabled}`
     );

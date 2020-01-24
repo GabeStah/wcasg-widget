@@ -93,6 +93,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'highlight-links-action',
         klass: [pluginStyles.highlightLinksBlock]
       })
     ]
@@ -102,6 +103,7 @@ export const PluginElements = [
     scalingIncrement: 1,
     actions: [
       new PluginActionProperty({
+        name: 'adjust-text-spacing-action',
         property: {
           name: 'letter-spacing',
           manipulationType: DOMPropertyManipulationType.AbsoluteScaling,
@@ -116,6 +118,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'hide-images-action',
         klass: [pluginStyles.hideImages]
       })
     ]
@@ -125,6 +128,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'readable-fonts-action',
         klass: [pluginStyles.readableFonts]
       })
     ]
@@ -134,6 +138,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'highlight-forms-action',
         klass: [pluginStyles.highlightForms]
       })
     ]
@@ -143,6 +148,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'emphasize-hover-action',
         klass: [pluginStyles.emphasizeHover]
       })
     ]
@@ -153,6 +159,7 @@ export const PluginElements = [
   //   enabled: false,
   //   actions: [
   //     new PluginActionClass({
+  //       name: 'large-cursor-action',
   //       klass: [pluginStyles.largeCursor]
   //     })
   //   ]
@@ -162,6 +169,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'invert-colors-action',
         klass: [constrastStyles.invert],
         query: 'html'
       })
@@ -172,6 +180,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'grayscale-action',
         klass: [constrastStyles.grayscale],
         query: 'html'
       })
@@ -182,10 +191,12 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'dark-contrast-action-style',
         klass: [darkContrastStyles.darkContrast],
         query: 'html'
       }),
       new PluginActionProperty({
+        name: 'dark-contrast-action-background-image',
         property: {
           name: 'background-image',
           manipulationType: DOMPropertyManipulationType.Toggle,
@@ -202,10 +213,12 @@ export const PluginElements = [
   //   enabled: false,
   //   actions: [
   //     new PluginActionClass({
+  //       name: 'light-contrast-action-style',
   //       klass: [lightContrastStyles.lightContrast],
   //       query: 'html'
   //     }),
   //     new PluginActionProperty({
+  //       name: 'light-contrast-action-background-image',
   //       property: {
   //         name: 'background-image',
   //         manipulationType: DOMPropertyManipulationType.Toggle,
@@ -221,10 +234,12 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'black-and-yell0w-action-style',
         klass: [blackAndYellowStyles.blackAndYellow],
         query: 'html'
       }),
       new PluginActionProperty({
+        name: 'black-and-yellow-action-background-image',
         property: {
           name: 'background-image',
           manipulationType: DOMPropertyManipulationType.Toggle,
@@ -241,6 +256,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionFunction({
+        name: 'text-func-action',
         func: [
           () => {
             const images = document.querySelectorAll(['img'].join(', '));

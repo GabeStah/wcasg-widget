@@ -120,7 +120,7 @@ export class PluginActionProperty extends PluginAction
 
   // tslint:disable-next-line:member-ordering
   public enable(params?: any): void {
-    console.log(`property/index:enable(), nodeList for id: ${this.id}`);
+    console.log(`property/index:enable(), nodeList for name: ${this.name}`);
     console.log(this.nodeList);
     console.log(this.nodeList.length);
     let counter = 0;
@@ -185,7 +185,7 @@ export class PluginActionProperty extends PluginAction
    */
   // tslint:disable-next-line:member-ordering
   public disable(): void {
-    console.log(`property/index:disable() for ${this.id}`);
+    console.log(`property/index:disable() for ${this.name}`);
     this.nodeList.forEach((node: any) => {
       let value = this.property.disabledValue;
       // If absolute, scaling, or toggled reset to original value

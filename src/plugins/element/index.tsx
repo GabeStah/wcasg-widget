@@ -61,7 +61,7 @@ export class PluginElement implements IPluginElement {
   public order: number = 0;
   public type: PluginElementType = PluginElementType.Toggleable;
   public reducerType: ReducerType = ReducerType.Element;
-  public title: string = `Title for ${this.id}`;
+  public title: string = `Element: ${this.id}`;
   protected _template = (self: any) => {};
 
   get defaultState(): any {
@@ -109,6 +109,11 @@ export class PluginElement implements IPluginElement {
       if (params.title) {
         this.title = params.title;
       }
+    }
+
+    // Initialize name
+    if (!this.name && this.title) {
+      this.name = this.title.toLowerCase().replace(' ', '-');
     }
   }
 }

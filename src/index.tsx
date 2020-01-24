@@ -9,6 +9,11 @@ import { reducerInitializedStore } from '@/state';
 import styles from 'styles/global.scss';
 import config from 'config';
 
+if (config.debug) {
+  console.warn('--- DEBUG ENABLED ---');
+  document.querySelectorAll('a[class="btn btn-sm"]')[0].id = 'test';
+}
+
 // Create modal div to contain widget and append to html doc
 const modal = document.createElement(`div`);
 modal.setAttribute('id', config.widgetId);
