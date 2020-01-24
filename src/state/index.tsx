@@ -13,6 +13,8 @@ import {
   PluginActionProperty
 } from 'plugins/action/property';
 import TextNodeType from 'classes/node-types/TextNodeType';
+import { PluginActionFunction } from 'plugins/action/function';
+// import LibGif from 'assets/js/libgif';
 // require('svg-url-loader!../../src/assets/cursor.svg');
 
 export const elementReducers = (
@@ -200,6 +202,26 @@ export const PluginElements = [
       new PluginActionClass({
         klass: [blackAndYellowStyles.blackAndYellow],
         node: 'html'
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Test Func',
+    enabled: false,
+    actions: [
+      new PluginActionFunction({
+        func: [
+          () => {
+            const images = document.querySelectorAll(['img'].join(', '));
+            if (images && images.length > 0) {
+              images.forEach(image => {
+                // const gif = new LibGif({ gif: image });
+                // console.log(gif);
+              });
+            }
+          },
+          () => console.log('test2')
+        ]
       })
     ]
   })

@@ -22,6 +22,7 @@
       "@*": [
         "src*"
       ],
+      "assets/*": ["src/assets/*"],
       "classes/*": ["src/classes/*"],
       "config": ["config.ts"],
       "components/*": ["src/components/*"],

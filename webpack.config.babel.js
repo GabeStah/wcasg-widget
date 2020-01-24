@@ -19,6 +19,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      assets: path.resolve(__dirname, 'src/assets'),
       classes: path.resolve(__dirname, 'src/classes'),
       config: path.resolve(__dirname, 'config.ts'),
       components: path.resolve(__dirname, 'src/components'),
@@ -36,7 +37,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, '/src/assets/js/libgif/**/*.*'],
         use: [
           {
             loader: 'babel-loader',
