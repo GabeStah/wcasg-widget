@@ -1,6 +1,7 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
 import constrastStyles from 'styles/contrast/index.scss';
+import lightContrastStyles from 'styles/contrast/light-contrast.scss';
 import darkContrastStyles from 'styles/contrast/dark-contrast.scss';
 import pluginStyles from 'styles/plugin-styles.scss';
 import { PluginActionClass } from 'plugins/action/class';
@@ -177,6 +178,16 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [darkContrastStyles.darkContrast],
+        node: 'html'
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Light Contrast',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        klass: [lightContrastStyles.lightContrast],
         node: 'html'
       })
     ]
