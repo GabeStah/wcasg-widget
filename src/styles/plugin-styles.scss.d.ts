@@ -10,6 +10,7 @@ interface CssExports {
   highlightLinksBoth: string;
   largeCursor: string;
   readableFonts: string;
+  stopGlobalAnimations: string;
 }
 export const cssExports: CssExports;
 export default cssExports;

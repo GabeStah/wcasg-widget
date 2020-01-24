@@ -287,6 +287,17 @@ export const PluginElements = [
         ]
       })
     ]
+  }),
+  new PluginElementToggleable({
+    title: 'Stop CSS Animations',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        name: 'stop-css-animations-action',
+        klass: [pluginStyles.stopGlobalAnimations],
+        query: 'body'
+      })
+    ]
   })
 ];
 
