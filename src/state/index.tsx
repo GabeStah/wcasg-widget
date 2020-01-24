@@ -9,7 +9,7 @@ import { PluginActionClass } from 'plugins/action/class';
 import { PluginElementToggleable } from 'plugins/element/toggleable/';
 import { PluginElementScalable } from 'plugins/element/scalable';
 import {
-  DOMPropertyScalingType,
+  DOMPropertyManipulationType,
   PluginActionProperty
 } from 'plugins/action/property';
 import TextNodeType from 'classes/node-types/TextNodeType';
@@ -80,9 +80,9 @@ export const PluginElements = [
       new PluginActionProperty({
         property: {
           name: 'font-size',
-          scalingType: DOMPropertyScalingType.Percentage
+          manipulationType: DOMPropertyManipulationType.PercentageScaling
         },
-        node: new TextNodeType().types
+        query: new TextNodeType().types.join(', ')
       })
     ]
   }),
@@ -102,10 +102,10 @@ export const PluginElements = [
       new PluginActionProperty({
         property: {
           name: 'letter-spacing',
-          scalingType: DOMPropertyScalingType.Absolute,
+          manipulationType: DOMPropertyManipulationType.AbsoluteScaling,
           unitType: 'px'
         },
-        node: new TextNodeType().types
+        query: new TextNodeType().types.join(', ')
       })
     ]
   }),
@@ -161,7 +161,7 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [constrastStyles.invert],
-        node: 'html'
+        query: 'html'
       })
     ]
   }),
@@ -171,7 +171,7 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [constrastStyles.grayscale],
-        node: 'html'
+        query: 'html'
       })
     ]
   }),
@@ -181,7 +181,16 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [darkContrastStyles.darkContrast],
-        node: 'html'
+        query: 'html'
+      }),
+      new PluginActionProperty({
+        property: {
+          name: 'background-image',
+          manipulationType: DOMPropertyManipulationType.Toggle,
+          // Value assigned to property when action is enabled.
+          enabledValue: 'none'
+        },
+        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
       })
     ]
   }),
@@ -191,7 +200,16 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [lightContrastStyles.lightContrast],
-        node: 'html'
+        query: 'html'
+      }),
+      new PluginActionProperty({
+        property: {
+          name: 'background-image',
+          manipulationType: DOMPropertyManipulationType.Toggle,
+          // Value assigned to property when action is enabled.
+          enabledValue: 'none'
+        },
+        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
       })
     ]
   }),
@@ -201,7 +219,16 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [blackAndYellowStyles.blackAndYellow],
-        node: 'html'
+        query: 'html'
+      }),
+      new PluginActionProperty({
+        property: {
+          name: 'background-image',
+          manipulationType: DOMPropertyManipulationType.Toggle,
+          // Value assigned to property when action is enabled.
+          enabledValue: 'none'
+        },
+        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
       })
     ]
   }),

@@ -2,14 +2,16 @@ import Utility from '@/utility';
 import { IPluginAction, PluginAction } from 'plugins/action';
 
 interface IPluginActionClass extends IPluginAction {
+  cacheNodes: boolean;
   klass: string | string[];
-  node: NodeList | string | string[];
+  query: string;
 }
 
 interface IPluginActionClassParams {
+  cacheNodes?: boolean;
   klass?: string | string[];
   id?: string;
-  node?: NodeList | string | string[];
+  query?: string;
 }
 
 /**
@@ -17,24 +19,26 @@ interface IPluginActionClassParams {
  */
 export class PluginActionClass extends PluginAction
   implements IPluginActionClass {
+  public cacheNodes: boolean = true;
   public klass: string | string[] = [];
-  public node: NodeList | string | string[] = 'body';
-  private _nodeList!: NodeListOf<Element> | NodeList;
+  public query: string = 'body';
+  private _nodeList?: NodeList;
 
   constructor(params?: IPluginActionClassParams) {
     super(params);
     if (params) {
+      if (params.cacheNodes !== undefined) {
+        this.cacheNodes = params.cacheNodes;
+      }
+
       if (params.klass) {
         this.klass = params.klass;
       }
 
-      if (params.node) {
-        this.node = params.node;
+      if (params.query) {
+        this.query = params.query;
       }
     }
-
-    // Assign nodes
-    this.initializeNodeList();
   }
 
   /**
@@ -51,22 +55,19 @@ export class PluginActionClass extends PluginAction
     Utility.removeClass({ node: this.nodeList, klass: this.klass });
   }
 
-  get nodeList(): any {
-    return this._nodeList;
-  }
-
   /**
-   * Sets applicable DOM node list based on passed nodes property.
-   * @returns {any}
+   * Retrieves NodeList of Elements based on query selection.
+   * If `cacheNodes` is `true` then save initial query result to private property.
+   * @returns {NodeList}
    */
-  private initializeNodeList(): any {
-    if (this.node instanceof NodeList) {
-      this._nodeList = this.node;
-    } else {
-      this._nodeList = document.querySelectorAll(
-        Array.isArray(this.node) ? this.node.join(', ') : this.node
-      );
+  get nodeList(): NodeList {
+    if (this.cacheNodes) {
+      if (!this._nodeList) {
+        this._nodeList = Utility.getNodeListFromQuery(this.query);
+      }
+      return this._nodeList;
     }
+    return Utility.getNodeListFromQuery(this.query);
   }
 
   // tslint:disable-next-line:member-ordering

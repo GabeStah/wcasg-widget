@@ -63,6 +63,14 @@ const Utility = {
       return;
     }
 
+    const dataAttributeName = Utility.getDataAttributeName(property);
+
+    // Return any existing data before assigning new attribute.
+    const existingValue = node.getAttribute(dataAttributeName);
+    if (existingValue) {
+      return Utility.getCSSUnitType(existingValue);
+    }
+
     const prop = node.style.getPropertyValue(property);
     // Get computed value if property not explicitly assigned
     let value: string;
@@ -71,7 +79,7 @@ const Utility = {
     } else {
       value = window.getComputedStyle(node).getPropertyValue(property);
     }
-    node.setAttribute(Utility.getDataAttributeName(property), value);
+    node.setAttribute(dataAttributeName, value);
     return Utility.getCSSUnitType(value);
   },
 
@@ -79,6 +87,13 @@ const Utility = {
     return value.match(CSS_UNIT_TYPE_REGEX);
   },
 
+  /**
+   * Get assigned data attribute value via property name or direct attribute name.
+   * @param {Element} element
+   * @param {string | undefined} name
+   * @param {string | undefined} property
+   * @returns {any}
+   */
   getDataAttributeValue: ({
     element,
     name,
@@ -99,6 +114,27 @@ const Utility = {
     }
   },
 
+  /**
+   * Removes CSSStyleDeclaration property.
+   * @param {any} element
+   * @param {string} property
+   */
+  removeProperty: ({
+    element,
+    property
+  }: {
+    element: any;
+    property: string;
+  }): void => {
+    element.style.removeProperty(property);
+  },
+
+  /**
+   * Sets CSSStyleDeclaration property.
+   * @param {any} element
+   * @param {string} property
+   * @param {any} value
+   */
   setProperty: ({
     element,
     property,
@@ -135,6 +171,10 @@ const Utility = {
    */
   getBody: () => {
     return document.getElementsByTagName('body')[0];
+  },
+
+  getNodeListFromQuery(query: string): NodeList {
+    return document.querySelectorAll(query);
   },
 
   /**

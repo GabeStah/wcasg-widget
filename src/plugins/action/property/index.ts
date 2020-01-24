@@ -1,43 +1,39 @@
 import Utility from '@/utility';
 import { IPluginAction, PluginAction } from 'plugins/action';
 
-export enum DOMPropertyScalingType {
-  Percentage,
-  Absolute
+export enum DOMPropertyManipulationType {
+  PercentageScaling,
+  AbsoluteScaling,
+  Toggle,
+  Direct
 }
 
 interface DOMProperty {
   // Name of property (e.g. 'font-size')
   name: string;
   // Method of scaling property value
-  scalingType: DOMPropertyScalingType;
+  manipulationType: DOMPropertyManipulationType;
+  // Value applied for Direct manipulation type when enabled.
+  enabledValue?: string | null;
+  // Value applied for Direct manipulation type when disabled.
+  disabledValue?: string | null;
   // Base value if no original value can be determined
   baseValue?: string;
   // (Optional) Unit type to be used for property (e.g. 'px', 'em', etc)
   unitType?: string;
 }
 
-/**
- * ActionProperty holds property name
- * parent ActionElement passes value to apply
- */
-
-/**
- * IProperty
- * name
- * baseValue
- *
- */
-
 export interface IPluginActionProperty extends IPluginAction {
+  cacheNodes: boolean;
   property: DOMProperty;
-  node: NodeList | string | string[];
+  query: string;
 }
 
 interface IPluginActionPropertyParams {
+  cacheNodes?: boolean;
   property: DOMProperty;
   id?: string;
-  node?: NodeList | string | string[];
+  query?: string;
 }
 
 /**
@@ -45,20 +41,18 @@ interface IPluginActionPropertyParams {
  */
 export class PluginActionProperty extends PluginAction
   implements IPluginActionProperty {
+  public cacheNodes: boolean = true;
   public property: DOMProperty;
-  public node: NodeList | string | string[] = 'body';
-  private _nodeList!: NodeListOf<Element> | NodeList;
+  public query: string = 'body';
+  private _nodeList?: NodeList;
 
   constructor(params: IPluginActionPropertyParams) {
     super(params);
     this.property = params.property;
 
-    if (params.node) {
-      this.node = params.node;
+    if (params.query) {
+      this.query = params.query;
     }
-
-    // Assign nodes
-    this.initializeNodeList();
 
     // Initialize by generating original data attributes for property
     this.addDataAttributeForProperties();
@@ -100,7 +94,8 @@ export class PluginActionProperty extends PluginAction
 
     // If percentage scaling and original and base value are zero, report
     if (
-      this.property.scalingType === DOMPropertyScalingType.Percentage &&
+      this.property.manipulationType ===
+        DOMPropertyManipulationType.PercentageScaling &&
       numericValue === 0 &&
       parseFloat(baseValue) === 0
     ) {
@@ -117,10 +112,14 @@ export class PluginActionProperty extends PluginAction
     }
 
     // Apply scaling
-    if (this.property.scalingType === DOMPropertyScalingType.Absolute) {
+    if (
+      this.property.manipulationType ===
+      DOMPropertyManipulationType.AbsoluteScaling
+    ) {
       return `${numericValue + scalingFactor}${this.property.unitType}`;
     } else if (
-      this.property.scalingType === DOMPropertyScalingType.Percentage
+      this.property.manipulationType ===
+      DOMPropertyManipulationType.PercentageScaling
     ) {
       // If value is zero scaling will fail, so use base value
       return `${numericValue * (1 + scalingFactor)}${this.property.unitType}`;
@@ -128,34 +127,73 @@ export class PluginActionProperty extends PluginAction
   }
 
   /**
-   * Sets applicable DOM node list based on passed nodes property.
-   * @returns {any}
+   * Retrieves NodeList of Elements based on query selection.
+   * If `cacheNodes` is `true` then save initial query result to private property.
+   * @returns {NodeList}
    */
-  private initializeNodeList(): any {
-    if (this.node instanceof NodeList) {
-      this._nodeList = this.node;
-    } else {
-      this._nodeList = document.querySelectorAll(
-        Array.isArray(this.node) ? this.node.join(', ') : this.node
-      );
+  get nodeList(): NodeList {
+    if (this.cacheNodes) {
+      if (!this._nodeList) {
+        this._nodeList = Utility.getNodeListFromQuery(this.query);
+      }
+      return this._nodeList;
     }
-  }
-
-  get nodeList() {
-    return this._nodeList;
+    return Utility.getNodeListFromQuery(this.query);
   }
 
   // tslint:disable-next-line:member-ordering
-  public enable({ scalingFactor }: { scalingFactor: number }): void {
-    // console.info(`property/index.ts.enable(${scalingFactor}`);
+  public enable(params?: any): void {
     this.nodeList.forEach((node: any) => {
-      const value = this.getCalculatedPropertyValue(scalingFactor, node);
-      // console.info(`property/index.ts.enable, value: ${value}`);
-      Utility.setProperty({
-        element: node,
-        property: this.property.name,
-        value: value
-      });
+      // If absolute or scaling get calculated value
+      if (
+        [
+          DOMPropertyManipulationType.AbsoluteScaling,
+          DOMPropertyManipulationType.PercentageScaling
+        ].includes(this.property.manipulationType)
+      ) {
+        const { scalingFactor } = params;
+        Utility.setProperty({
+          element: node,
+          property: this.property.name,
+          value: this.getCalculatedPropertyValue(scalingFactor, node)
+        });
+      } else if (
+        this.property.manipulationType === DOMPropertyManipulationType.Toggle
+      ) {
+        // If toggle, set to enabledValue (or remove if enabledValue is null)
+        if (this.property.enabledValue) {
+          console.log(`action/property:enable`);
+          console.log(this.id);
+          console.log(this.property);
+          console.log(node);
+          Utility.setProperty({
+            element: node,
+            property: this.property.name,
+            value: this.property.enabledValue
+          });
+        } else {
+          Utility.removeProperty({
+            element: node,
+            property: this.property.name
+          });
+        }
+      } else if (
+        this.property.manipulationType === DOMPropertyManipulationType.Direct
+      ) {
+        // If direct, set to enabledValue (or remove if enabledValue is null)
+        if (this.property.enabledValue) {
+          Utility.setProperty({
+            element: node,
+            property: this.property.name,
+            value: this.property.enabledValue
+          });
+        } else {
+          Utility.removeProperty({
+            element: node,
+            property: this.property.name
+          });
+        }
+      }
     });
   }
 
@@ -165,14 +203,33 @@ export class PluginActionProperty extends PluginAction
   // tslint:disable-next-line:member-ordering
   public disable(): void {
     this.nodeList.forEach((node: any) => {
-      Utility.setProperty({
-        element: node,
-        property: this.property.name,
-        value: Utility.getDataAttributeValue({
+      let value = this.property.disabledValue;
+      // If absolute, scaling, or toggled reset to original value
+      if (
+        [
+          DOMPropertyManipulationType.AbsoluteScaling,
+          DOMPropertyManipulationType.PercentageScaling,
+          DOMPropertyManipulationType.Toggle
+        ].includes(this.property.manipulationType)
+      ) {
+        value = Utility.getDataAttributeValue({
           element: node,
           property: this.property.name
-        })
-      });
+        });
+      }
+      // Set prop to disableValue unless null, then remove property.
+      if (value) {
+        Utility.setProperty({
+          element: node,
+          property: this.property.name,
+          value
+        });
+      } else {
+        Utility.removeProperty({
+          element: node,
+          property: this.property.name
+        });
+      }
     });
   }
 

@@ -8,31 +8,17 @@ import {
 } from 'plugins/element';
 import { PluginActionProperty } from 'plugins/action/property';
 import styles from 'styles/plugin/element.scss';
-import config from 'config';
-
-/**
- * Scalable + Action.Class
- * on Scalable.value change: Apply Action using value
- * Toggleable.Disabled = Remove Action(s)
- */
-
-export enum PluginElementScalingType {
-  Percentage,
-  Absolute
-}
 
 interface IPluginElementScalable extends IPluginElement {
   actions: PluginActionProperty[];
   scalingFactor: number;
   scalingIncrement: number;
   baseScalingFactor: number;
-  // scalingType: PluginElementScalingType;
 }
 
 interface IPluginElementScalableParams extends IPluginElementParams {
   scalingIncrement?: number;
   value?: any;
-  // scalingType?: PluginElementScalingType;
 }
 
 export class PluginElementScalable extends PluginElement
