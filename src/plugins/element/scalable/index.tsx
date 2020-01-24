@@ -7,6 +7,8 @@ import {
   PluginElementType
 } from 'plugins/element';
 import { PluginActionProperty } from 'plugins/action/property';
+import styles from 'styles/plugin/element.scss';
+import config from 'config';
 
 /**
  * Scalable + Action.Class
@@ -128,7 +130,9 @@ export class PluginElementScalable extends PluginElement
     };
 
     return (
-      <>
+      <div
+        className={`${styles['plugin-element']} ${styles['plugin-element-scalable']}`}
+      >
         <h3>{self.title}</h3>
         <p>Current Adjustment: {parseFloat(scalingFactor).toFixed(2)}</p>
         <button type={'button'} onClick={() => handleToggleClick()}>
@@ -146,7 +150,7 @@ export class PluginElementScalable extends PluginElement
         >
           +
         </button>
-      </>
+      </div>
     );
   };
 }

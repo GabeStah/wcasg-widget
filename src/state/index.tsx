@@ -1,6 +1,7 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
-import constrastStyles from 'styles/contrast.scss';
+import constrastStyles from 'styles/contrast/index.scss';
+import darkContrastStyles from 'styles/contrast/dark-contrast.scss';
 import pluginStyles from 'styles/plugin-styles.scss';
 import { PluginActionClass } from 'plugins/action/class';
 import { PluginElementToggleable } from 'plugins/element/toggleable/';
@@ -140,15 +141,16 @@ export const PluginElements = [
       })
     ]
   }),
-  new PluginElementToggleable({
-    title: 'Large Cursor (TODO: SVG troubles)',
-    enabled: false,
-    actions: [
-      new PluginActionClass({
-        klass: [pluginStyles.largeCursor]
-      })
-    ]
-  }),
+  // TODO: Fix SVG issue (see #9).
+  // new PluginElementToggleable({
+  //   title: 'Large Cursor (TODO: SVG troubles)',
+  //   enabled: false,
+  //   actions: [
+  //     new PluginActionClass({
+  //       klass: [pluginStyles.largeCursor]
+  //     })
+  //   ]
+  // }),
   new PluginElementToggleable({
     title: 'Invert Colors',
     enabled: false,
@@ -165,6 +167,16 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [constrastStyles.grayscale],
+        node: 'html'
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Dark Contrast',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        klass: [darkContrastStyles.darkContrast],
         node: 'html'
       })
     ]

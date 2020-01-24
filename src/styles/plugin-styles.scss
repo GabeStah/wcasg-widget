@@ -26,6 +26,10 @@
   visibility: hidden !important;
 }
 
+.hideImages * {
+  background-image: none !important;
+}
+
 .highlightForms input,
 .highlightForms datalist,
 .highlightForms meter,

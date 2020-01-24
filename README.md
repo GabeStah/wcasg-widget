@@ -317,3 +317,7 @@ export const elementReducers = (
 3. Paste into Chrome Dev Tools.
   - Alternatively, create Bookmarklet that loads raw `build/index.js` content.
   - Alternatively, use local Git clone'd copy by adding `build/index.js` to `Chrome Dev Tools > Filesystem > Workspace`, then `Ctrl + A` to select and `Ctrl + Shift + E` to execute on current page.
+
+## Known Issues
+
+- Building the first time after importing / referencing a new `.scss` style or file will fail, reporting the property doesn't exist in `CssExports`.  This is due to the build order for TypeScript + SCSS imports.  Just force a second build to resolve the issue. 

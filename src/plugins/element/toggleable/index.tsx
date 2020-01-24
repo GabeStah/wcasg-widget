@@ -7,6 +7,7 @@ import {
   PluginElement,
   PluginElementType
 } from 'plugins/element';
+import styles from 'styles/plugin/element.scss';
 
 interface IPluginElementToggleable extends IPluginElement {
   // Action(s) to execute when toggled
@@ -74,12 +75,14 @@ export class PluginElementToggleable extends PluginElement
     };
 
     return (
-      <>
+      <div
+        className={`${styles['plugin-element']} ${styles['plugin-element-toggleable']}`}
+      >
         <h3>{self.title}</h3>
         <button type={'button'} onClick={handleOnClick}>
           {enabled ? 'Disable' : 'Enable'}
         </button>
-      </>
+      </div>
     );
   };
 }

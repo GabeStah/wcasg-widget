@@ -1,10 +1,8 @@
 .modal {
   background-color: hsla(0, 0%, 100%, 0.9);
-  position: absolute;
-  top: 5%;
-  right: 5%;
-  bottom: 5%;
-  left: 5%;
+  box-sizing: content-box;
+  height: 100%;
+  margin: 8px;
 
   h1 {
     font-size: 24px;

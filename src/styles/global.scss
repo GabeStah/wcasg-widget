@@ -4,12 +4,10 @@
   position: fixed;
   top: 5%;
   left: 0;
-  height: 80%;
   width: 20%;
-  max-width: 300px;
-  min-width: 200px;
-  overflow: scroll;
-  overflow-x: hidden;
+  max-height: 600px;
+  max-width: 350px;
+  min-width: 250px;
+  overflow: auto;
   z-index: 999;
 }
-
