@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import isEqual from 'lodash/isEqual';
 import { IPluginAction } from 'plugins/action';
 import {
   IPluginElement,
@@ -8,9 +9,10 @@ import {
   PluginElementType
 } from 'plugins/element';
 import styles from 'styles/plugin/element.scss';
+import { makeElementEnabledSelector } from '@/state';
 
 interface IPluginElementToggleable extends IPluginElement {
-  // Action(s) to execute when toggled
+  // Action(s) to execute when enabled
   actions: IPluginAction[];
 }
 
@@ -50,34 +52,42 @@ export class PluginElementToggleable extends PluginElement
     }
   };
 
-  public template = (self: any) => {
+  public template = () => {
     const dispatch = useDispatch();
 
-    const enabled = useSelector(
-      (state: any) => self.getFromState(state).enabled
-    );
+    const selectEnabled = useMemo(makeElementEnabledSelector, []);
+    const enabled = useSelector(state => selectEnabled(state, this.id));
 
-    console.log(`toggleable/index:template(), name: ${this.name}`);
-    console.log(
-      `toggleable/index:template(), self.update, enabled: ${enabled}`
-    );
-    console.log(this.actions);
-    self.update(enabled);
+    useEffect(() => {
+      const currentState = this.getInstanceState();
+      const newState = this.getInstanceState({ enabled });
 
-    const handleOnClick = () => {
-      dispatch({
-        type: 'toggle',
-        reducerType: self.reducerType,
-        payload: { id: self.id }
-      });
-    };
+      if (enabled !== this.enabled) {
+        this.enabled = enabled;
+      }
+
+      // Update on change
+      if (!isEqual(currentState, newState)) {
+        this.update(enabled);
+      }
+    });
+
+    const handleToggleClick = useCallback(
+      () =>
+        dispatch({
+          type: 'toggle',
+          reducerType: this.reducerType,
+          payload: { id: this.id }
+        }),
+      [dispatch]
+    );
 
     return (
       <div
         className={`${styles['plugin-element']} ${styles['plugin-element-toggleable']}`}
       >
-        <h3>{self.title}</h3>
-        <button type={'button'} onClick={handleOnClick}>
+        <h3>{this.title}</h3>
+        <button type={'button'} onClick={handleToggleClick}>
           {enabled ? 'Disable' : 'Enable'}
         </button>
       </div>

@@ -11,7 +11,7 @@ import config from 'config';
 
 if (config.debug) {
   console.warn('--- DEBUG ENABLED ---');
-  document.querySelectorAll('a[class="btn btn-sm"]')[0].id = 'test';
+  // document.querySelectorAll('a[class="btn btn-sm"]')[0].id = 'test';
 }
 
 // Create modal div to contain widget and append to html doc

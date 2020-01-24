@@ -14,37 +14,56 @@ import {
 } from 'plugins/action/property';
 import TextNodeType from 'classes/node-types/TextNodeType';
 import { PluginActionFunction } from 'plugins/action/function';
+import find from 'lodash/find';
+import { createSelector } from 'root/node_modules/reselect';
 // import LibGif from 'assets/js/libgif';
 // require('svg-url-loader!../../src/assets/cursor.svg');
+
+// Create out-of-scope selectors for use in components.
+export const makeElementScalingFactorSelector = () =>
+  createSelector(
+    (state: any) => state.elements.elements,
+    (_: any, id: any) => id,
+    (elements: any, id: any) => find(elements, ['id', id]).scalingFactor
+  );
+
+export const makeElementEnabledSelector = () =>
+  createSelector(
+    (state: any) => state.elements.elements,
+    (_: any, id: any) => id,
+    (elements: any, id: any) => find(elements, ['id', id]).enabled
+  );
 
 export const elementReducers = (
   state: InitialStateType = initialState,
   action: IReducerActionParams
 ) => {
-  if (action.type.includes('@@redux')) {
-    return state;
-  }
-  if (action.reducerType !== ReducerType.Element) {
-    return state;
-  }
-
-  const stateElementIndex = state.elements.findIndex(
-    (element: { id: any }) => element.id === action.payload.id
-  );
-  const stateElement = state.elements[stateElementIndex];
-
   switch (action.type) {
     case 'toggle':
-      stateElement.enabled = !stateElement.enabled;
-      break;
+      return Object.assign({}, state, {
+        elements: state.elements.map((element: any) => {
+          if (element.id === action.payload.id) {
+            return Object.assign({}, element, {
+              enabled: !element.enabled
+            });
+          }
+          return element;
+        })
+      });
     case 'scale':
-      stateElement.scalingFactor += action.payload.adjustment;
-      break;
+      return Object.assign({}, state, {
+        elements: state.elements.map((element: any) => {
+          if (element.id === action.payload.id) {
+            return Object.assign({}, element, {
+              scalingFactor: element.scalingFactor + action.payload.adjustment
+            });
+          }
+          return element;
+        })
+      });
     default:
       return state;
   }
-
-  return Object.assign({}, state, { elements: state.elements });
 };
 
 export enum ReducerType {
@@ -60,7 +79,7 @@ export interface IReducerActionParams {
 
 export interface InitialStateType {
   // plugins: any[];
-  elements: any[];
+  elements: any;
 }
 
 export const PluginElements = [
@@ -203,38 +222,37 @@ export const PluginElements = [
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
-        // query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
-        query: '#test'
+        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
       })
     ]
   }),
-  // new PluginElementToggleable({
-  //   title: 'Light Contrast',
-  //   enabled: false,
-  //   actions: [
-  //     new PluginActionClass({
-  //       name: 'light-contrast-action-style',
-  //       klass: [lightContrastStyles.lightContrast],
-  //       query: 'html'
-  //     }),
-  //     new PluginActionProperty({
-  //       name: 'light-contrast-action-background-image',
-  //       property: {
-  //         name: 'background-image',
-  //         manipulationType: DOMPropertyManipulationType.Toggle,
-  //         // Value assigned to property when action is enabled.
-  //         enabledValue: 'none'
-  //       },
-  //       query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
-  //     })
-  //   ]
-  // }),
+  new PluginElementToggleable({
+    title: 'Light Contrast',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        name: 'light-contrast-action-style',
+        klass: [lightContrastStyles.lightContrast],
+        query: 'html'
+      }),
+      new PluginActionProperty({
+        name: 'light-contrast-action-background-image',
+        property: {
+          name: 'background-image',
+          manipulationType: DOMPropertyManipulationType.Toggle,
+          // Value assigned to property when action is enabled.
+          enabledValue: 'none'
+        },
+        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+      })
+    ]
+  }),
   new PluginElementToggleable({
     title: 'Black & Yellow',
     enabled: false,
     actions: [
       new PluginActionClass({
-        name: 'black-and-yell0w-action-style',
+        name: 'black-and-yellow-action-style',
         klass: [blackAndYellowStyles.blackAndYellow],
         query: 'html'
       }),
@@ -246,8 +264,7 @@ export const PluginElements = [
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
-        // query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
-        query: '#test'
+        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
       })
     ]
   }),
@@ -263,7 +280,6 @@ export const PluginElements = [
             if (images && images.length > 0) {
               images.forEach(image => {
                 // const gif = new LibGif({ gif: image });
-                // console.log(gif);
               });
             }
           },
@@ -274,8 +290,8 @@ export const PluginElements = [
   })
 ];
 
-const defaultStateElements = PluginElements.map(
-  element => element.defaultState
+const defaultStateElements = PluginElements.map((element: any) =>
+  element.getInstanceState()
 );
 
 export const initialState: InitialStateType = {

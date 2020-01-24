@@ -36,8 +36,8 @@ export interface IPluginElement {
   actions?: IPluginActionTypes;
   // Reducer type
   reducerType: ReducerType;
-  // Get the default state object
-  defaultState: () => any;
+  // Get the current or default state object
+  getInstanceState: (params?: any) => any;
 }
 
 export interface IPluginElementParams {
@@ -64,14 +64,16 @@ export class PluginElement implements IPluginElement {
   public title: string = `Element: ${this.id}`;
   protected _template = (self: any) => {};
 
-  get defaultState(): any {
+  public getInstanceState(params?: { id?: string; enabled?: boolean }): any {
     return {
-      id: this.id,
-      enabled: this.enabled
+      id: params && params.id ? params.id : this.id,
+      enabled:
+        params && params.enabled !== undefined ? params.enabled : this.enabled
     };
   }
 
   public getFromState = (state: any): IPluginElement => {
+    // return state.elements.elements[this.id];
     return state.elements.elements.find((e: any) => e.id === this.id);
   };
 

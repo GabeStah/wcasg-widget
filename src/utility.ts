@@ -144,11 +144,7 @@ const Utility = {
     property: string;
     value: any;
   }): void => {
-    console.warn('get prop');
-    console.log(element.style.getPropertyValue(property));
     element.style.setProperty(property, value);
-    console.info('post change prop');
-    console.log(element.style.getPropertyValue(property));
   },
 
   throwError: (message: string): void => {

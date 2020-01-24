@@ -120,13 +120,7 @@ export class PluginActionProperty extends PluginAction
 
   // tslint:disable-next-line:member-ordering
   public enable(params?: any): void {
-    console.log(`property/index:enable(), nodeList for name: ${this.name}`);
-    console.log(this.nodeList);
-    console.log(this.nodeList.length);
-    let counter = 0;
     this.nodeList.forEach((node: any) => {
-      counter++;
-      console.log(`Counter total: ${counter}`);
       // If absolute or scaling get calculated value
       if (
         [
@@ -145,10 +139,6 @@ export class PluginActionProperty extends PluginAction
       ) {
         // If toggle, set to enabledValue (or remove if enabledValue is null)
         if (this.property.enabledValue) {
-          console.log(`action/property:enable`);
-          console.log(this.id);
-          console.log(this.property);
-          console.log(node);
           Utility.setProperty({
             element: node,
             property: this.property.name,
@@ -185,7 +175,6 @@ export class PluginActionProperty extends PluginAction
    */
   // tslint:disable-next-line:member-ordering
   public disable(): void {
-    console.log(`property/index:disable() for ${this.name}`);
     this.nodeList.forEach((node: any) => {
       let value = this.property.disabledValue;
       // If absolute, scaling, or toggled reset to original value
@@ -203,16 +192,12 @@ export class PluginActionProperty extends PluginAction
       }
       // Set prop to disableValue unless null, then remove property.
       if (value) {
-        console.log(`property/index:disable(), value: ${value}`);
         Utility.setProperty({
           element: node,
           property: this.property.name,
           value
         });
       } else {
-        console.log(
-          `property/index:disable(), removeProperty: ${this.property}`
-        );
         Utility.removeProperty({
           element: node,
           property: this.property.name
