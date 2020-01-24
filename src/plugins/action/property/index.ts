@@ -1,5 +1,9 @@
 import Utility from '@/utility';
-import { IPluginAction, PluginAction } from 'plugins/action';
+import {
+  IPluginAction,
+  IPluginActionParams,
+  PluginAction
+} from 'plugins/action';
 
 export enum DOMPropertyManipulationType {
   PercentageScaling,
@@ -24,16 +28,11 @@ interface DOMProperty {
 }
 
 export interface IPluginActionProperty extends IPluginAction {
-  cacheNodes: boolean;
   property: DOMProperty;
-  query: string;
 }
 
-interface IPluginActionPropertyParams {
-  cacheNodes?: boolean;
+interface IPluginActionPropertyParams extends IPluginActionParams {
   property: DOMProperty;
-  id?: string;
-  query?: string;
 }
 
 /**
@@ -41,18 +40,11 @@ interface IPluginActionPropertyParams {
  */
 export class PluginActionProperty extends PluginAction
   implements IPluginActionProperty {
-  public cacheNodes: boolean = true;
   public property: DOMProperty;
-  public query: string = 'body';
-  private _nodeList?: NodeList;
 
   constructor(params: IPluginActionPropertyParams) {
     super(params);
     this.property = params.property;
-
-    if (params.query) {
-      this.query = params.query;
-    }
 
     // Initialize by generating original data attributes for property
     this.addDataAttributeForProperties();
@@ -126,24 +118,15 @@ export class PluginActionProperty extends PluginAction
     }
   }
 
-  /**
-   * Retrieves NodeList of Elements based on query selection.
-   * If `cacheNodes` is `true` then save initial query result to private property.
-   * @returns {NodeList}
-   */
-  get nodeList(): NodeList {
-    if (this.cacheNodes) {
-      if (!this._nodeList) {
-        this._nodeList = Utility.getNodeListFromQuery(this.query);
-      }
-      return this._nodeList;
-    }
-    return Utility.getNodeListFromQuery(this.query);
-  }
-
   // tslint:disable-next-line:member-ordering
   public enable(params?: any): void {
+    console.log(`property/index:enable(), nodeList for id: ${this.id}`);
+    console.log(this.nodeList);
+    console.log(this.nodeList.length);
+    let counter = 0;
     this.nodeList.forEach((node: any) => {
+      counter++;
+      console.log(`Counter total: ${counter}`);
       // If absolute or scaling get calculated value
       if (
         [
@@ -202,6 +185,7 @@ export class PluginActionProperty extends PluginAction
    */
   // tslint:disable-next-line:member-ordering
   public disable(): void {
+    console.log(`property/index:disable() for ${this.id}`);
     this.nodeList.forEach((node: any) => {
       let value = this.property.disabledValue;
       // If absolute, scaling, or toggled reset to original value
@@ -219,12 +203,16 @@ export class PluginActionProperty extends PluginAction
       }
       // Set prop to disableValue unless null, then remove property.
       if (value) {
+        console.log(`property/index:disable(), value: ${value}`);
         Utility.setProperty({
           element: node,
           property: this.property.name,
           value
         });
       } else {
+        console.log(
+          `property/index:disable(), removeProperty: ${this.property}`
+        );
         Utility.removeProperty({
           element: node,
           property: this.property.name

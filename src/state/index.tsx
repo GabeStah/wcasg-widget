@@ -69,6 +69,7 @@ export const PluginElements = [
     enabled: false,
     actions: [
       new PluginActionClass({
+        name: 'emphasize-titles-action',
         klass: [pluginStyles.emphasizeTitles]
       })
     ]
@@ -78,6 +79,7 @@ export const PluginElements = [
     scalingIncrement: 0.1,
     actions: [
       new PluginActionProperty({
+        name: 'adjust-font-size-action',
         property: {
           name: 'font-size',
           manipulationType: DOMPropertyManipulationType.PercentageScaling
@@ -190,29 +192,30 @@ export const PluginElements = [
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
-        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+        // query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+        query: '#test'
       })
     ]
   }),
-  new PluginElementToggleable({
-    title: 'Light Contrast',
-    enabled: false,
-    actions: [
-      new PluginActionClass({
-        klass: [lightContrastStyles.lightContrast],
-        query: 'html'
-      }),
-      new PluginActionProperty({
-        property: {
-          name: 'background-image',
-          manipulationType: DOMPropertyManipulationType.Toggle,
-          // Value assigned to property when action is enabled.
-          enabledValue: 'none'
-        },
-        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
-      })
-    ]
-  }),
+  // new PluginElementToggleable({
+  //   title: 'Light Contrast',
+  //   enabled: false,
+  //   actions: [
+  //     new PluginActionClass({
+  //       klass: [lightContrastStyles.lightContrast],
+  //       query: 'html'
+  //     }),
+  //     new PluginActionProperty({
+  //       property: {
+  //         name: 'background-image',
+  //         manipulationType: DOMPropertyManipulationType.Toggle,
+  //         // Value assigned to property when action is enabled.
+  //         enabledValue: 'none'
+  //       },
+  //       query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+  //     })
+  //   ]
+  // }),
   new PluginElementToggleable({
     title: 'Black & Yellow',
     enabled: false,
@@ -228,7 +231,8 @@ export const PluginElements = [
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
-        query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+        // query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+        query: '#test'
       })
     ]
   }),

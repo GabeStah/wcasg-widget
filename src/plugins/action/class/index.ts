@@ -1,17 +1,16 @@
 import Utility from '@/utility';
-import { IPluginAction, PluginAction } from 'plugins/action';
+import {
+  IPluginAction,
+  IPluginActionParams,
+  PluginAction
+} from 'plugins/action';
 
 interface IPluginActionClass extends IPluginAction {
-  cacheNodes: boolean;
   klass: string | string[];
-  query: string;
 }
 
-interface IPluginActionClassParams {
-  cacheNodes?: boolean;
+interface IPluginActionClassParams extends IPluginActionParams {
   klass?: string | string[];
-  id?: string;
-  query?: string;
 }
 
 /**
@@ -19,24 +18,13 @@ interface IPluginActionClassParams {
  */
 export class PluginActionClass extends PluginAction
   implements IPluginActionClass {
-  public cacheNodes: boolean = true;
   public klass: string | string[] = [];
-  public query: string = 'body';
-  private _nodeList?: NodeList;
 
   constructor(params?: IPluginActionClassParams) {
     super(params);
     if (params) {
-      if (params.cacheNodes !== undefined) {
-        this.cacheNodes = params.cacheNodes;
-      }
-
       if (params.klass) {
         this.klass = params.klass;
-      }
-
-      if (params.query) {
-        this.query = params.query;
       }
     }
   }
@@ -53,21 +41,6 @@ export class PluginActionClass extends PluginAction
    */
   public removeClasses(): void {
     Utility.removeClass({ node: this.nodeList, klass: this.klass });
-  }
-
-  /**
-   * Retrieves NodeList of Elements based on query selection.
-   * If `cacheNodes` is `true` then save initial query result to private property.
-   * @returns {NodeList}
-   */
-  get nodeList(): NodeList {
-    if (this.cacheNodes) {
-      if (!this._nodeList) {
-        this._nodeList = Utility.getNodeListFromQuery(this.query);
-      }
-      return this._nodeList;
-    }
-    return Utility.getNodeListFromQuery(this.query);
   }
 
   // tslint:disable-next-line:member-ordering

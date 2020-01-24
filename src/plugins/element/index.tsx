@@ -6,6 +6,7 @@ import { IPluginActionProperty } from 'plugins/action/property';
 
 interface IPlugin {
   id?: string;
+  name?: string;
   elements: IPluginElement[];
 }
 
@@ -20,6 +21,7 @@ export type IPluginActionTypes = IPluginAction[] | IPluginActionProperty[];
 
 export interface IPluginElement {
   id?: string;
+  name?: string;
   title?: string;
   type: PluginElementType;
   // Actions only trigger when enabled.
@@ -43,6 +45,7 @@ export interface IPluginElementParams {
   children?: IPluginElement[];
   enabled?: boolean;
   id?: string;
+  name?: string;
   order?: number;
   template?: any;
   title?: string;
@@ -54,6 +57,7 @@ export class PluginElement implements IPluginElement {
   public actions: IPluginActionTypes = [];
   public children: IPluginElement[] = [];
   public enabled: boolean = true;
+  public name: string = '';
   public order: number = 0;
   public type: PluginElementType = PluginElementType.Toggleable;
   public reducerType: ReducerType = ReducerType.Element;
@@ -92,6 +96,9 @@ export class PluginElement implements IPluginElement {
       }
       if (params.enabled !== undefined) {
         this.enabled = params.enabled;
+      }
+      if (params.name) {
+        this.name = params.name;
       }
       if (params.order) {
         this.order = params.order;

@@ -28,13 +28,6 @@ export class PluginElementToggleable extends PluginElement
     this.initialize();
   }
 
-  public toggle = (): boolean => {
-    this.enabled = !this.enabled;
-
-    this.enabled ? this.enableActions() : this.disableActions();
-    return this.enabled;
-  };
-
   public update = (enabled: boolean): void => {
     enabled ? this.enableActions() : this.disableActions();
   };
@@ -64,6 +57,11 @@ export class PluginElementToggleable extends PluginElement
       (state: any) => self.getFromState(state).enabled
     );
 
+    console.log(`toggleable/index:template()`);
+    console.log(
+      `toggleable/index:template(), self.update, enabled: ${enabled}`
+    );
+    console.log(this.actions);
     self.update(enabled);
 
     const handleOnClick = () => {
