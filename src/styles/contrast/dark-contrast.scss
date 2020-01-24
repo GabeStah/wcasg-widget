@@ -1,66 +1,79 @@
 @import 'src/styles/variables';
 
-$white: #fff;
-$bright-foreground-color: rgba(245, 178, 0, 1);
-$outline-color: rgba(3, 242, 52, 0.85);
-$dark-background-color: rgba(58, 58, 58, 1);
+.darkContrast {
+  // Variables localized to this context only
+  $white: #fff;
+  $bright-foreground-color: rgba(245, 178, 0, 1);
+  $outline-color: rgba(3, 242, 52, 0.85);
+  $dark-background-color: rgba(58, 58, 58, 1);
 
-$ignored-tags: div;
+  // Populate with list of optional elements to be ignored
+  $ignored-elements: INVALID_ELEMENT_NAME;
 
-// Root
-.darkContrast body {
-  color: $bright-foreground-color !important;
-  background-color: $dark-background-color !important;
-}
-
-// Content Sections
-@each $tag in $tags-content-section {
-  .darkContrast #{$tag}:not(#{$ignored-tags}) {
+  // Root
+  body {
     color: $bright-foreground-color !important;
     background-color: $dark-background-color !important;
   }
-}
 
-// Text Content
-@each $tag in $tags-text-content {
-  .darkContrast #{$tag}:not(#{$ignored-tags}) {
-    color: $bright-foreground-color !important;
-    background-color: $dark-background-color !important;
+  // Content Sections
+  @each $element in $elements-content-section {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $bright-foreground-color !important;
+      background-color: $dark-background-color !important;
+    }
+  }
+
+  // Text Content
+  @each $element in $elements-text-content {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $white !important;
+      background-color: $dark-background-color !important;
+    }
+  }
+
+  // Inline Text Semantics
+  @each $element in $elements-inline-text-semantics {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $bright-foreground-color !important;
+      background-color: $dark-background-color !important;
+    }
+  }
+
+  // Interactive
+  @each $element in $elements-interactive {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $bright-foreground-color !important;
+      background-color: $dark-background-color !important;
+    }
+  }
+
+  // Media
+  @each $element in $elements-media {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $bright-foreground-color !important;
+      background-color: $dark-background-color !important;
+      outline: 2px solid $outline-color !important;
+      outline-offset: 1px !important;
+    }
+  }
+
+  // Tables
+  @each $element in $elements-table {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $bright-foreground-color !important;
+      background-color: $dark-background-color !important;
+    }
+  }
+
+  // Forms
+  @each $element in $elements-forms {
+    #{$element}:not(#{$ignored-elements}) {
+      color: $bright-foreground-color !important;
+      background-color: $dark-background-color !important;
+      outline: 2px solid $outline-color !important;
+      outline-offset: 1px !important;
+    }
   }
 }
 
-// Inline Text Semantics
-@each $tag in $tags-inline-text-semantics {
-  .darkContrast #{$tag}:not(#{$ignored-tags}) {
-    color: $bright-foreground-color !important;
-    background-color: $dark-background-color !important;
-  }
-}
-
-// Media
-@each $tag in $tags-media {
-  .darkContrast #{$tag}:not(#{$ignored-tags}) {
-    color: $bright-foreground-color !important;
-    background-color: $dark-background-color !important;
-    outline: 2px solid $outline-color !important;
-    outline-offset: 1px !important;
-  }
-}
-
-// Tables
-@each $tag in $tags-table {
-  .darkContrast #{$tag}:not(#{$ignored-tags}) {
-    color: $bright-foreground-color !important;
-    background-color: $dark-background-color !important;
-  }
-}
-
-// Forms
-@each $tag in $tags-forms {
-  .darkContrast #{$tag}:not(#{$ignored-tags}) {
-    color: $bright-foreground-color !important;
-    background-color: $dark-background-color !important;
-    outline: 2px solid $outline-color !important;
-    outline-offset: 1px !important;
-  }
-}

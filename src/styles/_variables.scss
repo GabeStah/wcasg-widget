@@ -3,29 +3,13 @@ $default-highlight-color-secondary: #56c69f;
 $default-highlight-color-tertiary: #ecaa17;
 $default-highlight-color-quaternary: #1cec00;
 
-$tags-content-section: address, article, aside, footer, header, hgroup, main, nav, section;
-$tags-text-content: blockquote, dd, div, dl, dt, figcaption, figure, h1, h2, h3, h4, h5, h6, hr, li, main, ol, p, pre, ul;
-$tags-inline-text-semantics: a, abbr, b, bdi, bdo, br, cite, code, data, dfn, em, i, kbd, mark, q, rb, rp, rt, rtc, ruby, s, samp, small, span, strong, sub, sup, time, u, var, wbr;
-$tags-media: area, audio, img, map, svg, track, video;
-$tags-table: caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr;
-$tags-forms: button, datalist, fieldset, form, input, label, legend, meter, optgroup, option, output, progress, select, textarea;
-
-//Color Invert (if possible)
-// filter: invert(x)
-$filter-inversion-amount: 100%;
-
-//Grayscale
-// filter: grayscale(x)
-$filter-grayscale-amount: 100%;
-
-//Dark Contrast
-// filter: invert(x)
-
-//Light Contrast
-// filter: invert(x)
-
-//Black & Yellow Only
-// filter: invert(x)
+$elements-content-section: address, article, aside, footer, header, hgroup, main, nav, section;
+$elements-text-content: blockquote, dd, div, dl, dt, figcaption, figure, h1, h2, h3, h4, h5, h6, hr, li, main, ol, p, pre, ul;
+$elements-inline-text-semantics: a, abbr, b, bdi, bdo, br, cite, code, data, dfn, em, i, kbd, mark, q, rb, rp, rt, rtc, ruby, s, samp, small, span, strong, sub, sup, time, u, var, wbr;
+$elements-interactive: details, dialog, menu, menuitem, summary;
+$elements-media: area, audio, img, map, svg, track, video;
+$elements-table: caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr;
+$elements-forms: button, datalist, fieldset, form, input, label, legend, meter, optgroup, option, output, progress, select, textarea;
 
 // TODO: Dynamically assign from config
 $widget-prefix: "wcasg-ada-app-";

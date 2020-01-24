@@ -1,17 +1,17 @@
 @import 'src/styles/variables';
 
 .grayscale {
-  -webkit-filter: grayscale($filter-grayscale-amount);
-  -moz-filter: grayscale($filter-grayscale-amount);
-  -ms-filter: grayscale($filter-grayscale-amount);
-  -o-filter: grayscale($filter-grayscale-amount);
-  filter: grayscale($filter-grayscale-amount);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .invert {
-  -webkit-filter: invert($filter-inversion-amount);
-  -moz-filter: invert($filter-inversion-amount);
-  -ms-filter: invert($filter-inversion-amount);
-  -o-filter: invert($filter-inversion-amount);
-  filter: invert($filter-inversion-amount);
+  -webkit-filter: invert(100%);
+  -moz-filter: invert(100%);
+  -ms-filter: invert(100%);
+  -o-filter: invert(100%);
+  filter: invert(100%);
 }
