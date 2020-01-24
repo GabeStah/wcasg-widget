@@ -1,6 +1,7 @@
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
 import constrastStyles from 'styles/contrast/index.scss';
+import blackAndYellowStyles from 'styles/contrast/black-and-yellow.scss';
 import lightContrastStyles from 'styles/contrast/light-contrast.scss';
 import darkContrastStyles from 'styles/contrast/dark-contrast.scss';
 import pluginStyles from 'styles/plugin-styles.scss';
@@ -188,6 +189,16 @@ export const PluginElements = [
     actions: [
       new PluginActionClass({
         klass: [lightContrastStyles.lightContrast],
+        node: 'html'
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Black & Yellow',
+    enabled: false,
+    actions: [
+      new PluginActionClass({
+        klass: [blackAndYellowStyles.blackAndYellow],
         node: 'html'
       })
     ]
