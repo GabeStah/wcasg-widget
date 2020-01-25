@@ -1,10 +1,13 @@
 import forEach from 'lodash/forEach';
 import times from 'lodash/times';
 import config from 'config';
+import Aria from './aria';
 
 export const CSS_UNIT_TYPE_REGEX = /(\d*\.?\d+)\s?(px|em|ex|%|in|cn|mm|pt|pc+)/;
 
 const Utility = {
+  Aria,
+
   /**
    * Adds class(es) to node(s).
    * IE compatible.

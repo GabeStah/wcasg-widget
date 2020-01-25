@@ -2,7 +2,9 @@
 // Please do not change this file!
 interface CssExports {
   'plugin-element': string;
+  'plugin-element-custom': string;
   'plugin-element-scalable': string;
+  'plugin-element-static': string;
   'plugin-element-toggleable': string;
 }
 export const cssExports: CssExports;

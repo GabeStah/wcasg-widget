@@ -42,6 +42,11 @@ export class PluginElementScalable extends PluginElement
       if (params.scalingIncrement) {
         this.scalingIncrement = params.scalingIncrement;
       }
+
+      if (params.template) {
+        this.template = params.template;
+      }
+
       if (params.value) {
         this.scalingFactor = params.value;
         // Retain base value for later reference
@@ -91,7 +96,7 @@ export class PluginElementScalable extends PluginElement
     }
   };
 
-  public template = () => {
+  public template = (self: any) => {
     const dispatch = useDispatch();
 
     const selectEnabled = useMemo(makeElementEnabledSelector, []);

@@ -14,7 +14,9 @@ export enum PluginElementType {
   Toggleable,
   Scalable,
   Selectable,
-  Multiselectable
+  Multiselectable,
+  Static,
+  Custom
 }
 
 export type IPluginActionTypes = IPluginAction[] | IPluginActionProperty[];
@@ -29,7 +31,7 @@ export interface IPluginElement {
   // Display order
   order?: number;
   // If excluded use default based on type.
-  template?: any;
+  template?: (self?: any) => any;
   // Children are enabled if parent is enabled.
   children?: IPluginElement[];
   // Actions to execute
@@ -47,7 +49,7 @@ export interface IPluginElementParams {
   id?: string;
   name?: string;
   order?: number;
-  template?: any;
+  template?: (self?: any) => any;
   title?: string;
   type?: PluginElementType;
 }
@@ -62,6 +64,7 @@ export class PluginElement implements IPluginElement {
   public type: PluginElementType = PluginElementType.Toggleable;
   public reducerType: ReducerType = ReducerType.Element;
   public title: string = `Element: ${this.id}`;
+  // public template: (self?: any) => any = (self?: any) => {};
   protected _template = (self: any) => {};
 
   public getInstanceState(params?: { id?: string; enabled?: boolean }): any {

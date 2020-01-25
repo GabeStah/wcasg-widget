@@ -11,19 +11,19 @@ import {
 import styles from 'styles/plugin/element.scss';
 import { makeElementEnabledSelector } from '@/state';
 
-interface IPluginElementToggleable extends IPluginElement {
+interface IPluginElementStatic extends IPluginElement {
   // Action(s) to execute when enabled
   actions: IPluginAction[];
 }
 
 // tslint:disable-next-line:no-empty-interface
-interface IPluginElementToggleableParams extends IPluginElementParams {}
+interface IPluginElementStaticParams extends IPluginElementParams {}
 
-export class PluginElementToggleable extends PluginElement
-  implements IPluginElementToggleable {
-  public type: PluginElementType = PluginElementType.Toggleable;
+export class PluginElementStatic extends PluginElement
+  implements IPluginElementStatic {
+  public type: PluginElementType = PluginElementType.Static;
 
-  constructor(params?: IPluginElementToggleableParams) {
+  constructor(params?: IPluginElementStaticParams) {
     super(params);
 
     if (params) {
