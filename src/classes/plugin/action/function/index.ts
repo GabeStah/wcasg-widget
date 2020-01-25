@@ -1,9 +1,8 @@
-import Utility from '@/utility';
 import {
   IPluginAction,
   IPluginActionParams,
   PluginAction
-} from 'plugins/action';
+} from 'classes/plugin/action';
 
 type FunctionType = (params?: any) => any;
 

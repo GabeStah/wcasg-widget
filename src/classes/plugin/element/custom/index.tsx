@@ -1,11 +1,11 @@
 import React from 'react';
-import { IPluginAction } from 'plugins/action';
+import { IPluginAction } from 'classes/plugin/action';
 import {
   IPluginElement,
   IPluginElementParams,
   PluginElement,
   PluginElementType
-} from 'plugins/element';
+} from 'classes/plugin/element';
 import styles from 'styles/plugin/element.scss';
 
 interface IPluginElementCustom extends IPluginElement {

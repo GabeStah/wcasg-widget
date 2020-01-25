@@ -1,29 +1,31 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
-import { IPluginAction } from 'plugins/action';
+
+import { makeElementEnabledSelector } from '@/state';
+
+import { IPluginAction } from 'classes/plugin/action';
 import {
   IPluginElement,
   IPluginElementParams,
   PluginElement,
   PluginElementType
-} from 'plugins/element';
+} from 'classes/plugin/element';
 import styles from 'styles/plugin/element.scss';
-import { makeElementEnabledSelector } from '@/state';
 
-interface IPluginElementStatic extends IPluginElement {
+interface IPluginElementToggleable extends IPluginElement {
   // Action(s) to execute when enabled
   actions: IPluginAction[];
 }
 
 // tslint:disable-next-line:no-empty-interface
-interface IPluginElementStaticParams extends IPluginElementParams {}
+interface IPluginElementToggleableParams extends IPluginElementParams {}
 
-export class PluginElementStatic extends PluginElement
-  implements IPluginElementStatic {
-  public type: PluginElementType = PluginElementType.Static;
+export class PluginElementToggleable extends PluginElement
+  implements IPluginElementToggleable {
+  public type: PluginElementType = PluginElementType.Toggleable;
 
-  constructor(params?: IPluginElementStaticParams) {
+  constructor(params?: IPluginElementToggleableParams) {
     super(params);
 
     if (params) {
@@ -82,7 +84,6 @@ export class PluginElementStatic extends PluginElement
       () =>
         dispatch({
           type: 'toggle',
-          reducerType: this.reducerType,
           payload: { id: this.id }
         }),
       [dispatch]

@@ -1,7 +1,7 @@
 import React from 'react';
 import config from 'config';
-import { PluginElements } from '@/state';
 import styles from './styles.scss';
+import { PluginElements } from '@/state';
 
 export default class Widget extends React.Component<{}> {
   public render() {

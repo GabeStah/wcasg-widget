@@ -3,54 +3,54 @@ import {
   DOMValueType,
   IPluginAction,
   IPluginActionParams,
-  IPluginActionStyleOptions,
+  IPluginActionPropertyOptions,
   PluginAction,
   ValueManipulationType
-} from 'plugins/action';
+} from 'classes/plugin/action';
 
-export interface IPluginActionStyle extends IPluginAction {
-  style: IPluginActionStyleOptions;
+export interface IPluginActionProperty extends IPluginAction {
+  property: IPluginActionPropertyOptions;
 }
 
-interface IPluginActionStyleParams extends IPluginActionParams {
-  style: IPluginActionStyleOptions;
+interface IPluginActionPropertyParams extends IPluginActionParams {
+  property: IPluginActionPropertyOptions;
 }
 
 /**
  * PluginAction that manipulates CSS styles on DOM nodes.
  */
-export class PluginActionStyle extends PluginAction
-  implements IPluginActionStyle {
-  public style: IPluginActionStyleOptions;
-  public domValueType: DOMValueType = DOMValueType.Style;
+export class PluginActionProperty extends PluginAction
+  implements IPluginActionProperty {
+  public property: IPluginActionPropertyOptions;
+  public domValueType: DOMValueType = DOMValueType.Property;
 
-  constructor(params: IPluginActionStyleParams) {
+  constructor(params: IPluginActionPropertyParams) {
     super(params);
-    this.style = params.style;
+    this.property = params.property;
 
     // Initialize by generating original data attributes for property
-    this.addDataAttributeForStyles();
+    this.addDataAttributeForProperties();
   }
 
-  protected addDataAttributeForStyles(): void {
+  protected addDataAttributeForProperties(): void {
     Utility.Data.createOriginalDataAttribute({
       node: this.nodeList,
-      name: this.style.name,
+      name: this.property.name,
       type: this.domValueType
     });
   }
 
-  protected getCalculatedStyleValue(
+  protected getCalculatedPropertyValue(
     scalingFactor: number,
     element: Element
   ): any {
-    const styleName = this.style.name;
-    const baseValue = this.style.baseValue || '0';
+    const propertyName = this.property.name;
+    const baseValue = this.property.baseValue || '0';
     // Get original data attribute value
     const originalValue = Utility.getNodeValue({
       node: element,
       name: Utility.Data.generateDataAttributeName({
-        name: styleName,
+        name: propertyName,
         type: this.domValueType
       }),
       type: DOMValueType.Attribute
@@ -64,39 +64,42 @@ export class PluginActionStyle extends PluginAction
       numericValue = parseFloat(baseValue);
     }
 
-    if (!this.style.unitType) {
+    if (!this.property.unitType) {
       const unitMatches = Utility.Css.getUnitType(originalValue);
       if (unitMatches) {
-        this.style.unitType = unitMatches[2];
+        this.property.unitType = unitMatches[2];
       }
     }
 
     // If percentage scaling and original and base value are zero, report
     if (
-      this.style.manipulationType === ValueManipulationType.PercentageScaling &&
+      this.property.manipulationType ===
+        ValueManipulationType.PercentageScaling &&
       numericValue === 0 &&
       parseFloat(baseValue) === 0
     ) {
       Utility.throwError(
-        `Cannot use 'DOMPropertyScalingType.Percentage' for style: ${this.style.name} which has an original and base value of zero.`
+        `Cannot use 'DOMPropertyScalingType.Percentage' for property: ${this.property.name} which has an original and base value of zero.`
       );
     }
 
     // If percentage scaling and original and base value are zero, report
-    if (this.style.unitType === undefined) {
+    if (this.property.unitType === undefined) {
       Utility.throwError(
-        `Unable to detect valid unit type for original style value of '${this.style.name}.'  Please explicitly assign expected 'unitType' in configuration.`
+        `Unable to detect valid unit type for original property value of '${this.property.name}.'  Please explicitly assign expected 'unitType' in configuration.`
       );
     }
 
     // Apply scaling
-    if (this.style.manipulationType === ValueManipulationType.AbsoluteScaling) {
-      return `${numericValue + scalingFactor}${this.style.unitType}`;
+    if (
+      this.property.manipulationType === ValueManipulationType.AbsoluteScaling
+    ) {
+      return `${numericValue + scalingFactor}${this.property.unitType}`;
     } else if (
-      this.style.manipulationType === ValueManipulationType.PercentageScaling
+      this.property.manipulationType === ValueManipulationType.PercentageScaling
     ) {
       // If value is zero scaling will fail, so use base value
-      return `${numericValue * (1 + scalingFactor)}${this.style.unitType}`;
+      return `${numericValue * (1 + scalingFactor)}${this.property.unitType}`;
     }
   }
 
@@ -108,44 +111,48 @@ export class PluginActionStyle extends PluginAction
         [
           ValueManipulationType.AbsoluteScaling,
           ValueManipulationType.PercentageScaling
-        ].includes(this.style.manipulationType)
+        ].includes(this.property.manipulationType)
       ) {
         const { scalingFactor } = params;
         Utility.setNodeValue({
           node,
-          name: this.style.name,
+          name: this.property.name,
           type: this.domValueType,
-          value: this.getCalculatedStyleValue(scalingFactor, node)
+          value: this.getCalculatedPropertyValue(scalingFactor, node)
         });
-      } else if (this.style.manipulationType === ValueManipulationType.Toggle) {
+      } else if (
+        this.property.manipulationType === ValueManipulationType.Toggle
+      ) {
         // If toggle, set to enabledValue (or remove if enabledValue is null)
-        if (this.style.enabledValue !== undefined) {
+        if (this.property.enabledValue !== undefined) {
           Utility.setNodeValue({
             node,
-            name: this.style.name,
+            name: this.property.name,
             type: this.domValueType,
-            value: this.style.enabledValue
+            value: this.property.enabledValue
           });
         } else {
           Utility.removeNodeValue({
             node,
-            name: this.style.name,
+            name: this.property.name,
             type: this.domValueType
           });
         }
-      } else if (this.style.manipulationType === ValueManipulationType.Direct) {
+      } else if (
+        this.property.manipulationType === ValueManipulationType.Direct
+      ) {
         // If direct, set to enabledValue (or remove if enabledValue is null)
-        if (this.style.enabledValue !== undefined) {
+        if (this.property.enabledValue !== undefined) {
           Utility.setNodeValue({
             node,
-            name: this.style.name,
+            name: this.property.name,
             type: this.domValueType,
-            value: this.style.enabledValue
+            value: this.property.enabledValue
           });
         } else {
           Utility.removeNodeValue({
             node,
-            name: this.style.name,
+            name: this.property.name,
             type: this.domValueType
           });
         }
@@ -159,19 +166,20 @@ export class PluginActionStyle extends PluginAction
   // tslint:disable-next-line:member-ordering
   public disable(): void {
     this.nodeList.forEach((node: any) => {
-      let value = this.style.disabledValue;
+      let value = this.property.disabledValue;
       // If absolute, scaling, or toggled reset to original value
       if (
         [
           ValueManipulationType.AbsoluteScaling,
           ValueManipulationType.PercentageScaling,
           ValueManipulationType.Toggle
-        ].includes(this.style.manipulationType)
+        ].includes(this.property.manipulationType)
       ) {
+        // Get original from data attribute
         value = Utility.getNodeValue({
           node,
           name: Utility.Data.generateDataAttributeName({
-            name: this.style.name,
+            name: this.property.name,
             type: this.domValueType
           }),
           type: DOMValueType.Attribute
@@ -181,14 +189,14 @@ export class PluginActionStyle extends PluginAction
       if (value !== undefined) {
         Utility.setNodeValue({
           node,
-          name: this.style.name,
+          name: this.property.name,
           type: this.domValueType,
           value
         });
       } else {
         Utility.removeNodeValue({
           node,
-          name: this.style.name,
+          name: this.property.name,
           type: this.domValueType
         });
       }

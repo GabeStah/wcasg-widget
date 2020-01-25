@@ -3,7 +3,7 @@ import {
   IPluginAction,
   IPluginActionParams,
   PluginAction
-} from 'plugins/action';
+} from 'classes/plugin/action';
 
 interface IPluginActionClass extends IPluginAction {
   klass: string | string[];

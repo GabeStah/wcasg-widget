@@ -1,5 +1,5 @@
 import Utility from '@/utility';
-import { DOMValueType } from 'plugins/action';
+import { DOMValueType } from 'classes/plugin/action';
 
 export const Aria = {
   /**

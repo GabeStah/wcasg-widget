@@ -1,6 +1,6 @@
 import forEach from 'lodash/forEach';
 import config from 'config';
-import { DOMValueType } from 'plugins/action';
+import { DOMValueType } from 'classes/plugin/action';
 import Utility from '@/utility';
 
 export const Data = {

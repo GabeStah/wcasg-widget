@@ -3,7 +3,7 @@ import config from 'config';
 import Aria from '@/utility/aria';
 import Css from '@/utility/css';
 import Data from '@/utility/data';
-import { DOMValueType } from 'plugins/action';
+import { DOMValueType } from 'classes/plugin/action';
 
 const Utility = {
   Aria,

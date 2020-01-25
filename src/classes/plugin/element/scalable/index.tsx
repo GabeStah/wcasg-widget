@@ -1,18 +1,21 @@
 import React, { useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
+
+import {
+  makeElementEnabledSelector,
+  makeElementScalingFactorSelector
+} from '@/state';
+
 import {
   IPluginElement,
   IPluginElementParams,
   PluginElement,
   PluginElementType
-} from 'plugins/element';
-import { PluginActionStyle } from 'plugins/action/style';
+} from 'classes/plugin/element';
+import { PluginActionStyle } from 'classes/plugin/action/style';
+
 import styles from 'styles/plugin/element.scss';
-import {
-  makeElementEnabledSelector,
-  makeElementScalingFactorSelector
-} from '@/state';
 
 interface IPluginElementScalable extends IPluginElement {
   actions: PluginActionStyle[];
@@ -126,7 +129,6 @@ export class PluginElementScalable extends PluginElement
     const handleToggleClick = () => {
       dispatch({
         type: 'toggle',
-        reducerType: this.reducerType,
         payload: { id: this.id }
       });
     };
@@ -134,7 +136,6 @@ export class PluginElementScalable extends PluginElement
     const handleScaling = (adjustment: number): any => {
       dispatch({
         type: 'scale',
-        reducerType: this.reducerType,
         payload: { id: this.id, adjustment }
       });
     };

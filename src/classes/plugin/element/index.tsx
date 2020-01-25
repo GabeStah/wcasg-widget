@@ -1,8 +1,7 @@
 import React from 'react';
-import { ReducerType } from '@/state';
-import { IPluginAction } from 'plugins/action';
+import { IPluginAction } from 'classes/plugin/action';
+import { IPluginActionStyle } from 'classes/plugin/action/style';
 import Utility from '@/utility';
-import { IPluginActionStyle } from 'plugins/action/style';
 
 interface IPlugin {
   id?: string;
@@ -36,8 +35,6 @@ export interface IPluginElement {
   children?: IPluginElement[];
   // Actions to execute
   actions?: IPluginActionTypes;
-  // Reducer type
-  reducerType: ReducerType;
   // Get the current or default state object
   getInstanceState: (params?: any) => any;
 }
@@ -62,7 +59,6 @@ export class PluginElement implements IPluginElement {
   public name: string = '';
   public order: number = 0;
   public type: PluginElementType = PluginElementType.Toggleable;
-  public reducerType: ReducerType = ReducerType.Element;
   public title: string = `Element: ${this.id}`;
   // public template: (self?: any) => any = (self?: any) => {};
   protected _template = (self: any) => {};
