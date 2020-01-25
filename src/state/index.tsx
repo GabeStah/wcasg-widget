@@ -10,7 +10,6 @@ import { PluginElementToggleable } from 'plugins/element/toggleable/';
 import { PluginElementScalable } from 'plugins/element/scalable';
 import { PluginActionStyle } from 'plugins/action/style';
 import TextNodeType from 'classes/node-types/TextNodeType';
-import { PluginActionFunction } from 'plugins/action/function';
 import find from 'lodash/find';
 import findLast from 'lodash/findLast';
 import { createSelector } from 'root/node_modules/reselect';
@@ -19,7 +18,7 @@ import styles from 'styles/plugin/element.scss';
 import Utility from '@/utility';
 import config from 'config';
 import { ValueManipulationType } from 'plugins/action';
-// import LibGif from 'assets/js/libgif';
+import { PluginActionProperty } from 'plugins/action/property';
 // require('svg-url-loader!../../src/assets/cursor.svg');
 
 // Create out-of-scope selectors for use in components.
@@ -423,14 +422,13 @@ export const PluginElements = [
     title: 'Mute Audio',
     enabled: false,
     actions: [
-      new PluginActionStyle({
+      new PluginActionProperty({
         name: 'mute-audio-action',
-        style: {
+        property: {
           name: 'muted',
           manipulationType: ValueManipulationType.Direct,
-          baseValue: 'false',
-          enabledValue: 'true',
-          disabledValue: 'false'
+          enabledValue: true,
+          disabledValue: false
         },
         query: ['audio', 'video'].join(', ')
       })

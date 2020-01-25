@@ -1,4 +1,5 @@
 import Utility from '@/utility';
+import { DOMValueType } from 'plugins/action';
 
 export const Aria = {
   /**
@@ -25,12 +26,20 @@ export const Aria = {
 
     const values = [];
 
-    const label = element.getAttribute('aria-label');
+    const label = Utility.getNodeValue({
+      node: element,
+      name: 'aria-label',
+      type: DOMValueType.Attribute
+    });
     if (label) {
       values.push(label);
     }
 
-    const labelledBy = element.getAttribute('aria-labelledby');
+    const labelledBy = Utility.getNodeValue({
+      node: element,
+      name: 'aria-labelledby',
+      type: DOMValueType.Attribute
+    });
     if (labelledBy) {
       if (document.getElementById(labelledBy)) {
         const labelOfLabelledBy = Utility.Aria.getElementText({
@@ -43,7 +52,11 @@ export const Aria = {
       }
     }
 
-    const valueText = element.getAttribute('aria-valuetext');
+    const valueText = Utility.getNodeValue({
+      node: element,
+      name: 'aria-valuetext',
+      type: DOMValueType.Attribute
+    });
     if (valueText) {
       values.push(valueText);
     }

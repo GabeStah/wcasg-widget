@@ -15,7 +15,7 @@ export const Data = {
     node: NodeList | any;
     name: string | string[];
     type: DOMValueType;
-  }): { value: string; unitType: any } | void => {
+  }): void => {
     if (node instanceof NodeList) {
       forEach(node, nodeValue =>
         Utility.Data.createOriginalDataAttribute({
@@ -42,22 +42,16 @@ export const Data = {
       type
     });
 
-    // Return any existing data before assigning new attribute.
-    const existingValue = node.getAttribute(dataAttributeName);
-    if (existingValue) {
-      return Utility.Css.getUnitType(existingValue);
-    }
+    // Get value
+    const value = Utility.getNodeValue({ node, name, type });
 
-    const prop = node.style.getPropertyValue(name);
-    // Get computed value if property not explicitly assigned
-    let value: string;
-    if (prop && prop !== '') {
-      value = prop;
-    } else {
-      value = window.getComputedStyle(node).getPropertyValue(name);
-    }
-    node.setAttribute(dataAttributeName, value);
-    return Utility.Css.getUnitType(value);
+    // Explicitly setting data attribute
+    Utility.setNodeValue({
+      node,
+      value,
+      type: DOMValueType.Attribute,
+      name: dataAttributeName
+    });
   },
 
   /**

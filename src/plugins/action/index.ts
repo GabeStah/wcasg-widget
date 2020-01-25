@@ -19,11 +19,11 @@ interface IPluginActionOptions {
   // Method of scaling property value
   manipulationType?: ValueManipulationType;
   // Value applied for Direct manipulation type when enabled.
-  enabledValue?: string | null;
+  enabledValue?: any;
   // Value applied for Direct manipulation type when disabled.
-  disabledValue?: string | null;
+  disabledValue?: any;
   // Base value if no original value can be determined
-  baseValue?: string;
+  baseValue?: any;
   // Unit type to be used for property (e.g. 'px', 'em', etc)
   unitType?: string;
 }
@@ -34,11 +34,11 @@ export interface IPluginActionPropertyOptions extends IPluginActionOptions {
   // Method of scaling property value
   manipulationType: ValueManipulationType;
   // Value applied for Direct manipulation type when enabled.
-  enabledValue?: string | null;
+  enabledValue?: any;
   // Value applied for Direct manipulation type when disabled.
-  disabledValue?: string | null;
+  disabledValue?: any;
   // Base value if no original value can be determined
-  baseValue?: string;
+  baseValue?: any;
 }
 
 export interface IPluginActionStyleOptions extends IPluginActionOptions {
@@ -47,9 +47,9 @@ export interface IPluginActionStyleOptions extends IPluginActionOptions {
   // Method of scaling property value
   manipulationType: ValueManipulationType;
   // Value applied for Direct manipulation type when enabled.
-  enabledValue?: string | null;
+  enabledValue?: any;
   // Value applied for Direct manipulation type when disabled.
-  disabledValue?: string | null;
+  disabledValue?: any;
   // Base value if no original value can be determined
   baseValue?: string;
   // Unit type to be used for property (e.g. 'px', 'em', etc)

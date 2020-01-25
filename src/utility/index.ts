@@ -27,6 +27,14 @@ const Utility = {
     name: string;
     type: DOMValueType;
   }): string => {
+    if (type === DOMValueType.Attribute) {
+      return node.getAttribute(name);
+    }
+
+    if (type === DOMValueType.Property) {
+      return node[name];
+    }
+
     if (type === DOMValueType.Style) {
       const value = node.style.getPropertyValue(name);
       if (value && value !== '') {
@@ -35,13 +43,6 @@ const Utility = {
       return window.getComputedStyle(node).getPropertyValue(name);
     }
 
-    if (type === DOMValueType.Property) {
-      return node[name];
-    }
-
-    if (type === DOMValueType.Attribute) {
-      return node.getAttribute(name);
-    }
     return '';
   },
 
@@ -62,6 +63,72 @@ const Utility = {
 
   getNodeListFromQuery(query: string): NodeList {
     return document.querySelectorAll(query);
+  },
+
+  /**
+   * Get value by name and ValueType of specified node.
+   *
+   * @param {NodeList | Element | any} node
+   * @param {string} name
+   * @param {DOMValueType} type
+   * @returns {string | void}
+   */
+  removeNodeValue: ({
+    node,
+    name,
+    type
+  }: {
+    node: NodeList | Element | any;
+    name: string;
+    type: DOMValueType;
+  }): void => {
+    if (type === DOMValueType.Attribute) {
+      node.removeAttribute(name);
+    }
+
+    if (type === DOMValueType.Property) {
+      delete node[name];
+    }
+
+    if (type === DOMValueType.Style) {
+      node.style.removeProperty(name);
+    }
+  },
+
+  /**
+   * Set node value via name and ValueType.
+   *
+   * @param {NodeList | Element | any} node
+   * @param {string} name
+   * @param {DOMValueType} type
+   * @param value
+   * @param priority
+   * @returns {string | void}
+   */
+  setNodeValue: ({
+    node,
+    name,
+    type,
+    value,
+    priority
+  }: {
+    node: NodeList | Element | any;
+    name: string;
+    type: DOMValueType;
+    value: any;
+    priority?: string;
+  }): void => {
+    if (type === DOMValueType.Attribute) {
+      node.setAttribute(name, value);
+    }
+
+    if (type === DOMValueType.Property) {
+      node[name] = value;
+    }
+
+    if (type === DOMValueType.Style) {
+      node.style.setProperty(name, value, priority);
+    }
   },
 
   throwError: (message: string): void => {
