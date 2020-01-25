@@ -35,14 +35,14 @@ export class PluginActionFunction extends PluginAction
   //  * Add classes to nodes
   //  */
   // public addClasses(): void {
-  //   Utility.addClass({ node: this.nodeList, func: this.func });
+  //   Utility.Css.addClass({ node: this.nodeList, func: this.func });
   // }
   //
   // /**
   //  * Remove classes from nodes
   //  */
   // public removeClasses(): void {
-  //   Utility.removeClass({ node: this.nodeList, func: this.func });
+  //   Utility.Css.removeClass({ node: this.nodeList, func: this.func });
   // }
 
   // tslint:disable-next-line:member-ordering

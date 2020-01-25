@@ -1,4 +1,4 @@
-import Utility from '@/utility/index';
+import Utility from '@/utility';
 
 export const Aria = {
   /**

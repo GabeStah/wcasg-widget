@@ -33,14 +33,14 @@ export class PluginActionClass extends PluginAction
    * Add classes to nodes
    */
   public addClasses(): void {
-    Utility.addClass({ node: this.nodeList, klass: this.klass });
+    Utility.Css.addClass({ node: this.nodeList, name: this.klass });
   }
 
   /**
    * Remove classes from nodes
    */
   public removeClasses(): void {
-    Utility.removeClass({ node: this.nodeList, klass: this.klass });
+    Utility.Css.removeClass({ node: this.nodeList, name: this.klass });
   }
 
   // tslint:disable-next-line:member-ordering

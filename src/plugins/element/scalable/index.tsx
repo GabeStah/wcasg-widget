@@ -7,7 +7,7 @@ import {
   PluginElement,
   PluginElementType
 } from 'plugins/element';
-import { PluginActionProperty } from 'plugins/action/property';
+import { PluginActionStyle } from 'plugins/action/style';
 import styles from 'styles/plugin/element.scss';
 import {
   makeElementEnabledSelector,
@@ -15,7 +15,7 @@ import {
 } from '@/state';
 
 interface IPluginElementScalable extends IPluginElement {
-  actions: PluginActionProperty[];
+  actions: PluginActionStyle[];
   scalingFactor: number;
   scalingIncrement: number;
   baseScalingFactor: number;
@@ -29,7 +29,7 @@ interface IPluginElementScalableParams extends IPluginElementParams {
 export class PluginElementScalable extends PluginElement
   implements IPluginElementScalable {
   // Force inferred assignment since parent handles it
-  public actions!: PluginActionProperty[];
+  public actions!: PluginActionStyle[];
   public type: PluginElementType = PluginElementType.Scalable;
   public scalingFactor: number = 0;
   public scalingIncrement: number = 1;

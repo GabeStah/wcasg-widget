@@ -8,10 +8,7 @@ import pluginStyles from 'styles/plugin-styles.scss';
 import { PluginActionClass } from 'plugins/action/class';
 import { PluginElementToggleable } from 'plugins/element/toggleable/';
 import { PluginElementScalable } from 'plugins/element/scalable';
-import {
-  DOMPropertyManipulationType,
-  PluginActionProperty
-} from 'plugins/action/property';
+import { PluginActionStyle } from 'plugins/action/style';
 import TextNodeType from 'classes/node-types/TextNodeType';
 import { PluginActionFunction } from 'plugins/action/function';
 import find from 'lodash/find';
@@ -21,6 +18,7 @@ import { PluginElementCustom } from 'plugins/element/custom';
 import styles from 'styles/plugin/element.scss';
 import Utility from '@/utility';
 import config from 'config';
+import { ValueManipulationType } from 'plugins/action';
 // import LibGif from 'assets/js/libgif';
 // require('svg-url-loader!../../src/assets/cursor.svg');
 
@@ -102,11 +100,11 @@ export const PluginElements = [
     title: 'Adjust Font Size',
     scalingIncrement: 0.1,
     actions: [
-      new PluginActionProperty({
+      new PluginActionStyle({
         name: 'adjust-font-size-action',
-        property: {
+        style: {
           name: 'font-size',
-          manipulationType: DOMPropertyManipulationType.PercentageScaling
+          manipulationType: ValueManipulationType.PercentageScaling
         },
         query: new TextNodeType().types.join(', ')
       })
@@ -126,11 +124,11 @@ export const PluginElements = [
     title: 'Adjust Text Spacing',
     scalingIncrement: 1,
     actions: [
-      new PluginActionProperty({
+      new PluginActionStyle({
         name: 'adjust-text-spacing-action',
-        property: {
+        style: {
           name: 'letter-spacing',
-          manipulationType: DOMPropertyManipulationType.AbsoluteScaling,
+          manipulationType: ValueManipulationType.AbsoluteScaling,
           unitType: 'px'
         },
         query: new TextNodeType().types.join(', ')
@@ -219,11 +217,11 @@ export const PluginElements = [
         klass: [darkContrastStyles.darkContrast],
         query: 'html'
       }),
-      new PluginActionProperty({
+      new PluginActionStyle({
         name: 'dark-contrast-action-background-image',
-        property: {
+        style: {
           name: 'background-image',
-          manipulationType: DOMPropertyManipulationType.Toggle,
+          manipulationType: ValueManipulationType.Toggle,
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
@@ -240,11 +238,11 @@ export const PluginElements = [
         klass: [lightContrastStyles.lightContrast],
         query: 'html'
       }),
-      new PluginActionProperty({
+      new PluginActionStyle({
         name: 'light-contrast-action-background-image',
-        property: {
+        style: {
           name: 'background-image',
-          manipulationType: DOMPropertyManipulationType.Toggle,
+          manipulationType: ValueManipulationType.Toggle,
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
@@ -261,11 +259,11 @@ export const PluginElements = [
         klass: [blackAndYellowStyles.blackAndYellow],
         query: 'html'
       }),
-      new PluginActionProperty({
+      new PluginActionStyle({
         name: 'black-and-yellow-action-background-image',
-        property: {
+        style: {
           name: 'background-image',
-          manipulationType: DOMPropertyManipulationType.Toggle,
+          manipulationType: ValueManipulationType.Toggle,
           // Value assigned to property when action is enabled.
           enabledValue: 'none'
         },
@@ -425,11 +423,11 @@ export const PluginElements = [
     title: 'Mute Audio',
     enabled: false,
     actions: [
-      new PluginActionProperty({
+      new PluginActionStyle({
         name: 'mute-audio-action',
-        property: {
+        style: {
           name: 'muted',
-          manipulationType: DOMPropertyManipulationType.Direct,
+          manipulationType: ValueManipulationType.Direct,
           baseValue: 'false',
           enabledValue: 'true',
           disabledValue: 'false'

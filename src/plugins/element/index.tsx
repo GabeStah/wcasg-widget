@@ -2,7 +2,7 @@ import React from 'react';
 import { ReducerType } from '@/state';
 import { IPluginAction } from 'plugins/action';
 import Utility from '@/utility';
-import { IPluginActionProperty } from 'plugins/action/property';
+import { IPluginActionStyle } from 'plugins/action/style';
 
 interface IPlugin {
   id?: string;
@@ -19,7 +19,7 @@ export enum PluginElementType {
   Custom
 }
 
-export type IPluginActionTypes = IPluginAction[] | IPluginActionProperty[];
+export type IPluginActionTypes = IPluginAction[] | IPluginActionStyle[];
 
 export interface IPluginElement {
   id?: string;

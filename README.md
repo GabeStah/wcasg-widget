@@ -55,7 +55,7 @@ The `PluginElementSelectable` and `PluginElementMultiselectable` elements are st
 
 As mentioned, a `PluginAction` is a stateless instance that is a child of a given `PluginElement`.  When the `PluginElement` dispatches a relevant state change it triggers its child `PluginActions`, which perform their assigned task of updating the DOM.
 
-As with `PluginElements` there are a few inherited `PluginAction` classes that perform explicit types of actions.  [`PluginActionClass`](src/plugins/action/class/index.ts) alters a node's assigned CSS classes list, making it ideal for `PluginElements` that want to affect styling of the entire page.  [`PluginActionProperty`](src/plugins/action/property/index.ts) is used for fine-grained manipulation of node styling and properties.  It is best used when modifying styling incrementally (such as `font-size` via the `PluginElementScalable` element).
+As with `PluginElements` there are a few inherited `PluginAction` classes that perform explicit types of actions.  [`PluginActionClass`](src/plugins/action/class/index.ts) alters a node's assigned CSS classes list, making it ideal for `PluginElements` that want to affect styling of the entire page.  [`PluginActionProperty`](src/plugins/action/style/index.ts) is used for fine-grained manipulation of node styling and properties.  It is best used when modifying styling incrementally (such as `font-size` via the `PluginElementScalable` element).
 
 In most cases, a `PluginAction` affects the DOM by altering relevant nodes (i.e. elements).
 

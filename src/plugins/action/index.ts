@@ -1,10 +1,59 @@
 import Utility from '@/utility';
 
-enum PluginActionType {
-  Class,
-  Style,
-  Script,
-  Property
+export enum ValueManipulationType {
+  PercentageScaling,
+  AbsoluteScaling,
+  Toggle,
+  Direct
+}
+
+export enum DOMValueType {
+  Attribute = 'attribute',
+  Style = 'style',
+  Property = 'property'
+}
+
+interface IPluginActionOptions {
+  // Name of property (e.g. 'font-size')
+  name?: string;
+  // Method of scaling property value
+  manipulationType?: ValueManipulationType;
+  // Value applied for Direct manipulation type when enabled.
+  enabledValue?: string | null;
+  // Value applied for Direct manipulation type when disabled.
+  disabledValue?: string | null;
+  // Base value if no original value can be determined
+  baseValue?: string;
+  // Unit type to be used for property (e.g. 'px', 'em', etc)
+  unitType?: string;
+}
+
+export interface IPluginActionPropertyOptions extends IPluginActionOptions {
+  // Name of property (e.g. 'font-size')
+  name: string;
+  // Method of scaling property value
+  manipulationType: ValueManipulationType;
+  // Value applied for Direct manipulation type when enabled.
+  enabledValue?: string | null;
+  // Value applied for Direct manipulation type when disabled.
+  disabledValue?: string | null;
+  // Base value if no original value can be determined
+  baseValue?: string;
+}
+
+export interface IPluginActionStyleOptions extends IPluginActionOptions {
+  // Name of property (e.g. 'font-size')
+  name: string;
+  // Method of scaling property value
+  manipulationType: ValueManipulationType;
+  // Value applied for Direct manipulation type when enabled.
+  enabledValue?: string | null;
+  // Value applied for Direct manipulation type when disabled.
+  disabledValue?: string | null;
+  // Base value if no original value can be determined
+  baseValue?: string;
+  // Unit type to be used for property (e.g. 'px', 'em', etc)
+  unitType?: string;
 }
 
 export interface IPluginAction {

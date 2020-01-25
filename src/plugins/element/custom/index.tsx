@@ -1,6 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import isEqual from 'lodash/isEqual';
+import React from 'react';
 import { IPluginAction } from 'plugins/action';
 import {
   IPluginElement,
@@ -9,7 +7,6 @@ import {
   PluginElementType
 } from 'plugins/element';
 import styles from 'styles/plugin/element.scss';
-import { makeElementEnabledSelector } from '@/state';
 
 interface IPluginElementCustom extends IPluginElement {
   // Action(s) to execute when enabled
