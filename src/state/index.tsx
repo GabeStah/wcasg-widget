@@ -390,26 +390,26 @@ export const PluginElements = [
       );
     }
   }),
-  new PluginElementToggleable({
-    title: 'Test Func',
-    enabled: false,
-    actions: [
-      new PluginActionFunction({
-        name: 'text-func-action',
-        func: [
-          () => {
-            const images = document.querySelectorAll(['img'].join(', '));
-            if (images && images.length > 0) {
-              images.forEach(image => {
-                // const gif = new LibGif({ gif: image });
-              });
-            }
-          },
-          () => console.log('test2')
-        ]
-      })
-    ]
-  }),
+  // new PluginElementToggleable({
+  //   title: 'Test Func',
+  //   enabled: false,
+  //   actions: [
+  //     new PluginActionFunction({
+  //       name: 'text-func-action',
+  //       func: [
+  //         () => {
+  //           const images = document.querySelectorAll(['img'].join(', '));
+  //           if (images && images.length > 0) {
+  //             images.forEach(image => {
+  //               // const gif = new LibGif({ gif: image });
+  //             });
+  //           }
+  //         },
+  //         () => console.log('test2')
+  //       ]
+  //     })
+  //   ]
+  // }),
   new PluginElementToggleable({
     title: 'Stop CSS Animations',
     enabled: false,
@@ -418,6 +418,23 @@ export const PluginElements = [
         name: 'stop-css-animations-action',
         klass: [pluginStyles.stopGlobalAnimations],
         query: 'body'
+      })
+    ]
+  }),
+  new PluginElementToggleable({
+    title: 'Mute Audio',
+    enabled: false,
+    actions: [
+      new PluginActionProperty({
+        name: 'mute-audio-action',
+        property: {
+          name: 'muted',
+          manipulationType: DOMPropertyManipulationType.Direct,
+          baseValue: 'false',
+          enabledValue: 'true',
+          disabledValue: 'false'
+        },
+        query: ['audio', 'video'].join(', ')
       })
     ]
   })

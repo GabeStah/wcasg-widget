@@ -5,6 +5,11 @@ import {
   PluginAction
 } from 'plugins/action';
 
+export enum PropertyType {
+  Style,
+  Property
+}
+
 export enum DOMPropertyManipulationType {
   PercentageScaling,
   AbsoluteScaling,
@@ -25,6 +30,8 @@ interface DOMProperty {
   baseValue?: string;
   // (Optional) Unit type to be used for property (e.g. 'px', 'em', etc)
   unitType?: string;
+  // Indicates what type of property to adjust, such as a style property or direct object property.
+  propertyType?: PropertyType;
 }
 
 export interface IPluginActionProperty extends IPluginAction {
