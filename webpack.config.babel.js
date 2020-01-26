@@ -37,7 +37,11 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|js)x?$/,
-        exclude: [/node_modules/, '/src/assets/js/libgif/**/*.*'],
+        exclude: [
+          /node_modules/,
+          '/src/assets/svg/**/*.*',
+          '/src/assets/js/libgif/**/*.*'
+        ],
         use: [
           {
             loader: 'babel-loader',

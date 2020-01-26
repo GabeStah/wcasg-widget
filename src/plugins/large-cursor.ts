@@ -3,12 +3,13 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import pluginStyles from 'styles/plugin-styles.scss';
 
 export const pluginLargeCursor = new PluginElementToggleable({
-  title: 'Large Cursor (TODO: SVG troubles)',
+  title: 'Large Cursor',
   enabled: false,
   actions: [
     new PluginActionClass({
       name: 'large-cursor-action',
-      klass: [pluginStyles.largeCursor]
+      klass: [pluginStyles.largeCursor],
+      query: 'html'
     })
   ]
 });

@@ -386,6 +386,19 @@ public template = (self: any) => {
 - Alternatively, create Bookmarklet that loads raw `build/index.js` content.
 - Alternatively, use local Git clone'd copy by adding `build/index.js` to `Chrome Dev Tools > Filesystem > Workspace`, then `Ctrl + A` to select and `Ctrl + Shift + E` to execute on current page.
 
+## Using Inline SVGs
+
+1. Add SVG file to `src/assets/svg`.
+2. Run `npm run svg:optimize`, which uses the [svgo](https://github.com/svg/svgo) tool to minify.
+3. Reference the minified svg copy found in `srv/assets/svg-minified`:
+
+```css
+.largeCursor,
+.largeCursor * {
+  cursor: url(src/assets/svg-minified/cursor-arrow.svg), default !important;
+}
+```
+
 ## Known Issues
 
 - Building the first time after importing / referencing a new `.scss` style or file will fail, reporting the property doesn't exist in `CssExports`. This is due to the build order for TypeScript + SCSS imports. Just force a second build to resolve the issue.
