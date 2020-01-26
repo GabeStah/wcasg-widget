@@ -6,12 +6,14 @@ import {
 
 type FunctionType = (params?: any) => any;
 
-interface IPluginActionFunction extends IPluginAction {
+export interface IPluginActionFunction extends IPluginAction {
   func: FunctionType | FunctionType[];
+  funcOnDisable: FunctionType | FunctionType[];
 }
 
 interface IPluginActionFunctionParams extends IPluginActionParams {
   func?: FunctionType | FunctionType[];
+  funcOnDisable?: FunctionType | FunctionType[];
 }
 
 /**
@@ -20,6 +22,7 @@ interface IPluginActionFunctionParams extends IPluginActionParams {
 export class PluginActionFunction extends PluginAction
   implements IPluginActionFunction {
   public func: FunctionType | FunctionType[] = [];
+  public funcOnDisable: FunctionType | FunctionType[] = [];
 
   constructor(params?: IPluginActionFunctionParams) {
     super(params);
@@ -27,46 +30,27 @@ export class PluginActionFunction extends PluginAction
       if (params.func) {
         this.func = params.func;
       }
+      if (params.funcOnDisable) {
+        this.funcOnDisable = params.funcOnDisable;
+      }
     }
   }
 
-  // /**
-  //  * Add classes to nodes
-  //  */
-  // public addClasses(): void {
-  //   Utility.Css.addClass({ node: this.nodeList, func: this.func });
-  // }
-  //
-  // /**
-  //  * Remove classes from nodes
-  //  */
-  // public removeClasses(): void {
-  //   Utility.Css.removeClass({ node: this.nodeList, func: this.func });
-  // }
-
-  // tslint:disable-next-line:member-ordering
   public enable(): void {
     // Iterate functions
     if (Array.isArray(this.func)) {
-      this.func.forEach(f => f());
+      this.func.forEach(f => f(this));
     } else {
-      this.func();
+      this.func(this);
     }
-    // this.addClasses();
   }
 
-  // tslint:disable-next-line:member-ordering
   public disable(): void {
-    // this.removeClasses();
-  }
-
-  /**
-   * Remove all applied classes, then reapply classes if enabled.
-   */
-  // tslint:disable-next-line:member-ordering
-  public reset(): void {
-    // Remove
-    // this.removeClasses();
-    // this.addClasses();
+    // Iterate functions
+    if (Array.isArray(this.funcOnDisable)) {
+      this.funcOnDisable.forEach(f => f(this));
+    } else {
+      this.funcOnDisable(this);
+    }
   }
 }

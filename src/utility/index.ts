@@ -3,12 +3,14 @@ import config from 'config';
 import Aria from '@/utility/aria';
 import Css from '@/utility/css';
 import Data from '@/utility/data';
+import Plugin from '@/utility/plugin';
 import { DOMValueType } from 'classes/plugin/action';
 
 const Utility = {
   Aria,
   Css,
   Data,
+  Plugin,
 
   /**
    * Get value by name and ValueType of specified node.

@@ -8,6 +8,7 @@ interface CssExports {
   highlightLinksBlock: string;
   highlightLinksBorder: string;
   highlightLinksBoth: string;
+  keyboardNavigationFocus: string;
   largeCursor: string;
   readableFonts: string;
   stopGlobalAnimations: string;

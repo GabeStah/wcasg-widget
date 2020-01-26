@@ -1,3 +1,5 @@
+@import 'src/styles/variables';
+
 /* Name must NOT contain hyphen */
 .widgetContainer {
   background-color: rgba(0,0,0,0.7);
@@ -10,4 +12,10 @@
   min-width: 250px;
   overflow: auto;
   z-index: 999;
+}
+
+.#{$widget-prefix}-focused {
+  background-color: rgba($default-highlight-color-secondary, 1) !important;
+  outline: 2px solid rgba($default-highlight-color-primary, 0.5) !important;
+  outline-offset: 1px !important;
 }

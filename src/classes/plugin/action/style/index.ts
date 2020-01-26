@@ -2,11 +2,26 @@ import Utility from '@/utility';
 import {
   DOMValueType,
   IPluginAction,
+  IPluginActionOptions,
   IPluginActionParams,
-  IPluginActionStyleOptions,
   PluginAction,
   ValueManipulationType
 } from 'classes/plugin/action';
+
+export interface IPluginActionStyleOptions extends IPluginActionOptions {
+  // Name of property (e.g. 'font-size')
+  name: string;
+  // Method of scaling property value
+  manipulationType: ValueManipulationType;
+  // Value applied for Direct manipulation type when enabled.
+  enabledValue?: any;
+  // Value applied for Direct manipulation type when disabled.
+  disabledValue?: any;
+  // Base value if no original value can be determined
+  baseValue?: string;
+  // Unit type to be used for property (e.g. 'px', 'em', etc)
+  unitType?: string;
+}
 
 export interface IPluginActionStyle extends IPluginAction {
   style: IPluginActionStyleOptions;

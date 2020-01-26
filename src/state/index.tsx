@@ -9,6 +9,7 @@ import { pluginHideImages } from 'plugins/hide-images';
 import { pluginHighlightForms } from 'plugins/highlight-forms';
 import { pluginHighlightLinks } from 'plugins/highlight-links';
 import { pluginInvertColors } from 'plugins/invert-colors';
+import { pluginKeyboardNavigation } from 'plugins/keyboard-navigation';
 import { pluginLargeCursor } from 'plugins/large-cursor';
 import { pluginLightContrast } from 'plugins/light-contrast';
 import { pluginMuteAudio } from 'plugins/mute-audio';
@@ -77,7 +78,7 @@ export interface InitialStateType {
   elements: any;
 }
 
-export const PluginElements = [
+export const Plugins = [
   pluginEmphasizeTitles,
   pluginFontSize,
   pluginHighlightLinks,
@@ -94,10 +95,11 @@ export const PluginElements = [
   pluginBlackAndYellow,
   pluginPageNavigation,
   pluginStopAnimations,
-  pluginMuteAudio
+  pluginMuteAudio,
+  pluginKeyboardNavigation
 ];
 
-const defaultStateElements = PluginElements.map((element: any) =>
+const defaultStateElements = Plugins.map((element: any) =>
   element.getInstanceState()
 );
 

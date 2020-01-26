@@ -1,7 +1,49 @@
 import Utility from '@/utility';
 import { DOMValueType } from 'classes/plugin/action';
+import globalStyles from 'styles/global.scss';
 
 export const Aria = {
+  blurNode: ({ node }: { node: any }): void => {
+    if (!node) {
+      return;
+    }
+    // Remove focused class.
+    Utility.Css.removeClass({
+      node,
+      name: globalStyles['wcasg-ada-app-focused']
+    });
+    // Remove tabindex value.
+    Utility.removeNodeValue({
+      node,
+      type: DOMValueType.Attribute,
+      name: 'tabindex'
+    });
+    // Blur, if available
+    if (node.blur && typeof node.blur === 'function') {
+      node.blur();
+    }
+  },
+  focusNode: ({ node }: { node: any }): void => {
+    if (!node) {
+      return;
+    }
+    // Add focused class.
+    Utility.Css.addClass({
+      node,
+      name: globalStyles['wcasg-ada-app-focused']
+    });
+    // Set -1 tabindex value.
+    Utility.setNodeValue({
+      node,
+      type: DOMValueType.Attribute,
+      name: 'tabindex',
+      value: -1
+    });
+    // Focus, if available
+    if (node.focus && typeof node.focus === 'function') {
+      node.focus();
+    }
+  },
   /**
    * Get the preferred text value for a passed Element, searching in order of importance:
    * aria-label > aria-labelledby > aria-value-text > textContent > href

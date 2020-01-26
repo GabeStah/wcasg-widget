@@ -1,7 +1,7 @@
 import React from 'react';
 import config from 'config';
 import styles from './styles.scss';
-import { PluginElements } from '@/state';
+import { Plugins } from '@/state';
 
 export default class Widget extends React.Component<{}> {
   public render() {
@@ -9,7 +9,7 @@ export default class Widget extends React.Component<{}> {
       <div className={styles.modal}>
         <h2>{config.widgetTitle}</h2>
         <div className={styles.modalContainer}>
-          {PluginElements.map((element: { template: any }) => {
+          {Plugins.map((element: { template: any }) => {
             return element.template;
           })}
         </div>
