@@ -135,15 +135,23 @@ const handleKeyDown = (
 
   switch (e.which) {
     case KeyCodes.T:
+      e.stopImmediatePropagation();
+      e.preventDefault();
       changeFocus({ plugin, searchTags: table, isReverse: e.shiftKey });
       break;
     case KeyCodes.G:
+      e.stopImmediatePropagation();
+      e.preventDefault();
       changeFocus({ plugin, searchTags: image, isReverse: e.shiftKey });
       break;
     case KeyCodes.L:
+      e.stopImmediatePropagation();
+      e.preventDefault();
       changeFocus({ plugin, searchTags: listAndMenu, isReverse: e.shiftKey });
       break;
     case KeyCodes.I:
+      e.stopImmediatePropagation();
+      e.preventDefault();
       changeFocus({
         plugin,
         searchTags: listAndMenuItems,
@@ -151,9 +159,13 @@ const handleKeyDown = (
       });
       break;
     case KeyCodes.F:
+      e.stopImmediatePropagation();
+      e.preventDefault();
       changeFocus({ plugin, searchTags: elements, isReverse: e.shiftKey });
       break;
     case KeyCodes.H:
+      e.stopImmediatePropagation();
+      e.preventDefault();
       changeFocus({ plugin, searchTags: headings, isReverse: e.shiftKey });
       break;
     default:

@@ -1,4 +1,5 @@
-import React from 'react';
+import Utility from '@/utility';
+import { StorageDataType } from '@/utility/store';
 import { IPluginAction } from 'classes/plugin/action';
 import {
   IPluginElement,
@@ -6,6 +7,8 @@ import {
   PluginElement,
   PluginElementType
 } from 'classes/plugin/element';
+import config from 'config';
+import React from 'react';
 import styles from 'styles/plugin/element.scss';
 
 interface IPluginElementCustom extends IPluginElement {
@@ -37,11 +40,24 @@ export class PluginElementCustom extends PluginElement
       }
     }
 
+    this.loadFromLocalStorage();
+
     this.initialize(this);
+  }
+
+  public setInstanceState(params?: { id?: string; enabled?: boolean }): void {
+    this.enabled =
+      params && params.enabled !== undefined ? params.enabled : this.enabled;
   }
 
   public update = (enabled: boolean): void => {
     enabled ? this.enableActions() : this.disableActions();
+    // Update current state to local storage.
+    Utility.Store.saveToLocalStorage({
+      type: StorageDataType.Plugin,
+      value: this,
+      withCompression: config.useLocalStorageCompression
+    });
   };
 
   public disableActions = (): void => {

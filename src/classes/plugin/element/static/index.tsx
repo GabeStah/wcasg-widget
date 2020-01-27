@@ -1,3 +1,6 @@
+import Utility from '@/utility';
+import { StorageDataType } from '@/utility/store';
+import config from 'config';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
@@ -34,11 +37,24 @@ export class PluginElementStatic extends PluginElement
       }
     }
 
+    this.loadFromLocalStorage();
+
     this.initialize(this);
+  }
+
+  public setInstanceState(params?: { id?: string; enabled?: boolean }): void {
+    this.enabled =
+      params && params.enabled !== undefined ? params.enabled : this.enabled;
   }
 
   public update = (enabled: boolean): void => {
     enabled ? this.enableActions() : this.disableActions();
+    // Update current state to local storage.
+    Utility.Store.saveToLocalStorage({
+      type: StorageDataType.Plugin,
+      value: this,
+      withCompression: config.useLocalStorageCompression
+    });
   };
 
   public disableActions = (): void => {

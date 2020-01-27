@@ -1,3 +1,4 @@
+import Store from '@/utility/store';
 import times from 'lodash/times';
 import config from 'config';
 import Aria from '@/utility/aria';
@@ -11,6 +12,7 @@ const Utility = {
   Css,
   Data,
   Plugin,
+  Store,
 
   /**
    * Get value by name and ValueType of specified node.

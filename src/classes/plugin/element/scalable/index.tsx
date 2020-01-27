@@ -1,3 +1,6 @@
+import Utility from '@/utility';
+import { StorageDataType } from '@/utility/store';
+import config from 'config';
 import React, { useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
@@ -26,7 +29,6 @@ interface IPluginElementScalable extends IPluginElement {
 
 interface IPluginElementScalableParams extends IPluginElementParams {
   scalingIncrement?: number;
-  value?: any;
 }
 
 export class PluginElementScalable extends PluginElement
@@ -49,19 +51,21 @@ export class PluginElementScalable extends PluginElement
       if (params.template) {
         this.template = params.template;
       }
-
-      if (params.value) {
-        this.scalingFactor = params.value;
-        // Retain base value for later reference
-        this.baseScalingFactor = params.value;
-      }
     }
+
+    this.loadFromLocalStorage();
 
     this.initialize(this);
   }
 
   public update = (enabled: boolean): void => {
     enabled ? this.enableActions() : this.disableActions();
+    // Update current state to local storage.
+    Utility.Store.saveToLocalStorage({
+      type: StorageDataType.Plugin,
+      value: this,
+      withCompression: config.useLocalStorageCompression
+    });
   };
 
   public getInstanceState(params?: {
@@ -78,6 +82,18 @@ export class PluginElementScalable extends PluginElement
           ? params.scalingFactor
           : this.scalingFactor
     };
+  }
+
+  public setInstanceState(params?: {
+    enabled?: boolean;
+    scalingFactor?: number;
+  }): void {
+    this.scalingFactor =
+      params && params.scalingFactor !== undefined
+        ? params.scalingFactor
+        : this.scalingFactor;
+    this.enabled =
+      params && params.enabled !== undefined ? params.enabled : this.enabled;
   }
 
   public enableActions = (): void => {

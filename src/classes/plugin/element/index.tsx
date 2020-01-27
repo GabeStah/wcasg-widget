@@ -1,7 +1,10 @@
-import React from 'react';
+import Utility from '@/utility';
+import { StorageDataType } from '@/utility/store';
 import { IPluginAction } from 'classes/plugin/action';
 import { IPluginActionStyle } from 'classes/plugin/action/style';
-import Utility from '@/utility';
+import config from 'config';
+import React from 'react';
+import store from 'store2';
 
 interface IPlugin {
   id?: string;
@@ -111,11 +114,26 @@ export abstract class PluginElement implements IPluginElement {
     };
   }
 
+  public abstract setInstanceState(params?: any): void;
+
   public initialize = (self: any): void => {
     // Initialize name
     if (!this.name && this.title) {
       this.name = this.title.toLowerCase().replace(' ', '-');
     }
   };
+
+  protected loadFromLocalStorage(): any {
+    const data = Utility.Store.getFromLocalStorage({
+      type: StorageDataType.Plugin,
+      id: this.id,
+      withCompression: config.useLocalStorageCompression
+    });
+    if (!data) {
+      return;
+    }
+    this.setInstanceState(data);
+  }
+
   private _template = (self: any) => undefined;
 }
