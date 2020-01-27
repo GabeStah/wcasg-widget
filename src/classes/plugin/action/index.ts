@@ -35,7 +35,7 @@ export interface IPluginAction {
   enable: (value: any | void) => void;
   id?: string;
   name?: string;
-  onInitialize?: (self: any) => void;
+  initialize?: (self: any) => void;
   query?: string;
 }
 
@@ -46,7 +46,7 @@ export interface IPluginActionParams {
   enable?: (value: any | void) => void;
   id?: string;
   name?: string;
-  onInitialize?: (self: any) => void;
+  initialize?: (self: any) => void;
   query?: string;
 }
 
@@ -55,15 +55,27 @@ export interface IPluginActionParams {
  * PluginActions have no concept of state, so actions should be self-contained (functional).
  */
 export abstract class PluginAction implements IPluginAction {
+  /**
+   * Retrieves NodeList of Elements based on query selection.
+   * If `cacheNodes` is `true` then save initial query result to private property.
+   * @returns {NodeList}
+   */
+  get nodeList(): NodeList {
+    if (this.cacheNodes) {
+      if (!this._nodeList) {
+        this._nodeList = Utility.getNodeListFromQuery(this.query);
+      }
+      return this._nodeList;
+    }
+    return Utility.getNodeListFromQuery(this.query);
+  }
   public cacheNodes: boolean = true;
   public data: any;
   public id: string = Utility.generateGuid();
   public name: string = '';
   public query: string = 'body';
   private _nodeList?: NodeList;
-  public onInitialize: (self: any) => void = () => undefined;
 
-  /* tslint:disable-next-line:member-ordering */
   protected constructor(params?: IPluginActionParams) {
     if (params) {
       if (params.id) {
@@ -81,40 +93,21 @@ export abstract class PluginAction implements IPluginAction {
       if (params.disable) {
         this.disable = params.disable;
       }
-
       if (params.cacheNodes !== undefined) {
         this.cacheNodes = params.cacheNodes;
       }
-
       if (params.query) {
         this.query = params.query;
       }
-      if (params.onInitialize) {
-        this.onInitialize = params.onInitialize;
+      if (params.initialize) {
+        this.initialize = params.initialize;
       }
     }
-
-    this.onInitialize(this);
   }
 
-  /**
-   * Retrieves NodeList of Elements based on query selection.
-   * If `cacheNodes` is `true` then save initial query result to private property.
-   * @returns {NodeList}
-   */
-  get nodeList(): NodeList {
-    if (this.cacheNodes) {
-      if (!this._nodeList) {
-        this._nodeList = Utility.getNodeListFromQuery(this.query);
-      }
-      return this._nodeList;
-    }
-    return Utility.getNodeListFromQuery(this.query);
-  }
+  public initialize: (self: any) => void = () => undefined;
 
-  // tslint:disable-next-line:no-empty
   public abstract enable(value: any | void): void;
 
-  // tslint:disable-next-line:no-empty
   public abstract disable(): void;
 }

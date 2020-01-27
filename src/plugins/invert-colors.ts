@@ -3,6 +3,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import constrastStyles from 'styles/contrast/index.scss';
 
 export const pluginInvertColors = new PluginElementToggleable({
+  id: 'plugin-invert-colors',
   title: 'Invert Colors',
   enabled: false,
   actions: [

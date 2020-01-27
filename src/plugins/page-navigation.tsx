@@ -6,6 +6,7 @@ import React from 'react';
 import styles from 'styles/plugin/element.scss';
 
 export const pluginPageNavigation = new PluginElementCustom({
+  id: 'plugin-page-navigation',
   title: 'Page Navigation',
   /**
    * Gather collection of headers and links, in order of DOM tree.
@@ -107,9 +108,7 @@ export const pluginPageNavigation = new PluginElementCustom({
 
     return (
       <div
-        className={`${styles['plugin-element']} ${
-          styles['plugin-element-custom']
-        }`}
+        className={`${styles['plugin-element']} ${styles['plugin-element-custom']}`}
       >
         <h3>{self.title}</h3>
         <select

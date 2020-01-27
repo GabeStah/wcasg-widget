@@ -57,8 +57,7 @@ export class PluginElementScalable extends PluginElement
       }
     }
 
-    // Initialize
-    this.initialize();
+    this.initialize(this);
   }
 
   public update = (enabled: boolean): void => {
@@ -93,7 +92,7 @@ export class PluginElementScalable extends PluginElement
     });
   };
 
-  public initialize = (): void => {
+  public initialize = (self: any): void => {
     if (this.enabled) {
       this.enableActions();
     }

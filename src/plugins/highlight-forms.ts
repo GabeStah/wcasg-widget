@@ -3,6 +3,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import pluginStyles from 'styles/plugin-styles.scss';
 
 export const pluginHighlightForms = new PluginElementToggleable({
+  id: 'plugin-highlight-forms',
   title: 'Highlight Forms',
   enabled: false,
   actions: [

@@ -5,6 +5,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import lightContrastStyles from 'styles/contrast/light-contrast.scss';
 
 export const pluginLightContrast = new PluginElementToggleable({
+  id: 'plugin-light-contrast',
   title: 'Light Contrast',
   enabled: false,
   actions: [

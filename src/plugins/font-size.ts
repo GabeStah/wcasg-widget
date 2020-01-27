@@ -4,7 +4,8 @@ import { PluginActionStyle } from 'classes/plugin/action/style';
 import { PluginElementScalable } from 'classes/plugin/element/scalable';
 
 export const pluginFontSize = new PluginElementScalable({
-  title: 'Adjust Font Size',
+  id: 'plugin-font-size',
+  title: 'Font Size',
   scalingIncrement: 0.1,
   actions: [
     new PluginActionStyle({

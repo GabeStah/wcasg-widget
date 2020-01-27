@@ -37,6 +37,8 @@ export interface IPluginElement {
   actions?: IPluginActionTypes;
   // Get the current or default state object
   getInstanceState: (params?: any) => any;
+  // Executes on initialize
+  initialize?: (self: any) => void;
 }
 
 export interface IPluginElementParams {
@@ -45,13 +47,21 @@ export interface IPluginElementParams {
   enabled?: boolean;
   id?: string;
   name?: string;
+  initialize?: (self: any) => void;
   order?: number;
   template?: (self?: any) => any;
   title?: string;
   type?: PluginElementType;
 }
 
-export class PluginElement implements IPluginElement {
+export abstract class PluginElement implements IPluginElement {
+  get template(): any {
+    return this._template(this);
+  }
+
+  set template(value: any) {
+    this._template = value;
+  }
   public id: string = Utility.generateGuid();
   public actions: IPluginActionTypes = [];
   public children: IPluginElement[] = [];
@@ -60,31 +70,8 @@ export class PluginElement implements IPluginElement {
   public order: number = 0;
   public type: PluginElementType = PluginElementType.Toggleable;
   public title: string = `Element: ${this.id}`;
-  // public template: (self?: any) => any = (self?: any) => {};
-  protected _template = (self: any) => {};
 
-  public getInstanceState(params?: { id?: string; enabled?: boolean }): any {
-    return {
-      id: params && params.id ? params.id : this.id,
-      enabled:
-        params && params.enabled !== undefined ? params.enabled : this.enabled
-    };
-  }
-
-  public getFromState = (state: any): IPluginElement => {
-    // return state.elements.elements[this.id];
-    return state.elements.elements.find((e: any) => e.id === this.id);
-  };
-
-  get template(): any {
-    return this._template(this);
-  }
-
-  set template(value: any) {
-    this._template = value;
-  }
-
-  constructor(params?: IPluginElementParams) {
+  protected constructor(params?: IPluginElementParams) {
     if (params) {
       if (params.id) {
         this.id = params.id;
@@ -101,6 +88,9 @@ export class PluginElement implements IPluginElement {
       if (params.name) {
         this.name = params.name;
       }
+      if (params.initialize) {
+        this.initialize = params.initialize;
+      }
       if (params.order) {
         this.order = params.order;
       }
@@ -111,10 +101,21 @@ export class PluginElement implements IPluginElement {
         this.title = params.title;
       }
     }
+  }
 
+  public getInstanceState(params?: { id?: string; enabled?: boolean }): any {
+    return {
+      id: params && params.id ? params.id : this.id,
+      enabled:
+        params && params.enabled !== undefined ? params.enabled : this.enabled
+    };
+  }
+
+  public initialize = (self: any): void => {
     // Initialize name
     if (!this.name && this.title) {
       this.name = this.title.toLowerCase().replace(' ', '-');
     }
-  }
+  };
+  private _template = (self: any) => undefined;
 }

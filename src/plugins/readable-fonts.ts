@@ -3,6 +3,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import pluginStyles from 'styles/plugin-styles.scss';
 
 export const pluginReadableFonts = new PluginElementToggleable({
+  id: 'plugin-readable-fonts',
   title: 'Readable Fonts',
   enabled: false,
   actions: [

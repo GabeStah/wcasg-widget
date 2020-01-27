@@ -5,6 +5,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import blackAndYellowStyles from 'styles/contrast/black-and-yellow.scss';
 
 export const pluginBlackAndYellow = new PluginElementToggleable({
+  id: 'plugin-black-and-yellow',
   title: 'Black & Yellow',
   enabled: false,
   actions: [

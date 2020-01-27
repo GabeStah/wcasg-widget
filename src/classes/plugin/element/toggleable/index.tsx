@@ -34,8 +34,7 @@ export class PluginElementToggleable extends PluginElement
       }
     }
 
-    // Initialize
-    this.initialize();
+    this.initialize(this);
   }
 
   public update = (enabled: boolean): void => {
@@ -54,7 +53,7 @@ export class PluginElementToggleable extends PluginElement
     });
   };
 
-  public initialize = (): void => {
+  public initialize = (self: any): void => {
     if (this.enabled) {
       this.enableActions();
     }

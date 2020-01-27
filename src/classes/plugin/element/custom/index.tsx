@@ -17,7 +17,6 @@ interface IPluginElementCustom extends IPluginElement {
 // tslint:disable-next-line:no-empty-interface
 interface IPluginElementCustomParams extends IPluginElementParams {
   options?: any;
-  initialize?: any;
 }
 
 export class PluginElementCustom extends PluginElement
@@ -29,10 +28,6 @@ export class PluginElementCustom extends PluginElement
     super(params);
 
     if (params) {
-      if (params.initialize) {
-        this.initialize = params.initialize;
-      }
-
       if (params.options) {
         this.options = params.options;
       }
@@ -42,7 +37,6 @@ export class PluginElementCustom extends PluginElement
       }
     }
 
-    // Initialize
     this.initialize(this);
   }
 
@@ -61,8 +55,6 @@ export class PluginElementCustom extends PluginElement
       action.enable(null);
     });
   };
-
-  public initialize = (self: any): void => {};
 
   public template = (self: any) => {
     return (

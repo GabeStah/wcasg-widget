@@ -176,6 +176,7 @@ const handleKeyDown = (
  * @type {PluginElementToggleable}
  */
 export const pluginKeyboardNavigation = new PluginElementToggleable({
+  id: 'plugin-keyboard-navigation',
   title: 'Keyboard Navigation',
   enabled: false,
   actions: [
@@ -193,7 +194,7 @@ export const pluginKeyboardNavigation = new PluginElementToggleable({
           self.data.focusedNodeIndex = undefined;
         }
       ],
-      onInitialize: (self: PluginActionFunction) => {
+      initialize: (self: PluginActionFunction) => {
         // Add event listener one time.
         document.addEventListener('keydown', e =>
           handleKeyDown(e, self, pluginKeyboardNavigation)

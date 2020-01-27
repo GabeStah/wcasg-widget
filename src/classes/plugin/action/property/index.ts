@@ -41,8 +41,110 @@ export class PluginActionProperty extends PluginAction
     super(params);
     this.property = params.property;
 
+    this.initialize(this);
+  }
+
+  public initialize = (self: any): void => {
     // Initialize by generating original data attributes for property
     this.addDataAttributeForProperties();
+  };
+
+  public enable(params?: any): void {
+    this.nodeList.forEach((node: any) => {
+      // If absolute or scaling get calculated value
+      if (
+        [
+          ValueManipulationType.AbsoluteScaling,
+          ValueManipulationType.PercentageScaling
+        ].includes(this.property.manipulationType)
+      ) {
+        const { scalingFactor } = params;
+        Utility.setNodeValue({
+          node,
+          name: this.property.name,
+          type: this.domValueType,
+          value: this.getCalculatedPropertyValue(scalingFactor, node)
+        });
+      } else if (
+        this.property.manipulationType === ValueManipulationType.Toggle
+      ) {
+        // If toggle, set to enabledValue (or remove if enabledValue is null)
+        if (this.property.enabledValue !== undefined) {
+          Utility.setNodeValue({
+            node,
+            name: this.property.name,
+            type: this.domValueType,
+            value: this.property.enabledValue
+          });
+        } else {
+          Utility.removeNodeValue({
+            node,
+            name: this.property.name,
+            type: this.domValueType
+          });
+        }
+      } else if (
+        this.property.manipulationType === ValueManipulationType.Direct
+      ) {
+        // If direct, set to enabledValue (or remove if enabledValue is null)
+        if (this.property.enabledValue !== undefined) {
+          Utility.setNodeValue({
+            node,
+            name: this.property.name,
+            type: this.domValueType,
+            value: this.property.enabledValue
+          });
+        } else {
+          Utility.removeNodeValue({
+            node,
+            name: this.property.name,
+            type: this.domValueType
+          });
+        }
+      }
+    });
+  }
+
+  /**
+   * Reset all applied properties to original values from saved data attribute
+   */
+  public disable(): void {
+    this.nodeList.forEach((node: any) => {
+      let value = this.property.disabledValue;
+      // If absolute, scaling, or toggled reset to original value
+      if (
+        [
+          ValueManipulationType.AbsoluteScaling,
+          ValueManipulationType.PercentageScaling,
+          ValueManipulationType.Toggle
+        ].includes(this.property.manipulationType)
+      ) {
+        // Get original from data attribute
+        value = Utility.getNodeValue({
+          node,
+          name: Utility.Data.generateDataAttributeName({
+            name: this.property.name,
+            type: this.domValueType
+          }),
+          type: DOMValueType.Attribute
+        });
+      }
+      // Set prop to disableValue unless null, then remove property.
+      if (value !== undefined) {
+        Utility.setNodeValue({
+          node,
+          name: this.property.name,
+          type: this.domValueType,
+          value
+        });
+      } else {
+        Utility.removeNodeValue({
+          node,
+          name: this.property.name,
+          type: this.domValueType
+        });
+      }
+    });
   }
 
   protected addDataAttributeForProperties(): void {
@@ -114,113 +216,5 @@ export class PluginActionProperty extends PluginAction
       // If value is zero scaling will fail, so use base value
       return `${numericValue * (1 + scalingFactor)}${this.property.unitType}`;
     }
-  }
-
-  // tslint:disable-next-line:member-ordering
-  public enable(params?: any): void {
-    this.nodeList.forEach((node: any) => {
-      // If absolute or scaling get calculated value
-      if (
-        [
-          ValueManipulationType.AbsoluteScaling,
-          ValueManipulationType.PercentageScaling
-        ].includes(this.property.manipulationType)
-      ) {
-        const { scalingFactor } = params;
-        Utility.setNodeValue({
-          node,
-          name: this.property.name,
-          type: this.domValueType,
-          value: this.getCalculatedPropertyValue(scalingFactor, node)
-        });
-      } else if (
-        this.property.manipulationType === ValueManipulationType.Toggle
-      ) {
-        // If toggle, set to enabledValue (or remove if enabledValue is null)
-        if (this.property.enabledValue !== undefined) {
-          Utility.setNodeValue({
-            node,
-            name: this.property.name,
-            type: this.domValueType,
-            value: this.property.enabledValue
-          });
-        } else {
-          Utility.removeNodeValue({
-            node,
-            name: this.property.name,
-            type: this.domValueType
-          });
-        }
-      } else if (
-        this.property.manipulationType === ValueManipulationType.Direct
-      ) {
-        // If direct, set to enabledValue (or remove if enabledValue is null)
-        if (this.property.enabledValue !== undefined) {
-          Utility.setNodeValue({
-            node,
-            name: this.property.name,
-            type: this.domValueType,
-            value: this.property.enabledValue
-          });
-        } else {
-          Utility.removeNodeValue({
-            node,
-            name: this.property.name,
-            type: this.domValueType
-          });
-        }
-      }
-    });
-  }
-
-  /**
-   * Reset all applied properties to original values from saved data attribute
-   */
-  // tslint:disable-next-line:member-ordering
-  public disable(): void {
-    this.nodeList.forEach((node: any) => {
-      let value = this.property.disabledValue;
-      // If absolute, scaling, or toggled reset to original value
-      if (
-        [
-          ValueManipulationType.AbsoluteScaling,
-          ValueManipulationType.PercentageScaling,
-          ValueManipulationType.Toggle
-        ].includes(this.property.manipulationType)
-      ) {
-        // Get original from data attribute
-        value = Utility.getNodeValue({
-          node,
-          name: Utility.Data.generateDataAttributeName({
-            name: this.property.name,
-            type: this.domValueType
-          }),
-          type: DOMValueType.Attribute
-        });
-      }
-      // Set prop to disableValue unless null, then remove property.
-      if (value !== undefined) {
-        Utility.setNodeValue({
-          node,
-          name: this.property.name,
-          type: this.domValueType,
-          value
-        });
-      } else {
-        Utility.removeNodeValue({
-          node,
-          name: this.property.name,
-          type: this.domValueType
-        });
-      }
-    });
-  }
-
-  /**
-   * Remove all applied classes, then reapply classes if enabled.
-   */
-  // tslint:disable-next-line:member-ordering
-  public reset(): void {
-    // TODO: Remove properties from nodes
   }
 }

@@ -26,6 +26,7 @@ export class PluginActionFunction extends PluginAction
 
   constructor(params?: IPluginActionFunctionParams) {
     super(params);
+
     if (params) {
       if (params.func) {
         this.func = params.func;
@@ -34,6 +35,8 @@ export class PluginActionFunction extends PluginAction
         this.funcOnDisable = params.funcOnDisable;
       }
     }
+
+    this.initialize(this);
   }
 
   public enable(): void {

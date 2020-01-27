@@ -3,6 +3,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import pluginStyles from 'styles/plugin-styles.scss';
 
 export const pluginEmphasizeTitles = new PluginElementToggleable({
+  id: 'plugin-emphasize-titles',
   title: 'Emphasize Titles',
   enabled: false,
   actions: [

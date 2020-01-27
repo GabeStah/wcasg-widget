@@ -3,6 +3,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import constrastStyles from 'styles/contrast/index.scss';
 
 export const pluginGrayscale = new PluginElementToggleable({
+  id: 'plugin-grayscale',
   title: 'Grayscale',
   enabled: false,
   actions: [

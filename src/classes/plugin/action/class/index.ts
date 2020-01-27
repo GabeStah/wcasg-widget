@@ -27,6 +27,8 @@ export class PluginActionClass extends PluginAction
         this.klass = params.klass;
       }
     }
+
+    this.initialize(this);
   }
 
   /**
@@ -43,12 +45,10 @@ export class PluginActionClass extends PluginAction
     Utility.Css.removeClass({ node: this.nodeList, name: this.klass });
   }
 
-  // tslint:disable-next-line:member-ordering
   public enable(): void {
     this.addClasses();
   }
 
-  // tslint:disable-next-line:member-ordering
   public disable(): void {
     this.removeClasses();
   }
@@ -56,7 +56,6 @@ export class PluginActionClass extends PluginAction
   /**
    * Remove all applied classes, then reapply classes if enabled.
    */
-  // tslint:disable-next-line:member-ordering
   public reset(): void {
     // Remove
     this.removeClasses();

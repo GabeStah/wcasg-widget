@@ -3,6 +3,7 @@ import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import pluginStyles from 'styles/plugin-styles.scss';
 
 export const pluginLargeCursor = new PluginElementToggleable({
+  id: 'plugin-large-cursor',
   title: 'Large Cursor',
   enabled: false,
   actions: [

@@ -4,6 +4,7 @@ import { PluginActionStyle } from 'classes/plugin/action/style';
 import { PluginElementScalable } from 'classes/plugin/element/scalable';
 
 export const pluginTextSpacing = new PluginElementScalable({
+  id: 'plugin-text-spacing',
   title: 'Adjust Text Spacing',
   scalingIncrement: 1,
   actions: [
