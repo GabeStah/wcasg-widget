@@ -17,7 +17,7 @@ if (config.debug) {
 // Create modal div to contain widget and append to html doc
 const modal = document.createElement(`div`);
 modal.setAttribute('id', config.widgetId);
-modal.className = `${styles.widgetContainer}`;
+modal.className = `${styles['wcasg-ada-app-container']}`;
 
 document.getElementsByTagName('html')[0].append(modal);
 
