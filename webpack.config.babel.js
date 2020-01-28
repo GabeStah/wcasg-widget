@@ -36,6 +36,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/i,
+        loader: 'html-loader'
+      },
+      {
         test: /\.(ts|js)x?$/,
         exclude: [
           /node_modules/,

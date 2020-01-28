@@ -1,6 +1,4 @@
-import Utility from '@/utility';
 import { ValueManipulationType } from 'classes/plugin/action';
-import { PluginActionFunction } from 'classes/plugin/action/function';
 import { PluginActionProperty } from 'classes/plugin/action/property';
 import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 

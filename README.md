@@ -189,7 +189,7 @@ A `PluginActionClass` action accepts just a couple properties, namely:
 
 In many cases directly changing `query` is unnecessary as you want to add a class/styling to the document root or `body`, which is the default node.
 
-Here is the current code for creating the [`Emphasize Titles`](src/plugins/emphasize-titles.ts) plugin:
+Here is the current code for creating the [`Emphasize Titles`](src/plugins/emphasize-titles/index.ts) plugin:
 
 ```ts
 import { PluginActionClass } from 'classes/plugin/action/class';

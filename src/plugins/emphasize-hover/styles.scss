@@ -1,0 +1,6 @@
+@import 'src/styles/variables';
+
+.emphasizeHover > *:not(#{$widget-prefix}) *:hover {
+  outline: solid 2px rgba($default-highlight-color-tertiary, 1) !important;
+  outline-offset: 1px !important;
+}

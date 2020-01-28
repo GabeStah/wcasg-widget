@@ -1,0 +1,10 @@
+@import 'src/styles/variables';
+
+.highlightForms input,
+.highlightForms datalist,
+.highlightForms meter,
+.highlightForms select,
+.highlightForms textarea {
+  outline: 2px solid rgba($default-highlight-color-quaternary, 0.5) !important;
+  outline-offset: 1px !important;
+}

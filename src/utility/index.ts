@@ -1,3 +1,4 @@
+import Html from '@/utility/html';
 import Store from '@/utility/store';
 import times from 'lodash/times';
 import config from 'config';
@@ -11,6 +12,7 @@ const Utility = {
   Aria,
   Css,
   Data,
+  Html,
   Plugin,
   Store,
 

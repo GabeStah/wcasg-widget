@@ -103,6 +103,15 @@ export const Aria = {
       values.push(valueText);
     }
 
+    const altText = Utility.getNodeValue({
+      node: element,
+      name: 'alt',
+      type: DOMValueType.Attribute
+    });
+    if (altText) {
+      values.push(altText);
+    }
+
     const text = element.textContent;
     if (text) {
       values.push(text);

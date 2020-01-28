@@ -17,6 +17,7 @@ import { pluginPageNavigation } from 'plugins/page-navigation';
 import { pluginReadableFonts } from 'plugins/readable-fonts';
 import { pluginStopAnimations } from 'plugins/stop-animations';
 import { pluginTextSpacing } from 'plugins/text-spacing';
+import { pluginTooltip } from 'plugins/tooltip';
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
 import { createSelector } from 'reselect';
@@ -96,7 +97,8 @@ export const Plugins = [
   pluginPageNavigation,
   pluginStopAnimations,
   pluginMuteAudio,
-  pluginKeyboardNavigation
+  pluginKeyboardNavigation,
+  pluginTooltip
 ];
 
 const defaultStateElements = Plugins.map((element: any) =>
