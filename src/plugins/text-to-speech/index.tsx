@@ -1,15 +1,15 @@
 // import { Plugins } from '@/state';
 import Utility from '@/utility';
-import TextNodeType from 'classes/node-types/TextNodeType';
 import { PluginActionFunction } from 'classes/plugin/action/function';
 import { IPluginElement } from 'classes/plugin/element';
 import { PluginElementToggleable } from 'classes/plugin/element/toggleable';
 import config, { TextToSpeechEngine } from 'config';
 import React from 'react';
-import findIndex from 'lodash/findIndex';
-import findLastIndex from 'lodash/findLastIndex';
+// import googleCloudTextToSpeech from '@google-cloud/text-to-speech';
+// import { google } from 'root/node_modules/@google-cloud/text-to-speech/build/protos/protos';
+// import SsmlVoiceGender = google.cloud.texttospeech.v1beta1.SsmlVoiceGender;
 
-const text = ['p', 'span', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const textTags = ['p', 'span', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 // const image = ['IMAGE', 'IMG'];
 // const listAndMenu = ['UL', 'OL', 'DL', 'MENU'];
 // const listAndMenuItems = ['LI', 'DT', 'DD'];
@@ -26,7 +26,49 @@ const text = ['p', 'span', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 //   'SECTION'
 // ];
 // const headings = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-const tags = [...text];
+const tags = [...textTags];
+
+const synthesizeSpeech = async ({
+  text,
+  plugin,
+  engine = config.textToSpeechEngine
+}: {
+  text: string;
+  plugin: PluginActionFunction;
+  engine?: TextToSpeechEngine;
+}) => {
+  if (engine === TextToSpeechEngine.Browser) {
+    const synth = window.speechSynthesis;
+    synth.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = window.speechSynthesis.getVoices()[0];
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    synth.speak(utterance);
+  } else if (engine === TextToSpeechEngine.GoogleCloud) {
+    try {
+      Utility.Audio.synthesizeSpeechFromText({
+        text
+      }).then(response => {
+        if (response && response.audioContent) {
+          if (plugin.data.audio) {
+            plugin.data.audio.pause();
+          }
+          plugin.data.audio = Utility.Audio.createHTMLAudioElement({
+            content: response.audioContent
+          });
+          if (plugin.data.audio) {
+            return plugin.data.audio.play();
+          }
+        } else {
+          console.log(`No valid response returned.`);
+        }
+      });
+    } catch (error) {
+      Utility.throwError(error);
+    }
+  }
+};
 
 const changeFocus = ({
   plugin,
@@ -84,16 +126,13 @@ const changeFocus = ({
   plugin.data.focusedNodeIndex = matchIndex;
   const newFocusedNode = plugin.nodeList[plugin.data.focusedNodeIndex];
 
+  synthesizeSpeech({
+    text: Utility.Aria.getElementText({ element: newFocusedNode }),
+    plugin
+  });
+
   // Focus new node
   Utility.Aria.focusNode({ node: newFocusedNode });
-  const synth = window.speechSynthesis;
-  const utterance = new SpeechSynthesisUtterance(
-    Utility.Aria.getElementText({ element: newFocusedNode })
-  );
-  utterance.voice = window.speechSynthesis.getVoices()[0];
-  utterance.rate = 1;
-  utterance.pitch = 1;
-  synth.speak(utterance);
 };
 
 const handleKeyDown = (
@@ -112,14 +151,26 @@ const handleKeyDown = (
   switch (e.key) {
     case 'ArrowLeft':
       // Halt any active speech
-      window.speechSynthesis.cancel();
+      if (config.textToSpeechEngine === TextToSpeechEngine.Browser) {
+        window.speechSynthesis.cancel();
+      } else if (config.textToSpeechEngine === TextToSpeechEngine.GoogleCloud) {
+        if (plugin.data.audio) {
+          plugin.data.audio.pause();
+        }
+      }
       e.stopImmediatePropagation();
       e.preventDefault();
       changeFocus({ plugin, isReverse: true });
       break;
     case 'ArrowRight':
       // Halt any active speech
-      window.speechSynthesis.cancel();
+      if (config.textToSpeechEngine === TextToSpeechEngine.Browser) {
+        window.speechSynthesis.cancel();
+      } else if (config.textToSpeechEngine === TextToSpeechEngine.GoogleCloud) {
+        if (plugin.data.audio) {
+          plugin.data.audio.pause();
+        }
+      }
       e.stopImmediatePropagation();
       e.preventDefault();
       changeFocus({ plugin, isReverse: false });
@@ -144,16 +195,23 @@ export const pluginTextToSpeech = new PluginElementToggleable({
     new PluginActionFunction({
       name: 'text-to-speech-action',
       data: {
-        focusedNodeIndex: undefined
+        focusedNodeIndex: undefined,
+        audio: undefined
       },
       initialize: (self: PluginActionFunction) => {
         // Check for browser compatibility
-        if (
-          config.textToSpeechEngine === TextToSpeechEngine.Browser &&
-          !window.speechSynthesis
+        if (config.textToSpeechEngine === TextToSpeechEngine.Browser) {
+          if (!window.speechSynthesis) {
+            console.error(`Incompatible browser, no voice synthesizer found.`);
+          } else {
+            // Add event listener one time.
+            document.addEventListener('keydown', e =>
+              handleKeyDown(e, self, pluginTextToSpeech)
+            );
+          }
+        } else if (
+          config.textToSpeechEngine === TextToSpeechEngine.GoogleCloud
         ) {
-          console.error(`Incompatible browser, no voice synthesizer found.`);
-        } else {
           // Add event listener one time.
           document.addEventListener('keydown', e =>
             handleKeyDown(e, self, pluginTextToSpeech)
@@ -164,6 +222,9 @@ export const pluginTextToSpeech = new PluginElementToggleable({
         (self: PluginActionFunction) => {
           // Stop speech
           window.speechSynthesis.cancel();
+          if (self.data.audio) {
+            self.data.audio.pause();
+          }
           // Remove active focus
           Utility.Aria.blurNode({
             node: self.nodeList[self.data.focusedNodeIndex]

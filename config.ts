@@ -16,7 +16,7 @@ const config = {
   useLocalStorageCompression: true,
   // TODO: Base64 compression currently bugged.
   localCompressionType: CompressionType.LZString,
-  textToSpeechEngine: TextToSpeechEngine.Browser,
+  textToSpeechEngine: TextToSpeechEngine.GoogleCloud,
   guid,
   widgetTitle: 'WCASG ADA Widget'
 };

@@ -1,3 +1,5 @@
+import { AudioUtilities as Audio } from '@/utility/audio';
+import Auth from '@/utility/auth';
 import Html from '@/utility/html';
 import Store from '@/utility/store';
 import times from 'lodash/times';
@@ -10,11 +12,32 @@ import { DOMValueType } from 'classes/plugin/action';
 
 const Utility = {
   Aria,
+  Audio,
+  Auth,
   Css,
   Data,
   Html,
   Plugin,
   Store,
+
+  /**
+   * Converts bytes into larger readable format.
+   *
+   * @source https://gist.github.com/lanqy/5193417
+   * @param {number} bytes
+   * @returns {string}
+   */
+  bytesToSize: (bytes: number) => {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) {
+      return 'n/a';
+    }
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    if (i === 0) {
+      return `${bytes} ${sizes[i]}`;
+    }
+    return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
+  },
 
   /**
    * Get value by name and ValueType of specified node.
@@ -140,6 +163,8 @@ const Utility = {
   throwError: (message: string): void => {
     throw new Error(`[${config.widgetTitle}]: ${message}`);
   },
+
+  //Add Google Cloud Text to Speech integration into 'Text to Speech' plugin.
 
   round(value: number, precision: number = 0): number {
     const y = +value + (precision === undefined ? 0.5 : precision / 2);
