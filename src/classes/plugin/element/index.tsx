@@ -30,6 +30,10 @@ export interface IPluginElement {
   type: PluginElementType;
   // Actions only trigger when enabled.
   enabled?: boolean;
+  // Track error displayed to user
+  error: string;
+  // Explicitly disable without allowing user interaction
+  disabled?: boolean;
   // Display order
   order?: number;
   // If excluded use default based on type.
@@ -47,7 +51,9 @@ export interface IPluginElement {
 export interface IPluginElementParams {
   actions?: IPluginActionTypes;
   children?: IPluginElement[];
+  disabled?: boolean;
   enabled?: boolean;
+  error?: string;
   id?: string;
   name?: string;
   initialize?: (self: any) => void;
@@ -68,7 +74,9 @@ export abstract class PluginElement implements IPluginElement {
   public id: string = Utility.generateGuid();
   public actions: IPluginActionTypes = [];
   public children: IPluginElement[] = [];
+  public disabled: boolean = false;
   public enabled: boolean = true;
+  public error: string = '';
   public name: string = '';
   public order: number = 0;
   public type: PluginElementType = PluginElementType.Toggleable;
@@ -85,8 +93,14 @@ export abstract class PluginElement implements IPluginElement {
       if (params.children) {
         this.children = params.children;
       }
+      if (params.disabled !== undefined) {
+        this.disabled = params.disabled;
+      }
       if (params.enabled !== undefined) {
         this.enabled = params.enabled;
+      }
+      if (params.error) {
+        this.error = params.error;
       }
       if (params.name) {
         this.name = params.name;
@@ -106,17 +120,25 @@ export abstract class PluginElement implements IPluginElement {
     }
   }
 
-  public getInstanceState(params?: { id?: string; enabled?: boolean }): any {
+  public getInstanceState(params?: {
+    id?: string;
+    enabled?: boolean;
+    error?: string;
+  }): any {
     return {
       id: params && params.id ? params.id : this.id,
       enabled:
-        params && params.enabled !== undefined ? params.enabled : this.enabled
+        params && params.enabled !== undefined ? params.enabled : this.enabled,
+      error: params && params.error !== undefined ? params.error : this.error
     };
   }
 
   public abstract setInstanceState(params?: any): void;
 
   public initialize = (self: any): void => {
+    if (self.disabled) {
+      return;
+    }
     // Initialize name
     if (!this.name && this.title) {
       this.name = this.title.toLowerCase().replace(' ', '-');

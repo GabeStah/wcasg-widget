@@ -45,9 +45,15 @@ export class PluginElementCustom extends PluginElement
     this.initialize(this);
   }
 
-  public setInstanceState(params?: { id?: string; enabled?: boolean }): void {
+  public setInstanceState(params?: {
+    id?: string;
+    enabled?: boolean;
+    error?: string;
+  }): void {
     this.enabled =
       params && params.enabled !== undefined ? params.enabled : this.enabled;
+    this.error =
+      params && params.error !== undefined ? params.error : this.error;
   }
 
   public update = (enabled: boolean): void => {
@@ -77,6 +83,7 @@ export class PluginElementCustom extends PluginElement
       <div
         className={`${styles['plugin-element']} ${styles['plugin-element-custom']}`}
       >
+        {this.error && this.error !== '' ? <h5>{this.error}</h5> : ''}
         <h3>{this.title}</h3>
       </div>
     );

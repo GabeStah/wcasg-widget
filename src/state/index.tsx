@@ -17,6 +17,7 @@ import { pluginPageNavigation } from 'plugins/page-navigation';
 import { pluginReadableFonts } from 'plugins/readable-fonts';
 import { pluginStopAnimations } from 'plugins/stop-animations';
 import { pluginTextSpacing } from 'plugins/text-spacing';
+import { pluginTextToSpeech } from 'plugins/text-to-speech';
 import { pluginTooltip } from 'plugins/tooltip';
 import React from 'react';
 import { combineReducers, createStore } from 'redux';
@@ -38,17 +39,24 @@ export const makeElementEnabledSelector = () =>
     (elements: any, id: any) => find(elements, ['id', id]).enabled
   );
 
+export const makeElementErrorSelector = () =>
+  createSelector(
+    (state: any) => state.elements.elements,
+    (_: any, id: any) => id,
+    (elements: any, id: any) => find(elements, ['id', id]).error
+  );
+
 export const elementReducers = (
   state: InitialStateType = initialState,
   action: IReducerActionParams
 ) => {
   switch (action.type) {
-    case 'toggle':
+    case 'error':
       return Object.assign({}, state, {
         elements: state.elements.map((element: any) => {
           if (element.id === action.payload.id) {
             return Object.assign({}, element, {
-              enabled: !element.enabled
+              error: action.payload.error
             });
           }
           return element;
@@ -60,6 +68,17 @@ export const elementReducers = (
           if (element.id === action.payload.id) {
             return Object.assign({}, element, {
               scalingFactor: element.scalingFactor + action.payload.adjustment
+            });
+          }
+          return element;
+        })
+      });
+    case 'toggle':
+      return Object.assign({}, state, {
+        elements: state.elements.map((element: any) => {
+          if (element.id === action.payload.id) {
+            return Object.assign({}, element, {
+              enabled: !element.enabled
             });
           }
           return element;
@@ -98,7 +117,8 @@ export const Plugins = [
   pluginStopAnimations,
   pluginMuteAudio,
   pluginKeyboardNavigation,
-  pluginTooltip
+  pluginTooltip,
+  pluginTextToSpeech
 ];
 
 const defaultStateElements = Plugins.map((element: any) =>

@@ -197,6 +197,12 @@ export const pluginKeyboardNavigation = new PluginElementToggleable({
       data: {
         focusedNodeIndex: undefined
       },
+      initialize: (self: PluginActionFunction) => {
+        // Add event listener one time.
+        document.addEventListener('keydown', e =>
+          handleKeyDown(e, self, pluginKeyboardNavigation)
+        );
+      },
       funcOnDisable: [
         (self: PluginActionFunction) => {
           // Remove active focus
@@ -206,12 +212,6 @@ export const pluginKeyboardNavigation = new PluginElementToggleable({
           self.data.focusedNodeIndex = undefined;
         }
       ],
-      initialize: (self: PluginActionFunction) => {
-        // Add event listener one time.
-        document.addEventListener('keydown', e =>
-          handleKeyDown(e, self, pluginKeyboardNavigation)
-        );
-      },
       query: tags.join(', ')
     })
   ]

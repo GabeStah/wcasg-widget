@@ -72,6 +72,7 @@ export class PluginElementScalable extends PluginElement
     id?: string;
     enabled?: boolean;
     scalingFactor?: number;
+    error?: string;
   }): any {
     return {
       id: params && params.id ? params.id : this.id,
@@ -80,13 +81,15 @@ export class PluginElementScalable extends PluginElement
       scalingFactor:
         params && params.scalingFactor
           ? params.scalingFactor
-          : this.scalingFactor
+          : this.scalingFactor,
+      error: params && params.error !== undefined ? params.error : this.error
     };
   }
 
   public setInstanceState(params?: {
     enabled?: boolean;
     scalingFactor?: number;
+    error?: string;
   }): void {
     this.scalingFactor =
       params && params.scalingFactor !== undefined
@@ -94,6 +97,8 @@ export class PluginElementScalable extends PluginElement
         : this.scalingFactor;
     this.enabled =
       params && params.enabled !== undefined ? params.enabled : this.enabled;
+    this.error =
+      params && params.error !== undefined ? params.error : this.error;
   }
 
   public enableActions = (): void => {
@@ -159,6 +164,7 @@ export class PluginElementScalable extends PluginElement
       <div
         className={`${styles['plugin-element']} ${styles['plugin-element-scalable']}`}
       >
+        {this.error && this.error !== '' ? <h5>{this.error}</h5> : ''}
         <h3>{this.title}</h3>
         <p>Current Adjustment: {parseFloat(scalingFactor).toFixed(2)}</p>
         <button type={'button'} onClick={() => handleToggleClick()}>

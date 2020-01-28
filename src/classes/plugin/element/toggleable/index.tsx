@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
-import { makeElementEnabledSelector } from '@/state';
+import { makeElementEnabledSelector, makeElementErrorSelector } from '@/state';
 
 import { IPluginAction } from 'classes/plugin/action';
 import {
@@ -42,9 +42,15 @@ export class PluginElementToggleable extends PluginElement
     this.initialize(this);
   }
 
-  public setInstanceState(params?: { id?: string; enabled?: boolean }): void {
+  public setInstanceState(params?: {
+    id?: string;
+    enabled?: boolean;
+    error?: string;
+  }): void {
     this.enabled =
       params && params.enabled !== undefined ? params.enabled : this.enabled;
+    this.error =
+      params && params.error !== undefined ? params.error : this.error;
   }
 
   public update = (enabled: boolean): void => {
@@ -81,6 +87,9 @@ export class PluginElementToggleable extends PluginElement
     const selectEnabled = useMemo(makeElementEnabledSelector, []);
     const enabled = useSelector(state => selectEnabled(state, this.id));
 
+    const selectError = useMemo(makeElementErrorSelector, []);
+    const error = useSelector(state => selectError(state, this.id));
+
     useEffect(() => {
       const currentState = this.getInstanceState();
       const newState = this.getInstanceState({ enabled });
@@ -108,6 +117,7 @@ export class PluginElementToggleable extends PluginElement
       <div
         className={`${styles['plugin-element']} ${styles['plugin-element-toggleable']}`}
       >
+        {error && error !== '' ? <h5>{error}</h5> : ''}
         <h3>{this.title}</h3>
         <button type={'button'} onClick={handleToggleClick}>
           {enabled ? 'Disable' : 'Enable'}
