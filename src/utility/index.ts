@@ -164,8 +164,6 @@ const Utility = {
     throw new Error(`[${config.widgetTitle}]: ${message}`);
   },
 
-  //Add Google Cloud Text to Speech integration into 'Text to Speech' plugin.
-
   round(value: number, precision: number = 0): number {
     const y = +value + (precision === undefined ? 0.5 : precision / 2);
     return y - (y % (precision === undefined ? 1 : +precision));

@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 
 export const Auth = {
   /**
@@ -13,7 +13,7 @@ export const Auth = {
     privateKey: string;
     options: any;
   }) => {
-    return jwt.sign(payload, privateKey, options);
+    return sign(payload, privateKey, options);
   },
   /**
    * @returns {Promise<void>}
