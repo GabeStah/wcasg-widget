@@ -6,7 +6,7 @@ const isDev = environment === 'development';
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: './index.tsx',
+  entry: './index-test.tsx',
 
   output: {
     path: path.resolve(__dirname, 'build'),
