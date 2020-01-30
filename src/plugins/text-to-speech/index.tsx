@@ -28,47 +28,47 @@ const textTags = ['p', 'span', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 // const headings = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
 const tags = [...textTags];
 
-const synthesizeSpeech = async ({
-  text,
-  plugin,
-  engine = config.textToSpeechEngine
-}: {
-  text: string;
-  plugin: PluginActionFunction;
-  engine?: TextToSpeechEngine;
-}) => {
-  if (engine === TextToSpeechEngine.Browser) {
-    const synth = window.speechSynthesis;
-    synth.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = window.speechSynthesis.getVoices()[0];
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    synth.speak(utterance);
-  } else if (engine === TextToSpeechEngine.GoogleCloud) {
-    try {
-      Utility.Audio.synthesizeSpeechFromText({
-        text
-      }).then(response => {
-        if (response && response.audioContent) {
-          if (plugin.data.audio) {
-            plugin.data.audio.pause();
-          }
-          plugin.data.audio = Utility.Audio.createHTMLAudioElement({
-            content: response.audioContent
-          });
-          if (plugin.data.audio) {
-            return plugin.data.audio.play();
-          }
-        } else {
-          console.log(`No valid response returned.`);
-        }
-      });
-    } catch (error) {
-      Utility.throwError(error);
-    }
-  }
-};
+// const synthesizeSpeech = async ({
+//   text,
+//   plugin,
+//   engine = config.textToSpeechEngine
+// }: {
+//   text: string;
+//   plugin: PluginActionFunction;
+//   engine?: TextToSpeechEngine;
+// }) => {
+//   if (engine === TextToSpeechEngine.Browser) {
+//     const synth = window.speechSynthesis;
+//     synth.cancel();
+//     const utterance = new SpeechSynthesisUtterance(text);
+//     utterance.voice = window.speechSynthesis.getVoices()[0];
+//     utterance.rate = 1;
+//     utterance.pitch = 1;
+//     synth.speak(utterance);
+//   } else if (engine === TextToSpeechEngine.GoogleCloud) {
+//     try {
+//       Utility.Audio.synthesizeSpeechFromText({
+//         text
+//       }).then(response => {
+//         if (response && response.audioContent) {
+//           if (plugin.data.audio) {
+//             plugin.data.audio.pause();
+//           }
+//           plugin.data.audio = Utility.Audio.createHTMLAudioElement({
+//             content: response.audioContent
+//           });
+//           if (plugin.data.audio) {
+//             return plugin.data.audio.play();
+//           }
+//         } else {
+//           console.log(`No valid response returned.`);
+//         }
+//       });
+//     } catch (error) {
+//       Utility.throwError(error);
+//     }
+//   }
+// };
 
 const changeFocus = ({
   plugin,
@@ -126,10 +126,10 @@ const changeFocus = ({
   plugin.data.focusedNodeIndex = matchIndex;
   const newFocusedNode = plugin.nodeList[plugin.data.focusedNodeIndex];
 
-  synthesizeSpeech({
-    text: Utility.Aria.getElementText({ element: newFocusedNode }),
-    plugin
-  });
+  // synthesizeSpeech({
+  //   text: Utility.Aria.getElementText({ element: newFocusedNode }),
+  //   plugin
+  // });
 
   // Focus new node
   Utility.Aria.focusNode({ node: newFocusedNode });

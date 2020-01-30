@@ -1,5 +1,6 @@
 import forEach from 'lodash/forEach';
-import Utility from '@/utility';
+
+import globalStyles from 'styles/global.scss';
 
 export const CSS_UNIT_TYPE_REGEX = /(\d*\.?\d+)\s?(px|em|ex|%|in|cn|mm|pt|pc+)/;
 
@@ -19,21 +20,33 @@ export const Css = {
     name: string | string[];
   }): void => {
     if (node instanceof NodeList) {
-      forEach(node, nodeValue =>
-        Utility.Css.addClass({ node: nodeValue, name })
-      );
+      forEach(node, nodeValue => Css.addClass({ node: nodeValue, name }));
       return;
     }
     if (Array.isArray(name)) {
-      forEach(name, nameValue =>
-        Utility.Css.addClass({ node, name: nameValue })
-      );
+      forEach(name, nameValue => Css.addClass({ node, name: nameValue }));
       return;
     }
     if (node.classList) {
       node.classList.add(name);
-    } else if (!Utility.Css.hasClass({ node, name })) {
+    } else if (!Css.hasClass({ node, name })) {
       node.className += ' ' + name;
+    }
+  },
+
+  /**
+   * Get all class-based-focus nodes.
+   *
+   * @returns {any}
+   */
+  clearAllFocused: (): any => {
+    const focusedNodes = Css.selectAllWithClass({
+      name: globalStyles['wcasg-ada-app-focused']
+    });
+    if (focusedNodes && focusedNodes.length > 0) {
+      forEach(focusedNodes, (node: any) =>
+        Css.removeClass({ node, name: globalStyles['wcasg-ada-app-focused'] })
+      );
     }
   },
 
@@ -72,20 +85,18 @@ export const Css = {
     name: string | string[];
   }): void => {
     if (node instanceof NodeList) {
-      forEach(node, nodeValue =>
-        Utility.Css.removeClass({ node: nodeValue, name })
-      );
+      forEach(node, nodeValue => Css.removeClass({ node: nodeValue, name }));
       return;
     }
     if (Array.isArray(name)) {
       forEach(name, nameValue => {
-        Utility.Css.removeClass({ node, name: nameValue });
+        Css.removeClass({ node, name: nameValue });
       });
       return;
     }
     if (node.classList) {
       node.classList.remove(name);
-    } else if (Utility.Css.hasClass({ node, name })) {
+    } else if (Css.hasClass({ node, name })) {
       const reg = new RegExp('(\\s|^)' + name + '(\\s|$)');
       node.className = node.className.replace(reg, ' ');
     }
@@ -98,6 +109,16 @@ export const Css = {
    */
   removeStyle: ({ element, name }: { element: any; name: string }): void => {
     element.style.removeProperty(name);
+  },
+
+  /**
+   * Get all nodes with matching class name.
+   *
+   * @param {string} name
+   * @returns {any}
+   */
+  selectAllWithClass: ({ name }: { name: string }): any => {
+    return document.getElementsByClassName(name);
   },
 
   /**

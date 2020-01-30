@@ -8,7 +8,12 @@ import Aria from '@/utility/aria';
 import Css from '@/utility/css';
 import Data from '@/utility/data';
 import Plugin from '@/utility/plugin';
-import { DOMValueType } from 'classes/plugin/action';
+
+enum DOMValueType {
+  Attribute = 'attribute',
+  Style = 'style',
+  Property = 'property'
+}
 
 const Utility = {
   Aria,

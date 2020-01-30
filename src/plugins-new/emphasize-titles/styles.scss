@@ -1,0 +1,11 @@
+@import 'src/styles/variables';
+
+.emphasizeTitles h1,
+.emphasizeTitles h2,
+.emphasizeTitles h3,
+.emphasizeTitles h4,
+.emphasizeTitles h5,
+.emphasizeTitles h6{
+  outline: 2px solid rgba($default-highlight-color-tertiary, 0.5) !important;
+  outline-offset: 1px !important;
+}

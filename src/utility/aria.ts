@@ -1,6 +1,12 @@
 import Utility from '@/utility';
-import { DOMValueType } from 'classes/plugin/action';
+// import { DOMValueType } from 'classes/plugin/action';
 import globalStyles from 'styles/global.scss';
+
+enum DOMValueType {
+  Attribute = 'attribute',
+  Style = 'style',
+  Property = 'property'
+}
 
 export const Aria = {
   blurNode: ({ node }: { node: any }): void => {
@@ -21,6 +27,50 @@ export const Aria = {
     // Blur, if available
     if (node.blur && typeof node.blur === 'function') {
       node.blur();
+    }
+  },
+  clearAllFocusedNodes: (): any => {
+    // Check if any focus exists.
+    if (!document.hasFocus()) {
+      return;
+    }
+    // Check browser assignment
+    if (!document.activeElement) {
+      return;
+    }
+    // Check by custom style
+    const node = document.getElementsByClassName(
+      globalStyles['wcasg-ada-app-focused']
+    );
+    if (node && node.length > 0) {
+      return node[0];
+    }
+    // Check by tabindex
+    const tabIndexed = document.querySelectorAll('*[tabindex]');
+    if (tabIndexed && tabIndexed.length > 0) {
+      return tabIndexed[0];
+    }
+  },
+  findFocusedNode: (): any => {
+    // Check if any focus exists.
+    if (!document.hasFocus()) {
+      return;
+    }
+    // Check browser assignment
+    if (document.activeElement) {
+      return document.activeElement;
+    }
+    // Check by custom style
+    const node = document.getElementsByClassName(
+      globalStyles['wcasg-ada-app-focused']
+    );
+    if (node && node.length > 0) {
+      return node[0];
+    }
+    // Check by tabindex
+    const tabIndexed = document.querySelectorAll('*[tabindex]');
+    if (tabIndexed && tabIndexed.length > 0) {
+      return tabIndexed[0];
     }
   },
   focusNode: ({ node }: { node: any }): void => {

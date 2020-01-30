@@ -1,5 +1,6 @@
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
+import CircularDependencyPlugin from 'circular-dependency-plugin';
 
 const environment = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const isDev = environment === 'development';
@@ -24,7 +25,6 @@ module.exports = {
       config: path.resolve(__dirname, 'config.ts'),
       components: path.resolve(__dirname, 'src/components'),
       plugins: path.resolve(__dirname, 'src/plugins'),
-      root: path.resolve(__dirname),
       state: path.resolve(__dirname, 'src/state'),
       styles: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
@@ -121,5 +121,20 @@ module.exports = {
   },
 
   // Add gzip output
-  plugins: [new CompressionPlugin()]
+  plugins: [
+    new CircularDependencyPlugin({
+      // exclude detection of files based on a RegExp
+      exclude: /a\.js|node_modules/,
+      // include specific files based on a RegExp
+      include: /src/,
+      // add errors to webpack instead of warnings
+      failOnError: false,
+      // allow import cycles that include an asyncronous import,
+      // e.g. via import(/* webpackMode: "weak" */ './file.js')
+      allowAsyncCycles: false,
+      // set the current working directory for displaying module paths
+      cwd: process.cwd()
+    }),
+    new CompressionPlugin()
+  ]
 };

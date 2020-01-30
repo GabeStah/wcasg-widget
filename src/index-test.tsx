@@ -1,16 +1,22 @@
-// import { reducerInitializedStore } from '@/state';
-import { PluginItem, PluginList } from 'components/base-plugin';
+// import { PluginComponent } from 'components/base-plugin';
+import { Component as HighlightLinksComponent } from '@/plugins-new/highlight-links';
+import { Component as KeyboardNavigationComponent } from '@/plugins-new/keyboard-navigation';
+import { Component as TextToSpeechComponent } from '@/plugins-new/text-to-speech';
+import { pluginHighlightLinks } from '@/plugins-new/highlight-links/plugin';
+import { pluginKeyboardNavigation } from '@/plugins-new/keyboard-navigation/plugin';
+import { pluginTextToSpeech } from '@/plugins-new/text-to-speech/plugin';
+import { PluginComponent } from 'components/plugin';
+// import { PluginList } from 'components/plugin-list';
 import config from 'config';
-import { createReducerFunction } from 'immer-reducer';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import { PluginReducer } from 'state/redux/actions';
+import { Connector } from 'state/redux/connectors';
+// import { KeyboardConnect } from 'state/redux/connectors/keyboard';
 import { defaultState } from 'state/redux/state';
 import { createPluginStore } from 'state/redux/store';
 import styles from 'styles/global.scss';
+// import { pluginHideImages } from 'plugins/hide-images';
 
 // import Widget from 'components/widget';
 
@@ -42,22 +48,30 @@ document.getElementsByTagName('html')[0].append(modal);
 
 ReactDOM.render(
   <Provider store={createPluginStore()}>
-    <PluginList
-      plugins={[
-        defaultState.plugins['font-size'],
-        defaultState.plugins['text-spacing'],
-        defaultState.plugins['keyboard-navigation'],
-        defaultState.plugins['text-to-speech']
-      ]}
-    />
-    {/*<BasePlugin*/}
-    {/*  key={defaultState.plugins['test'].id}*/}
-    {/*  data={defaultState.plugins['test']}*/}
-    {/*/>*/}
-    <PluginItem
-      key={defaultState.plugins['test'].id}
-      plugin={defaultState.plugins['test']}
-    />
+    <Connector>
+      {(state, actions) => (
+        <>
+          <HighlightLinksComponent
+            key={pluginHighlightLinks.id}
+            state={state}
+            actions={actions}
+            id={pluginHighlightLinks.id}
+          />
+          <KeyboardNavigationComponent
+            key={pluginKeyboardNavigation.id}
+            state={state}
+            actions={actions}
+            id={pluginKeyboardNavigation.id}
+          />
+          <TextToSpeechComponent
+            key={pluginTextToSpeech.id}
+            state={state}
+            actions={actions}
+            id={pluginTextToSpeech.id}
+          />
+        </>
+      )}
+    </Connector>
   </Provider>,
   modal
 );

@@ -1,12 +1,9 @@
-import Utility from '@/utility';
 import { CompressionType } from '@/utility/store';
 
 export enum TextToSpeechEngine {
   Browser,
   GoogleCloud
 }
-
-const guid = Utility.generateGuid();
 
 const config = {
   debug: true,
@@ -17,7 +14,6 @@ const config = {
   // TODO: Base64 compression currently bugged.
   localCompressionType: CompressionType.LZString,
   textToSpeechEngine: TextToSpeechEngine.GoogleCloud,
-  guid,
   widgetTitle: 'WCASG ADA Widget'
 };
 

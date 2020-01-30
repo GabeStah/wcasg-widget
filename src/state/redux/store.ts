@@ -9,14 +9,16 @@ import {
 } from 'redux';
 import { makeConnector } from 'redux-render-prop';
 import createSagaMiddleware from 'redux-saga';
+import { BaseReducer } from 'state/redux/reducers';
+import { Selectors } from 'state/redux/selectors';
 
-import { PluginReducer, PluginActions } from './actions';
+import { ActionCreators } from './actions';
 import { watchAll } from './sagas';
-import { defaultState, PluginSelectors, State } from './state';
+import { defaultState, State } from './state';
 
-export const createPluginConnector = makeConnector({
-  prepareState: (state: State) => new PluginSelectors(state),
-  prepareActions: dispatch => bindActionCreators(PluginActions, dispatch)
+export const createConnector = makeConnector({
+  prepareState: (state: State) => new Selectors(state),
+  prepareActions: dispatch => bindActionCreators(ActionCreators, dispatch)
 });
 
 declare global {
@@ -50,7 +52,7 @@ function composeReducers<S>(...reducers: Reducer<S, any>[]): Reducer<any, any> {
 
 export function createPluginStore() {
   const reducer = composeReducers<State>(
-    createReducerFunction(PluginReducer, defaultState)
+    createReducerFunction(BaseReducer, defaultState)
   );
   const sagaMiddleware = createSagaMiddleware();
 
@@ -58,6 +60,8 @@ export function createPluginStore() {
     reducer,
     composeEnhancers(applyMiddleware(sagaMiddleware))
   );
+
+  // setupKeyboardCommands(store);
 
   sagaMiddleware.run(watchAll);
 
