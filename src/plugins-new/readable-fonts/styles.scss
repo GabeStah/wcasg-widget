@@ -1,0 +1,18 @@
+@import 'src/styles/variables';
+
+/*
+Hard cancel all animations.
+see: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
+see: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+ */
+.stopGlobalAnimations * {
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  animation: none !important;
+
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}

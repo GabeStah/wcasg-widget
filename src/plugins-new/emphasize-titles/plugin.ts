@@ -1,9 +1,10 @@
 import { Plugin, PluginActionTypes } from '@/enum';
-import styles from '@/plugins-new/emphasize-titles/styles.scss';
+import { Ids } from 'plugins-new/data';
+import styles from './styles.scss';
 import { Css } from '@/utility/css';
 
-export const pluginEmphasizeTitles: Plugin = {
-  id: 'emphasize-titles',
+export const pluginObject: Plugin = {
+  id: Ids.EmphasizeTitles,
   title: 'Emphasize Titles',
   enabled: false,
   options: [],
@@ -31,3 +32,5 @@ export const pluginEmphasizeTitles: Plugin = {
     }
   ]
 };
+
+export default pluginObject;

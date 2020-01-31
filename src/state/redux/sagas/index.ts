@@ -1,5 +1,6 @@
 import { Plugins } from '@/globals';
-import { handleKeyboardNavigation } from '@/plugins-new/keyboard-navigation/plugin';
+import { Ids } from 'plugins-new/data';
+import { handleKeyboardNavigation } from 'plugins-new/keyboard-navigation/plugin';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import { AudioUtilities } from '@/utility/audio';
@@ -35,14 +36,14 @@ export function* onPluginEnable(action: Action) {
     return;
   }
   // On keyboard nav enable
-  if (action.payload.id === 'keyboard-navigation') {
+  if (action.payload.id === Ids.KeyboardNavigation) {
     // Enable keyboard
     yield put(ActionCreators.enableKeyboard());
   }
   // On text to speech enable
-  if (action.payload.id === 'text-to-speech') {
+  if (action.payload.id === Ids.TextToSpeech) {
     // Enable keyboard navigation
-    yield put(ActionCreators.enable({ id: 'keyboard-navigation' }));
+    yield put(ActionCreators.enable({ id: Ids.KeyboardNavigation }));
   }
 }
 
@@ -51,14 +52,14 @@ export function* onPluginDisable(action: Action) {
     return;
   }
   // On keyboard nav disable
-  if (action.payload.id === 'keyboard-navigation') {
+  if (action.payload.id === Ids.KeyboardNavigation) {
     // Disable keyboard
     yield put(ActionCreators.disableKeyboard());
     // Disable text to speech
-    yield put(ActionCreators.disable({ id: 'text-to-speech' }));
+    yield put(ActionCreators.disable({ id: Ids.TextToSpeech }));
   }
   // On text-to-speech, disable any active speaker
-  if (action.payload.id === 'text-to-speech') {
+  if (action.payload.id === Ids.TextToSpeech) {
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
@@ -117,7 +118,7 @@ export function* onFocusNode(action: Action) {
     return;
   }
   const state = yield select();
-  if (new Selectors(state).getPlugin('text-to-speech').enabled) {
+  if (new Selectors(state).getPlugin(Ids.TextToSpeech).enabled) {
     const text = Aria.getElementText({ element: action.payload.node });
     if (text) {
       // Perform text-to-speech if enabled

@@ -1,9 +1,11 @@
 import { Plugin, PluginActionTypes } from '@/enum';
 import { Ids } from 'plugins-new/data';
+import styles from './styles.scss';
+import { Css } from '@/utility/css';
 
 export const pluginObject: Plugin = {
-  id: Ids.TextToSpeech,
-  title: 'Text-to-Speech',
+  id: Ids.HighlightForms,
+  title: 'Highlight Forms',
   enabled: false,
   options: [],
   tasks: [

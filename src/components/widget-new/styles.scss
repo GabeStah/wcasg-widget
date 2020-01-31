@@ -1,0 +1,23 @@
+.modal {
+  background-color: hsla(0, 0%, 100%, 0.9);
+  box-sizing: content-box;
+  height: 100%;
+  margin: 8px;
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .modalContainer {
+    //  Add custom styling
+    background: inherit;
+  }
+}

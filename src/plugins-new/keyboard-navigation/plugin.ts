@@ -3,6 +3,8 @@ import { Aria } from '@/utility/aria';
 import Css from '@/utility/css';
 import findIndex from 'lodash/findIndex';
 import findLastIndex from 'lodash/findLastIndex';
+import { Ids } from 'plugins-new/data';
+import plugin from 'plugins-new/tooltip/plugin';
 import { select } from 'redux-saga/effects';
 import { ActionCreators } from 'state/redux/actions';
 // import { ActionCreators } from 'state/redux/actions';
@@ -144,7 +146,7 @@ function* changeFocus({
 export function* handleKeyboardNavigation(e?: any) {
   const state = yield select();
   const selectors = new Selectors(state);
-  const plugin = selectors.getPlugin(pluginKeyboardNavigation.id);
+  const plugin = selectors.getPlugin(pluginObject.id);
 
   if (!plugin.enabled) {
     return;
@@ -211,8 +213,8 @@ export function* handleKeyboardNavigation(e?: any) {
  * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
  * @type {PluginElementToggleable}
  */
-export const pluginKeyboardNavigation: Plugin = {
-  id: 'keyboard-navigation',
+export const pluginObject: Plugin = {
+  id: Ids.KeyboardNavigation,
   title: 'Keyboard Navigation',
   enabled: false,
   options: [],
@@ -228,3 +230,5 @@ export const pluginKeyboardNavigation: Plugin = {
     }
   ]
 };
+
+export default pluginObject;

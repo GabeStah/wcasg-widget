@@ -1,9 +1,10 @@
 import { Plugin, PluginActionTypes } from '@/enum';
-import { Css } from '@/utility/css';
+import { Ids } from 'plugins-new/data';
 import styles from './styles.scss';
+import { Css } from '@/utility/css';
 
-export const pluginHideImages: Plugin = {
-  id: 'hide-images',
+export const pluginObject: Plugin = {
+  id: Ids.HideImages,
   title: 'Hide Images',
   enabled: false,
   options: [],
@@ -31,3 +32,5 @@ export const pluginHideImages: Plugin = {
     }
   ]
 };
+
+export default pluginObject;

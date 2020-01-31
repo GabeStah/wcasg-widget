@@ -1,6 +1,7 @@
 import { Plugin, PluginActionTypes } from '@/enum';
 import styles from '@/plugins-new/highlight-links/styles.scss';
 import { Css } from '@/utility/css';
+import { Ids } from 'plugins-new/data';
 import { select } from 'redux-saga/effects';
 import { Selectors } from 'state/redux/selectors';
 
@@ -8,8 +9,8 @@ function* updateStyle() {
   const body = document.querySelectorAll('body')[0];
   const state = yield select();
   const selectors = new Selectors(state);
-  const plugin = selectors.getPlugin(pluginHighlightLinks.id);
-  const options = selectors.getPluginOption(pluginHighlightLinks.id);
+  const plugin = selectors.getPlugin(pluginObject.id);
+  const options = selectors.getPluginOption(plugin.id);
 
   Css.removeClass({
     node: body,
@@ -51,8 +52,8 @@ function* updateStyle() {
   }
 }
 
-export const pluginHighlightLinks: Plugin = {
-  id: 'highlight-links',
+export const pluginObject: Plugin = {
+  id: Ids.HighlightLinks,
   title: 'Highlight Links',
   enabled: false,
   options: [
@@ -96,3 +97,5 @@ export const pluginHighlightLinks: Plugin = {
     }
   ]
 };
+
+export default pluginObject;
