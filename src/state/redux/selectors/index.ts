@@ -1,4 +1,6 @@
 import { State } from 'state/redux/state';
+import { Plugin, PluginLocalState } from '@/enum';
+import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Some state selection helpers. Using helper like makes it easier to refactor
@@ -58,6 +60,14 @@ export class Selectors {
     if (plugin && plugin.scaling) {
       return plugin.scaling;
     }
+  }
+
+  public getPluginsLocalState() {
+    return this.state.plugins.map((plugin: Plugin) => {
+      const copy = cloneDeep(plugin);
+      delete copy.tasks;
+      return copy;
+    });
   }
 
   public isKeyboardEnabled() {

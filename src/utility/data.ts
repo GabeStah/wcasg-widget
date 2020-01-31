@@ -1,7 +1,12 @@
 import forEach from 'lodash/forEach';
 import config from 'config';
-import { DOMValueType } from 'classes/plugin/action';
 import Utility from '@/utility';
+
+enum DOMValueType {
+  Attribute = 'attribute',
+  Style = 'style',
+  Property = 'property'
+}
 
 export const Data = {
   /**
@@ -18,7 +23,7 @@ export const Data = {
   }): void => {
     if (node instanceof NodeList) {
       forEach(node, nodeValue =>
-        Utility.Data.createOriginalDataAttribute({
+        Data.createOriginalDataAttribute({
           node: nodeValue,
           name,
           type
@@ -28,7 +33,7 @@ export const Data = {
     }
     if (Array.isArray(name)) {
       forEach(name, nameValue =>
-        Utility.Data.createOriginalDataAttribute({
+        Data.createOriginalDataAttribute({
           node,
           name: nameValue,
           type
@@ -37,7 +42,7 @@ export const Data = {
       return;
     }
 
-    const dataAttributeName = Utility.Data.generateDataAttributeName({
+    const dataAttributeName = Data.generateDataAttributeName({
       name,
       type
     });

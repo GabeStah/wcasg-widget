@@ -1,5 +1,5 @@
 import { Plugin, PluginActionTypes } from '@/enum';
-import { Plugins } from '@/globals';
+import PluginManager from 'classes/plugin/manager';
 
 type FunctionType = (params?: any) => any;
 
@@ -21,7 +21,7 @@ export interface State {
 }
 
 export const defaultState: State = {
-  plugins: Plugins,
+  plugins: PluginManager.getInstance().plugins,
   keyboard: {
     enabled: false,
     pressedKeys: {}

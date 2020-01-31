@@ -1,4 +1,4 @@
-import Utility from '@/utility';
+import Css from '@/utility/css';
 import {
   IPluginAction,
   IPluginActionParams,
@@ -35,14 +35,14 @@ export class PluginActionClass extends PluginAction
    * Add classes to nodes
    */
   public addClasses(): void {
-    Utility.Css.addClass({ node: this.nodeList, name: this.klass });
+    Css.addClass({ node: this.nodeList, name: this.klass });
   }
 
   /**
    * Remove classes from nodes
    */
   public removeClasses(): void {
-    Utility.Css.removeClass({ node: this.nodeList, name: this.klass });
+    Css.removeClass({ node: this.nodeList, name: this.klass });
   }
 
   public enable(): void {

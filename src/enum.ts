@@ -31,6 +31,14 @@ export interface PluginComponentParams {
   state: any;
 }
 
+export interface PluginLocalState {
+  id: string;
+  enabled: boolean;
+  options: PluginOption[];
+  scaling?: PluginScaling;
+  title: string;
+}
+
 export interface Plugin {
   id: string;
   customComponent?: boolean;

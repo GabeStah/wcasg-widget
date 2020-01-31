@@ -1,4 +1,3 @@
-import Utility from '@/utility/index';
 import store from 'store2';
 import config from 'config';
 import findIndex from 'lodash/findIndex';
@@ -6,7 +5,7 @@ import LZString from 'lz-string';
 import fromBase64 from 'atob';
 import toBase64 from 'btoa';
 
-export enum CompressionType {
+enum CompressionType {
   LZString,
   Base64
 }
@@ -76,7 +75,7 @@ export const Store = {
       return;
     }
     if (withCompression) {
-      completeStore = Utility.Store.decompress({
+      completeStore = Store.decompress({
         value: completeStore,
         compressionType: config.localCompressionType
       });
@@ -108,7 +107,7 @@ export const Store = {
   }) => {
     if (type === StorageDataType.All) {
       if (withCompression) {
-        value = Utility.Store.compress({
+        value = Store.compress({
           value,
           compressionType: config.localCompressionType
         });
@@ -118,7 +117,7 @@ export const Store = {
       if (!value.id) {
         return;
       }
-      let completeStore = Utility.Store.getFromLocalStorage({
+      let completeStore = Store.getFromLocalStorage({
         type: StorageDataType.All,
         withCompression
       });
@@ -154,7 +153,7 @@ export const Store = {
       store.set(
         config.widgetId,
         withCompression
-          ? Utility.Store.compress({
+          ? Store.compress({
               value: completeStore,
               compressionType: config.localCompressionType
             })

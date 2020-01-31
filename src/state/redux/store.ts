@@ -60,8 +60,6 @@ export function createPluginStore() {
     composeEnhancers(applyMiddleware(sagaMiddleware))
   );
 
-  // setupKeyboardCommands(store);
-
   sagaMiddleware.run(watchAll);
 
   return store;

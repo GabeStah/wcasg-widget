@@ -1,4 +1,6 @@
 import Utility from '@/utility';
+import Css from '@/utility/css';
+import Data from '@/utility/data';
 import {
   DOMValueType,
   IPluginAction,
@@ -115,7 +117,7 @@ export class PluginActionStyle extends PluginAction
       ) {
         value = Utility.getNodeValue({
           node,
-          name: Utility.Data.generateDataAttributeName({
+          name: Data.generateDataAttributeName({
             name: this.style.name,
             type: this.domValueType
           }),
@@ -141,7 +143,7 @@ export class PluginActionStyle extends PluginAction
   }
 
   protected addDataAttributeForStyles(): void {
-    Utility.Data.createOriginalDataAttribute({
+    Data.createOriginalDataAttribute({
       node: this.nodeList,
       name: this.style.name,
       type: this.domValueType
@@ -157,7 +159,7 @@ export class PluginActionStyle extends PluginAction
     // Get original data attribute value
     const originalValue = Utility.getNodeValue({
       node: element,
-      name: Utility.Data.generateDataAttributeName({
+      name: Data.generateDataAttributeName({
         name: styleName,
         type: this.domValueType
       }),
@@ -173,7 +175,7 @@ export class PluginActionStyle extends PluginAction
     }
 
     if (!this.style.unitType) {
-      const unitMatches = Utility.Css.getUnitType(originalValue);
+      const unitMatches = Css.getUnitType(originalValue);
       if (unitMatches) {
         this.style.unitType = unitMatches[2];
       }

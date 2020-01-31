@@ -1,7 +1,9 @@
-import { Plugins } from '@/globals';
+// import { Plugins } from '@/globals';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import { AudioUtilities } from '@/utility/audio';
+import Store, { StorageDataType } from '@/utility/store';
+import PluginManager from 'classes/plugin/manager';
 import config, { TextToSpeechEngine } from 'config';
 import { isAction, isActionFrom } from 'immer-reducer';
 import Kefir from 'kefir';
@@ -12,6 +14,7 @@ import { buffers, END, eventChannel } from 'redux-saga';
 import {
   all,
   call,
+  debounce,
   delay,
   put,
   select,
@@ -133,7 +136,7 @@ export function* onFocusNode(action: Action) {
  * @returns {Generator<never, void, unknown>}
  */
 export function* watchPluginTasks(action: any) {
-  const plugin = Plugins.find(p => p.id === action.payload.id);
+  const plugin = PluginManager.getInstance().find(action.payload.id);
   if (plugin && plugin.tasks) {
     for (const task of plugin.tasks) {
       if (task.on === getActionTypeFromImmer(action)) {
@@ -214,16 +217,42 @@ export function* watchKeyDown() {
   });
 }
 
+export function* saveStateToLocalStorage() {
+  console.warn(`saving to storage`);
+  const state = yield select();
+  if (state) {
+    const pluginsState = new Selectors(state).getPluginsLocalState();
+    console.log(`saga:savestatetolocalstorage`);
+    console.log(pluginsState);
+    Store.saveToLocalStorage({
+      value: { plugins: pluginsState },
+      withCompression: config.useLocalStorageCompression,
+      type: StorageDataType.All
+    });
+  }
+}
+
 export function* watchAll() {
   yield all([
-    takeEvery(ActionCreators.disable, onPluginDisable),
     takeEvery(ActionCreators.enable, onPluginEnable),
+    takeEvery(ActionCreators.disable, onPluginDisable),
     takeEvery(ActionCreators.focusNode, onFocusNode),
     takeEvery(
       // Pattern to track all actions from reducer
       (action: Action) => isActionFrom(action, BaseReducer),
       watchPluginTasks
     ),
-    call(watchKeyDown)
+    call(watchKeyDown),
+    // Save on store update, after localStorageDebounceDelay seconds of non-interaction
+    debounce(
+      config.localStorageDebounceDelay * 1000,
+      [
+        ActionCreators.increment,
+        ActionCreators.disable,
+        ActionCreators.enable,
+        ActionCreators.decrement
+      ],
+      saveStateToLocalStorage
+    )
   ]);
 }

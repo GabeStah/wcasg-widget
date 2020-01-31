@@ -1,12 +1,12 @@
-import { AudioUtilities as Audio } from '@/utility/audio';
-import Auth from '@/utility/auth';
-import Html from '@/utility/html';
-import Store from '@/utility/store';
+// import { AudioUtilities as Audio } from '@/utility/audio';
+// import Auth from '@/utility/auth';
+// import Html from '@/utility/html';
+// import Store from '@/utility/store';
 import times from 'lodash/times';
 import config from 'config';
-import Aria from '@/utility/aria';
-import Css from '@/utility/css';
-import Data from '@/utility/data';
+// import Aria from '@/utility/aria';
+// import Css from '@/utility/css';
+// import Data from '@/utility/data';
 
 enum DOMValueType {
   Attribute = 'attribute',
@@ -15,13 +15,13 @@ enum DOMValueType {
 }
 
 const Utility = {
-  Aria,
-  Audio,
-  Auth,
-  Css,
-  Data,
-  Html,
-  Store,
+  // Aria,
+  // Audio,
+  // Auth,
+  // Css,
+  // Data,
+  // Html,
+  // Store,
 
   /**
    * Converts bytes into larger readable format.
