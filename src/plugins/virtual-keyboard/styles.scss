@@ -1,0 +1,63 @@
+@import '../../styles/variables';
+
+.#{$widget-prefix}-keyboard-modal * {
+  all: unset;
+}
+
+.#{$widget-prefix}-keyboard-modal {
+  background: #959595;
+  border: 2px solid #2d2d2d;
+  display: flex;
+  font: 12px sans-serif;
+  flex-wrap: wrap;
+  height: auto;
+  justify-content: center;
+  left:50%;
+  margin: 0 auto;
+  position:fixed;
+  bottom:5%;
+  transform: translate(-50%,-50%);
+  width: 500px;
+
+  &.visible {
+    display: flex;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.keyboard {
+  box-shadow: #121212;
+  margin: 0 auto;
+  text-align: center;
+  width: 520px;
+}
+
+.key-row {
+  display: block;
+}
+
+button.key {
+  align-items: center;
+  background-color: #f2f2f2;
+  border: 1px solid #2b2b2b;
+  box-sizing: border-box;
+  display: inline-flex;
+  font-size: 24px;
+  height: 36px;
+  justify-content: center;
+  margin: 1px;
+  padding: 0;
+  width: 36px;
+}
+
+.key:hover {
+  //color: $default-highlight-color-primary;
+  //border-color: $default-highlight-color-secondary;
+  //background-color: rgba(160, 183, 160, 0.29)
+}
+
+
+

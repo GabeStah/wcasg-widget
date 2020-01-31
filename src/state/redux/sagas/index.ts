@@ -136,6 +136,9 @@ export function* onFocusNode(action: Action) {
  * @returns {Generator<never, void, unknown>}
  */
 export function* watchPluginTasks(action: any) {
+  if (!action || !action.payload || !action.payload.id) {
+    return;
+  }
   const plugin = PluginManager.getInstance().find(action.payload.id);
   if (plugin && plugin.tasks) {
     for (const task of plugin.tasks) {
@@ -218,12 +221,9 @@ export function* watchKeyDown() {
 }
 
 export function* saveStateToLocalStorage() {
-  console.warn(`saving to storage`);
   const state = yield select();
   if (state) {
     const pluginsState = new Selectors(state).getPluginsLocalState();
-    console.log(`saga:savestatetolocalstorage`);
-    console.log(pluginsState);
     Store.saveToLocalStorage({
       value: { plugins: pluginsState },
       withCompression: config.useLocalStorageCompression,

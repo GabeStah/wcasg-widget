@@ -18,7 +18,7 @@ export class Selectors {
     return Object.values(this.state.plugins).map(plugin => plugin.id);
   }
 
-  public getEnabledIds() {
+  public getEnabledIds(): string[] {
     return Object.values(this.state.plugins)
       .filter(plugin => plugin.enabled)
       .map(plugin => plugin.id);

@@ -20,6 +20,7 @@ import ReadableFonts from 'plugins/readable-fonts/plugin';
 import StopAnimations from 'plugins/stop-animations/plugin';
 import TextToSpeech from 'plugins/text-to-speech/plugin';
 import Tooltip from 'plugins/tooltip/plugin';
+import VirtualKeyboard from 'plugins/virtual-keyboard/plugin';
 
 PluginManager.getInstance().add([
   BlackAndYellow,
@@ -41,7 +42,8 @@ PluginManager.getInstance().add([
   ReadableFonts,
   StopAnimations,
   TextToSpeech,
-  Tooltip
+  Tooltip,
+  VirtualKeyboard
 ]);
 
 PluginManager.getInstance().loadFromLocalStorage();

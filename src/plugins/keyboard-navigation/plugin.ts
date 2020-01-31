@@ -146,9 +146,9 @@ function* changeFocus({
 export function* handleKeyboardNavigation(e?: any) {
   const state = yield select();
   const selectors = new Selectors(state);
-  const plugin = selectors.getPlugin(pluginObject.id);
+  const statePlugin = selectors.getPlugin(pluginObject.id);
 
-  if (!plugin.enabled) {
+  if (!statePlugin.enabled) {
     return;
   }
   // Ensure no unexpected modifiers

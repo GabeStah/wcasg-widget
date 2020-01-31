@@ -1,4 +1,4 @@
-import { Widget } from 'components/widget';
+import Widget from 'components/widget';
 import config from 'config';
 import React from 'react';
 import ReactDOM from 'react-dom';

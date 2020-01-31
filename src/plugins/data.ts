@@ -18,5 +18,6 @@ export enum Ids {
   ReadableFonts = 'readable-fonts',
   StopAnimations = 'stop-animations',
   TextToSpeech = 'text-to-speech',
-  Tooltip = 'tooltip'
+  Tooltip = 'tooltip',
+  VirtualKeyboard = 'virtual-keyboard'
 }
