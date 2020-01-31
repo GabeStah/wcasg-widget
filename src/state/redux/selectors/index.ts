@@ -53,6 +53,13 @@ export class Selectors {
     }
   }
 
+  public getPluginScaling(id: string) {
+    const plugin = this.getPlugin(id);
+    if (plugin && plugin.scaling) {
+      return plugin.scaling;
+    }
+  }
+
   public isKeyboardEnabled() {
     return this.state.keyboard.enabled;
   }

@@ -1,7 +1,13 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import { PluginActionClass } from 'classes/plugin/action/class';
 import { Ids } from 'plugins-new/data';
 import styles from './styles.scss';
-import { Css } from '@/utility/css';
+
+const actionClass = new PluginActionClass({
+  name: 'large-cursor-action',
+  klass: [styles.largeCursor],
+  query: 'html'
+});
 
 export const pluginObject: Plugin = {
   id: Ids.LargeCursor,
@@ -11,11 +17,11 @@ export const pluginObject: Plugin = {
   tasks: [
     {
       on: PluginActionTypes.enable,
-      func: []
+      func: [() => actionClass.enable()]
     },
     {
       on: PluginActionTypes.disable,
-      func: []
+      func: [() => actionClass.disable()]
     }
   ]
 };

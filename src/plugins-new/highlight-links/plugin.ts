@@ -9,6 +9,7 @@ function* updateStyle() {
   const body = document.querySelectorAll('body')[0];
   const state = yield select();
   const selectors = new Selectors(state);
+  // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
   const options = selectors.getPluginOption(plugin.id);
 
@@ -88,12 +89,7 @@ export const pluginObject: Plugin = {
     },
     {
       on: PluginActionTypes.selectOption,
-      func: [
-        updateStyle
-        // function* hello() {
-        //   yield changeSelectOption();
-        // }
-      ]
+      func: [updateStyle]
     }
   ]
 };

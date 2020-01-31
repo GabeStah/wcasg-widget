@@ -1,6 +1,7 @@
 import { ImmerReducer } from 'immer-reducer';
 import findIndex from 'lodash/findIndex';
 import { defaultState, State } from 'state/redux/state';
+import { PluginScaling } from '@/enum';
 
 const getPluginIndexById = (plugins: any, id: any) => {
   return findIndex(plugins, (plugin: any) => plugin.id === id);
@@ -9,8 +10,12 @@ const getPluginIndexById = (plugins: any, id: any) => {
 export class BaseReducer extends ImmerReducer<State> {
   public decrement(payload: { id: string }) {
     const i = getPluginIndexById(this.draftState.plugins, payload.id);
-    const current = this.draftState.plugins[i].scalingFactor;
-    this.draftState.plugins[i].scalingFactor = current ? current - 1 : -1;
+    const scaling = this.draftState.plugins[i].scaling;
+    if (scaling) {
+      scaling.factor = scaling.factor
+        ? scaling.factor - scaling.increment
+        : scaling.baseFactor - scaling.increment;
+    }
   }
 
   public disable(payload: { id: string }) {
@@ -37,8 +42,12 @@ export class BaseReducer extends ImmerReducer<State> {
 
   public increment(payload: { id: string }) {
     const i = getPluginIndexById(this.draftState.plugins, payload.id);
-    const current = this.draftState.plugins[i].scalingFactor;
-    this.draftState.plugins[i].scalingFactor = current ? current + 1 : 1;
+    const scaling = this.draftState.plugins[i].scaling;
+    if (scaling) {
+      scaling.factor = scaling.factor
+        ? scaling.factor + scaling.increment
+        : scaling.baseFactor + scaling.increment;
+    }
   }
 
   public keyDown(payload: { key: string }) {

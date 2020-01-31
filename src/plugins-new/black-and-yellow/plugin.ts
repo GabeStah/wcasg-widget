@@ -1,23 +1,36 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import { ValueManipulationType } from 'classes/plugin/action';
+import { PluginActionClass } from 'classes/plugin/action/class';
+import { PluginActionStyle } from 'classes/plugin/action/style';
 import { Ids } from 'plugins-new/data';
 import styles from './styles.scss';
-import { Css } from '@/utility/css';
 
-const queryString = ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ');
+const actionClass = new PluginActionClass({
+  name: 'black-and-yellow-action-style',
+  klass: [styles.blackAndYellow],
+  query: 'html'
+});
 
-const addClassAndStyle = () => {
-  Css.addClass({
-    node: document.querySelectorAll(queryString),
-    name: styles.blackAndYellow
-  });
-};
+const actionStyle = new PluginActionStyle({
+  name: 'black-and-yellow-action-background-image',
+  style: {
+    name: 'background-image',
+    manipulationType: ValueManipulationType.Toggle,
+    // Value assigned to property when action is enabled.
+    enabledValue: 'none'
+  },
+  query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+});
 
-const removeClassAndStyle = () => {
-  Css.removeClass({
-    node: document.querySelectorAll(queryString),
-    name: styles.blackAndYellow
-  });
-};
+function* onEnable() {
+  actionClass.enable();
+  actionStyle.enable();
+}
+
+function* onDisable() {
+  actionClass.disable();
+  actionStyle.disable();
+}
 
 export const pluginObject: Plugin = {
   id: Ids.BlackAndYellow,
@@ -27,11 +40,11 @@ export const pluginObject: Plugin = {
   tasks: [
     {
       on: PluginActionTypes.enable,
-      func: [addClassAndStyle]
+      func: [onEnable]
     },
     {
       on: PluginActionTypes.disable,
-      func: [removeClassAndStyle]
+      func: [onDisable]
     }
   ]
 };

@@ -1,7 +1,12 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import { PluginActionClass } from 'classes/plugin/action/class';
 import { Ids } from 'plugins-new/data';
 import styles from './styles.scss';
-import { Css } from '@/utility/css';
+
+const actionClass = new PluginActionClass({
+  name: 'readable-fonts-action',
+  klass: [styles.readableFonts]
+});
 
 export const pluginObject: Plugin = {
   id: Ids.ReadableFonts,
@@ -11,11 +16,11 @@ export const pluginObject: Plugin = {
   tasks: [
     {
       on: PluginActionTypes.enable,
-      func: []
+      func: [() => actionClass.enable()]
     },
     {
       on: PluginActionTypes.disable,
-      func: []
+      func: [() => actionClass.disable()]
     }
   ]
 };

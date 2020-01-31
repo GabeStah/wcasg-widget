@@ -58,12 +58,12 @@ export class PluginActionProperty extends PluginAction
           ValueManipulationType.PercentageScaling
         ].includes(this.property.manipulationType)
       ) {
-        const { scalingFactor } = params;
+        const { factor } = params;
         Utility.setNodeValue({
           node,
           name: this.property.name,
           type: this.domValueType,
-          value: this.getCalculatedPropertyValue(scalingFactor, node)
+          value: this.getCalculatedPropertyValue(factor, node)
         });
       } else if (
         this.property.manipulationType === ValueManipulationType.Toggle

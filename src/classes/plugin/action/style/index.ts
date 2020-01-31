@@ -43,13 +43,9 @@ export class PluginActionStyle extends PluginAction
     super(params);
     this.style = params.style;
 
-    this.initialize(this);
-  }
-
-  public initialize = (self: any): void => {
     // Initialize by generating original data attributes for property
     this.addDataAttributeForStyles();
-  };
+  }
 
   public enable(params?: any): void {
     this.nodeList.forEach((node: any) => {
@@ -60,12 +56,12 @@ export class PluginActionStyle extends PluginAction
           ValueManipulationType.PercentageScaling
         ].includes(this.style.manipulationType)
       ) {
-        const { scalingFactor } = params;
+        const { factor } = params;
         Utility.setNodeValue({
           node,
           name: this.style.name,
           type: this.domValueType,
-          value: this.getCalculatedStyleValue(scalingFactor, node)
+          value: this.getCalculatedStyleValue(factor, node)
         });
       } else if (this.style.manipulationType === ValueManipulationType.Toggle) {
         // If toggle, set to enabledValue (or remove if enabledValue is null)

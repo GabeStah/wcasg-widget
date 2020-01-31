@@ -1,7 +1,35 @@
-import { Plugin, PluginActionTypes } from '@/enum';
-import { Ids } from 'plugins-new/data';
+import {Plugin, PluginActionTypes} from '@/enum';
+import {ValueManipulationType} from 'classes/plugin/action';
+import {PluginActionClass} from 'classes/plugin/action/class';
+import {PluginActionStyle} from 'classes/plugin/action/style';
+import {Ids} from 'plugins-new/data';
 import styles from './styles.scss';
-import { Css } from '@/utility/css';
+
+const actionClass = new PluginActionClass({
+  name: 'light-contrast-action-style',
+  klass: [styles.lightContrast],
+  query: 'html'
+});
+const actionStyle = new PluginActionStyle({
+  name: 'light-contrast-action-background-image',
+  style: {
+    name: 'background-image',
+    manipulationType: ValueManipulationType.Toggle,
+    // Value assigned to property when action is enabled.
+    enabledValue: 'none'
+  },
+  query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
+});
+
+function* onEnable() {
+  actionClass.enable();
+  actionStyle.enable();
+}
+
+function* onDisable() {
+  actionClass.disable();
+  actionStyle.disable();
+}
 
 export const pluginObject: Plugin = {
   id: Ids.LightContrast,
@@ -11,11 +39,11 @@ export const pluginObject: Plugin = {
   tasks: [
     {
       on: PluginActionTypes.enable,
-      func: []
+      func: [onEnable]
     },
     {
       on: PluginActionTypes.disable,
-      func: []
+      func: [onDisable]
     }
   ]
 };

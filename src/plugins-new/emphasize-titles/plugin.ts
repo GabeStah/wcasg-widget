@@ -1,7 +1,12 @@
-import { Plugin, PluginActionTypes } from '@/enum';
-import { Ids } from 'plugins-new/data';
+import {Plugin, PluginActionTypes} from '@/enum';
+import {PluginActionClass} from 'classes/plugin/action/class';
+import {Ids} from 'plugins-new/data';
 import styles from './styles.scss';
-import { Css } from '@/utility/css';
+
+const actionClass = new PluginActionClass({
+  name: 'emphasize-titles-action',
+  klass: [styles.emphasizeTitles]
+});
 
 export const pluginObject: Plugin = {
   id: Ids.EmphasizeTitles,
@@ -11,24 +16,11 @@ export const pluginObject: Plugin = {
   tasks: [
     {
       on: PluginActionTypes.enable,
-      func: [
-        () => {
-          Css.addClass({
-            node: document.querySelectorAll('body')[0],
-            name: styles.emphasizeTitles
-          });
-        }
-      ]
+      func: [() => actionClass.enable()]
     },
     {
       on: PluginActionTypes.disable,
-      func: [
-        () =>
-          Css.removeClass({
-            node: document.querySelectorAll('body')[0],
-            name: styles.emphasizeTitles
-          })
-      ]
+      func: [() => actionClass.disable()]
     }
   ]
 };

@@ -1,3 +1,4 @@
+import { PluginComponentParams } from '@/enum';
 import React from 'react';
 import { Radio } from 'components/radio';
 import { Scalable } from 'components/scalable';
@@ -6,16 +7,8 @@ import { Selectors } from 'state/redux/selectors';
 export const PluginComponent = ({
   state,
   actions,
-  id,
-  onEnable,
-  onDisable
-}: {
-  state: any;
-  actions: any;
-  id: string;
-  onEnable?: any;
-  onDisable?: any;
-}) => {
+  id
+}: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
   return (
     <div>
@@ -24,14 +17,8 @@ export const PluginComponent = ({
         onClick={() => {
           if (plugin.enabled) {
             actions.disable(plugin.id);
-            if (onDisable && typeof onDisable === 'function') {
-              onDisable();
-            }
           } else {
             actions.enable(plugin.id);
-            if (onEnable && typeof onEnable === 'function') {
-              onEnable();
-            }
           }
         }}
       >
@@ -40,7 +27,9 @@ export const PluginComponent = ({
       {plugin.options.length > 0 && (
         <Radio data={plugin.options} plugin={plugin} actions={actions} />
       )}
-      {plugin.scalingFactor && <Scalable plugin={plugin} actions={actions} />}
+      {plugin.scaling && (
+        <Scalable plugin={plugin} actions={actions} scaling={plugin.scaling} />
+      )}
     </div>
   );
 };

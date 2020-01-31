@@ -1,7 +1,12 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import { PluginActionClass } from 'classes/plugin/action/class';
 import { Ids } from 'plugins-new/data';
 import styles from './styles.scss';
-import { Css } from '@/utility/css';
+
+const actionClass = new PluginActionClass({
+  name: 'emphasize-hover-action',
+  klass: [styles.emphasizeHover]
+});
 
 export const pluginObject: Plugin = {
   id: Ids.EmphasizeHover,
@@ -11,11 +16,11 @@ export const pluginObject: Plugin = {
   tasks: [
     {
       on: PluginActionTypes.enable,
-      func: []
+      func: [() => actionClass.enable()]
     },
     {
       on: PluginActionTypes.disable,
-      func: []
+      func: [() => actionClass.disable()]
     }
   ]
 };

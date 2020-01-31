@@ -1,3 +1,6 @@
+import { ValueManipulationType } from 'classes/plugin/action';
+import { PluginComponent } from 'components/plugin';
+import React from 'react';
 import { PluginAction } from 'state/redux/state';
 
 export enum PluginActionTypes {
@@ -9,6 +12,13 @@ export enum PluginActionTypes {
   selectOption = 'selectOption'
 }
 
+export interface PluginScaling {
+  factor: number;
+  increment: number;
+  baseFactor: number;
+  type: ValueManipulationType;
+}
+
 export interface PluginOption {
   id: number;
   name: string;
@@ -17,11 +27,18 @@ export interface PluginOption {
   selected?: boolean;
 }
 
+export interface PluginComponentParams {
+  actions: any;
+  id: string;
+  state: any;
+}
+
 export interface Plugin {
   id: string;
-  title: string;
+  customComponent?: boolean;
   enabled: boolean;
-  scalingFactor?: number;
-  tasks: PluginAction[];
   options: PluginOption[];
+  scaling?: PluginScaling;
+  tasks: PluginAction[];
+  title: string;
 }
