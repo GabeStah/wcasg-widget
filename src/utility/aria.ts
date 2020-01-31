@@ -1,4 +1,5 @@
 import Utility from '@/utility';
+import Css from '@/utility/css';
 import globalStyles from 'styles/global.scss';
 
 enum DOMValueType {
@@ -13,7 +14,7 @@ export const Aria = {
       return;
     }
     // Remove focused class.
-    Utility.Css.removeClass({
+    Css.removeClass({
       node,
       name: globalStyles['wcasg-ada-app-focused']
     });
@@ -77,7 +78,7 @@ export const Aria = {
       return;
     }
     // Add focused class.
-    Utility.Css.addClass({
+    Css.addClass({
       node,
       name: globalStyles['wcasg-ada-app-focused']
     });
@@ -133,7 +134,7 @@ export const Aria = {
     });
     if (labelledBy) {
       if (document.getElementById(labelledBy)) {
-        const labelOfLabelledBy = Utility.Aria.getElementText({
+        const labelOfLabelledBy = Aria.getElementText({
           element: document.getElementById(labelledBy),
           maxLength
         });
