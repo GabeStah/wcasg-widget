@@ -1,13 +1,11 @@
+import { WidgetNew } from 'components/widget';
+import config from 'config';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-
-import Widget from 'components/widget';
-
-import { reducerInitializedStore } from '@/state';
-
+import { Connector } from 'state/redux/connectors';
+import { createPluginStore } from 'state/redux/store';
 import styles from 'styles/global.scss';
-import config from 'config';
 
 if (config.debug) {
   console.warn('--- DEBUG ENABLED ---');
@@ -22,8 +20,10 @@ modal.className = `${styles['wcasg-ada-app-container']}`;
 document.getElementsByTagName('html')[0].append(modal);
 
 ReactDOM.render(
-  <Provider store={reducerInitializedStore}>
-    <Widget />
+  <Provider store={createPluginStore()}>
+    <Connector>
+      {(state, actions) => <WidgetNew state={state} actions={actions} />}
+    </Connector>
   </Provider>,
   modal
 );

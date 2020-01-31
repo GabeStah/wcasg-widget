@@ -1,25 +1,25 @@
 import { Plugin } from '@/enum';
 
-import BlackAndYellow from 'plugins-new/black-and-yellow/plugin';
-import DarkContrast from 'plugins-new/dark-contrast/plugin';
-import EmphasizeHover from 'plugins-new/emphasize-hover/plugin';
-import EmphasizeTitles from 'plugins-new/emphasize-titles/plugin';
-import FontSize from 'plugins-new/font-size/plugin';
-import Grayscale from 'plugins-new/grayscale/plugin';
-import HideImages from 'plugins-new/hide-images/plugin';
-import HighlightForms from 'plugins-new/highlight-forms/plugin';
-import HighlightLinks from 'plugins-new/highlight-links/plugin';
-import InvertColors from 'plugins-new/invert-colors/plugin';
-import KeyboardNavigation from 'plugins-new/keyboard-navigation/plugin';
-import LargeCursor from 'plugins-new/large-cursor/plugin';
-import LetterSpacing from 'plugins-new/letter-spacing/plugin';
-import LightContrast from 'plugins-new/light-contrast/plugin';
-import MuteAudio from 'plugins-new/mute-audio/plugin';
-import PageNavigation from 'plugins-new/page-navigation/plugin';
-import ReadableFonts from 'plugins-new/readable-fonts/plugin';
-import StopAnimations from 'plugins-new/stop-animations/plugin';
-import TextToSpeech from 'plugins-new/text-to-speech/plugin';
-import Tooltip from 'plugins-new/tooltip/plugin';
+import BlackAndYellow from 'plugins/black-and-yellow/plugin';
+import DarkContrast from 'plugins/dark-contrast/plugin';
+import EmphasizeHover from 'plugins/emphasize-hover/plugin';
+import EmphasizeTitles from 'plugins/emphasize-titles/plugin';
+import FontSize from 'plugins/font-size/plugin';
+import Grayscale from 'plugins/grayscale/plugin';
+import HideImages from 'plugins/hide-images/plugin';
+import HighlightForms from 'plugins/highlight-forms/plugin';
+import HighlightLinks from 'plugins/highlight-links/plugin';
+import InvertColors from 'plugins/invert-colors/plugin';
+import KeyboardNavigation from 'plugins/keyboard-navigation/plugin';
+import LargeCursor from 'plugins/large-cursor/plugin';
+import LetterSpacing from 'plugins/letter-spacing/plugin';
+import LightContrast from 'plugins/light-contrast/plugin';
+import MuteAudio from 'plugins/mute-audio/plugin';
+import PageNavigation from 'plugins/page-navigation/plugin';
+import ReadableFonts from 'plugins/readable-fonts/plugin';
+import StopAnimations from 'plugins/stop-animations/plugin';
+import TextToSpeech from 'plugins/text-to-speech/plugin';
+import Tooltip from 'plugins/tooltip/plugin';
 
 export const Plugins: Plugin[] = [
   BlackAndYellow,

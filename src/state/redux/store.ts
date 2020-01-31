@@ -1,6 +1,5 @@
 import { createReducerFunction } from 'immer-reducer';
 import {
-  Action,
   applyMiddleware,
   bindActionCreators,
   compose,

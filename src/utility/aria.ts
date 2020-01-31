@@ -1,5 +1,4 @@
 import Utility from '@/utility';
-// import { DOMValueType } from 'classes/plugin/action';
 import globalStyles from 'styles/global.scss';
 
 enum DOMValueType {

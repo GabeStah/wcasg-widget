@@ -1,5 +1,9 @@
 ## WCASG ADA Widget
 
+## !!!ALERT!!!
+
+Much of this document is out of date.  Will update in the near future.
+
 ## App Architecture
 
 - Typescript: Improved syntax and type checking.

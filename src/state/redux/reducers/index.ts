@@ -1,7 +1,6 @@
 import { ImmerReducer } from 'immer-reducer';
 import findIndex from 'lodash/findIndex';
 import { defaultState, State } from 'state/redux/state';
-import { PluginScaling } from '@/enum';
 
 const getPluginIndexById = (plugins: any, id: any) => {
   return findIndex(plugins, (plugin: any) => plugin.id === id);

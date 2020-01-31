@@ -1,6 +1,4 @@
 import { ValueManipulationType } from 'classes/plugin/action';
-import { PluginComponent } from 'components/plugin';
-import React from 'react';
 import { PluginAction } from 'state/redux/state';
 
 export enum PluginActionTypes {

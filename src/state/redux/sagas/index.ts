@@ -1,12 +1,12 @@
 import { Plugins } from '@/globals';
-import { Ids } from 'plugins-new/data';
-import { handleKeyboardNavigation } from 'plugins-new/keyboard-navigation/plugin';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import { AudioUtilities } from '@/utility/audio';
 import config, { TextToSpeechEngine } from 'config';
 import { isAction, isActionFrom } from 'immer-reducer';
 import Kefir from 'kefir';
+import { Ids } from 'plugins/data';
+import { handleKeyboardNavigation } from 'plugins/keyboard-navigation/plugin';
 import { Action } from 'redux';
 import { buffers, END, eventChannel } from 'redux-saga';
 import {
@@ -201,11 +201,11 @@ export function* watchKeyDown() {
   yield takeLatest(channel, function*(val: any) {
     const state = yield select();
     if (new Selectors(state).isKeyboardEnabled()) {
+      // Immediately dispatch keyDown action for pressed key.
+      yield put(ActionCreators.keyDown({ key: val.key }));
       // Handle key down
       const node = yield handleKeyboardNavigation(val);
       yield put(ActionCreators.focusNode({ node }));
-      // Immediately dispatch keyDown action for pressed key.
-      yield put(ActionCreators.keyDown({ key: val.key }));
       // Delay before finalizing
       yield delay(2500);
       // Placeholder for cleanup logic

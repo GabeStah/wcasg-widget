@@ -7,7 +7,7 @@ const isDev = environment === 'development';
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: './index-test.tsx',
+  entry: './index.tsx',
 
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -25,7 +25,6 @@ module.exports = {
       config: path.resolve(__dirname, 'config.ts'),
       components: path.resolve(__dirname, 'src/components'),
       plugins: path.resolve(__dirname, 'src/plugins'),
-      'plugins-new': path.resolve(__dirname, 'src/plugins-new'),
       state: path.resolve(__dirname, 'src/state'),
       styles: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',

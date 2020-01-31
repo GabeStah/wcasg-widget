@@ -7,7 +7,6 @@ import config from 'config';
 import Aria from '@/utility/aria';
 import Css from '@/utility/css';
 import Data from '@/utility/data';
-import Plugin from '@/utility/plugin';
 
 enum DOMValueType {
   Attribute = 'attribute',
@@ -22,7 +21,6 @@ const Utility = {
   Css,
   Data,
   Html,
-  Plugin,
   Store,
 
   /**
