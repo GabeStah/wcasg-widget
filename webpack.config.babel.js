@@ -1,6 +1,7 @@
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
+import FileManagerPlugin from 'filemanager-webpack-plugin';
 
 const environment = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const isDev = environment === 'development';
@@ -10,7 +11,7 @@ module.exports = {
   entry: './index.tsx',
 
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'build/temp'),
     publicPath: '/',
     filename: 'index.js',
     libraryTarget: 'umd'
@@ -109,7 +110,7 @@ module.exports = {
     port: process.env.PORT || 8080,
     host: 'localhost',
     colors: true,
-    publicPath: '/build',
+    publicPath: '/build/out',
     contentBase: './',
     historyApiFallback: true,
     open: true
@@ -135,6 +136,16 @@ module.exports = {
       // set the current working directory for displaying module paths
       cwd: process.cwd()
     }),
-    new CompressionPlugin()
+    new CompressionPlugin(),
+    new FileManagerPlugin({
+      onEnd: [
+        {
+          copy: [{ source: './build/temp/*.*', destination: './build' }]
+        },
+        {
+          delete: ['./build/temp']
+        }
+      ]
+    })
   ]
 };

@@ -39,8 +39,8 @@ import styles from './styles.scss';
 // import HighlightLinksPlugin from 'plugins/highlight-links/plugin';
 // import KeyboardNavigationComponent from 'plugins/keyboard-navigation';
 // import KeyboardNavigationPlugin from 'plugins/keyboard-navigation/plugin';
-// import TextToSpeechComponent from 'plugins/text-to-speech';
-// import TextToSpeechPlugin from 'plugins/text-to-speech/plugin';
+import TextToSpeechComponent from 'plugins/text-to-speech';
+import TextToSpeechPlugin from 'plugins/text-to-speech/plugin';
 
 const Widget = ({ state, actions }: { state: State; actions: any }) => {
   useEffect(() => {
@@ -62,6 +62,12 @@ const Widget = ({ state, actions }: { state: State; actions: any }) => {
             />
           )
         )}
+        <TextToSpeechComponent
+          key={TextToSpeechPlugin.id}
+          state={state}
+          actions={actions}
+          id={TextToSpeechPlugin.id}
+        />
         <PageNavigationComponent
           key={PageNavigationPlugin.id}
           state={state}

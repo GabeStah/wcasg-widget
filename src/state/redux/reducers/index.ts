@@ -1,6 +1,6 @@
 import { ImmerReducer } from 'immer-reducer';
 import findIndex from 'lodash/findIndex';
-import { defaultState, State } from 'state/redux/state';
+import { defaultState, IGoogleCloudVoice, State } from 'state/redux/state';
 
 const getPluginIndexById = (plugins: any, id: any) => {
   return findIndex(plugins, (plugin: any) => plugin.id === id);
@@ -71,5 +71,13 @@ export class BaseReducer extends ImmerReducer<State> {
       }
       plugin.options[payload.selectId].selected = true;
     }
+  }
+
+  public setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {
+    this.draftState.services.googleCloud.textToSpeech.activeVoice = voice;
+  }
+
+  public setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {
+    this.draftState.services.googleCloud.textToSpeech.voices = voices;
   }
 }

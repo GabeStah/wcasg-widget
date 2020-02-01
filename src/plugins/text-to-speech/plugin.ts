@@ -6,6 +6,7 @@ export const pluginObject: Plugin = {
   title: 'Text-to-Speech',
   enabled: false,
   options: [],
+  customComponent: true,
   tasks: [
     {
       on: PluginActionTypes.enable,

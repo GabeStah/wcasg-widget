@@ -70,6 +70,13 @@ export class Selectors {
     });
   }
 
+  public getActiveTextToSpeechVoice() {
+    return this.state.services.googleCloud.textToSpeech.activeVoice;
+  }
+  public getTextToSpeechVoices() {
+    return this.state.services.googleCloud.textToSpeech.voices;
+  }
+
   public isKeyboardEnabled() {
     return this.state.keyboard.enabled;
   }

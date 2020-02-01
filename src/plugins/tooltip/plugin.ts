@@ -144,6 +144,8 @@ function* onDisable() {
       }
     });
   });
+  // Destroy any active tooltip
+  destroyTooltip({ instance: LocalState.popper });
 }
 
 export const pluginObject: Plugin = {

@@ -11,20 +11,51 @@ export interface PluginAction {
   func?: FunctionType[];
 }
 
-export interface State {
-  plugins: Plugin[];
+export interface IGoogleCloudVoice {
+  languageCodes: string[];
+  name: string;
+  ssmlGender: 'MALE' | 'FEMALE';
+  naturalSampleRateHertz: number;
+}
+
+interface StateServices {
+  services: {
+    googleCloud: {
+      textToSpeech: {
+        activeVoice: IGoogleCloudVoice | undefined;
+        voices: IGoogleCloudVoice[];
+      };
+    };
+  };
+}
+
+export interface State extends StateServices {
+  focusedNode: any;
   keyboard: {
     enabled: boolean;
     pressedKeys: any;
   };
-  focusedNode: any;
+  plugins: Plugin[];
 }
 
 export const defaultState: State = {
-  plugins: PluginManager.getInstance().plugins,
+  focusedNode: undefined,
   keyboard: {
     enabled: false,
     pressedKeys: {}
   },
-  focusedNode: undefined
+  plugins: PluginManager.getInstance().plugins,
+  services: {
+    googleCloud: {
+      textToSpeech: {
+        activeVoice: {
+          languageCodes: ['en-US'],
+          name: 'en-US-Wavenet-D',
+          naturalSampleRateHertz: 24000,
+          ssmlGender: 'FEMALE'
+        },
+        voices: []
+      }
+    }
+  }
 };

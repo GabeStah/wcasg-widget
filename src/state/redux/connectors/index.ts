@@ -1,3 +1,4 @@
+import { IGoogleCloudVoice } from 'state/redux/state';
 import { createConnector } from 'state/redux/store';
 
 export const Connector = createConnector({
@@ -36,6 +37,12 @@ export const Connector = createConnector({
     },
     selectOption(id: string, selectId: number) {
       actions.selectOption({ id, selectId });
+    },
+    setTextToSpeechVoice(voice: IGoogleCloudVoice) {
+      actions.setActiveTextToSpeechVoice(voice);
+    },
+    setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {
+      actions.setTextToSpeechVoices(voices);
     }
   })
 });

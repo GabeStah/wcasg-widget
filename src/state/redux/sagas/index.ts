@@ -196,6 +196,39 @@ export function* saveStateToLocalStorage() {
   }
 }
 
+function* getGoogleCloudVoices({
+  text,
+  engine = config.textToSpeechEngine
+}: {
+  text: string;
+  engine?: TextToSpeechEngine;
+}) {
+  try {
+    console.time('Google Cloud voice collection transaction time');
+    const response = yield AudioUtilities.synthesizeSpeechFromText({
+      text
+    });
+    console.timeEnd('Google Cloud voice collection  transaction time');
+
+    if (response && response.audioContent) {
+      if (speechToTextAudioElement) {
+        speechToTextAudioElement.pause();
+      }
+
+      speechToTextAudioElement = AudioUtilities.createHTMLAudioElement({
+        content: response.audioContent
+      });
+      if (speechToTextAudioElement) {
+        return speechToTextAudioElement.play();
+      }
+    } else {
+      console.log(`No valid response returned.`);
+    }
+  } catch (error) {
+    Utility.throwError(error);
+  }
+}
+
 export function* watchAll() {
   yield all([
     takeEvery(ActionCreators.enable, onPluginEnable),
@@ -206,6 +239,8 @@ export function* watchAll() {
       (action: Action) => isActionFrom(action, BaseReducer),
       watchPluginTasks
     ),
+    // Populate speech to text voices
+    call(AudioUtilities.getSpeechToTextVoices),
     // Track all focus events
     call(watchFocus),
     // Track all keydown events
