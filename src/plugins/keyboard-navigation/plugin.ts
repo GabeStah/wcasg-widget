@@ -1,15 +1,12 @@
 import { Plugin, PluginActionTypes } from '@/enum';
 import { Aria } from '@/utility/aria';
 import Css from '@/utility/css';
+import find from 'lodash/find';
 import findIndex from 'lodash/findIndex';
 import findLastIndex from 'lodash/findLastIndex';
 import { Ids } from 'plugins/data';
-import plugin from 'plugins/tooltip/plugin';
 import { select } from 'redux-saga/effects';
-import { ActionCreators } from 'state/redux/actions';
-// import { ActionCreators } from 'state/redux/actions';
 import { Selectors } from 'state/redux/selectors';
-import globalStyles from 'styles/global.scss';
 
 /**
  * Categorizations based on client description and functionality.
@@ -97,13 +94,17 @@ const findMatchingIndex = (
 
 function* changeFocus({
   searchTags,
-  isReverse = false
+  isReverse = false,
+  focusedNode
 }: {
   searchTags: string[];
   isReverse?: boolean;
+  focusedNode?: any;
 }) {
   // Current focus
-  const currentlyFocusedNode = Aria.findFocusedNode();
+  const currentlyFocusedNode = focusedNode
+    ? focusedNode
+    : Aria.findFocusedNode();
   let currentlyFocusedNodeIndex = 0;
 
   const nodeList = document.querySelectorAll(queryString);
@@ -143,10 +144,74 @@ function* changeFocus({
   return nodeList[matchIndex];
 }
 
+const mapKeysToParams = [
+  {
+    key: 't',
+    searchTags: table,
+    isReverse: false
+  },
+  {
+    key: 'T',
+    searchTags: table,
+    isReverse: true
+  },
+  {
+    key: 'g',
+    searchTags: image,
+    isReverse: false
+  },
+  {
+    key: 'G',
+    searchTags: image,
+    isReverse: true
+  },
+  {
+    key: 'l',
+    searchTags: listAndMenu,
+    isReverse: false
+  },
+  {
+    key: 'L',
+    searchTags: listAndMenu,
+    isReverse: true
+  },
+  {
+    key: 'i',
+    searchTags: listAndMenuItems,
+    isReverse: false
+  },
+  {
+    key: 'I',
+    searchTags: listAndMenuItems,
+    isReverse: true
+  },
+  {
+    key: 'f',
+    searchTags: elements,
+    isReverse: false
+  },
+  {
+    key: 'F',
+    searchTags: elements,
+    isReverse: true
+  },
+  {
+    key: 'h',
+    searchTags: headings,
+    isReverse: false
+  },
+  {
+    key: 'H',
+    searchTags: headings,
+    isReverse: true
+  }
+];
+
 export function* handleKeyboardNavigation(e?: any) {
   const state = yield select();
   const selectors = new Selectors(state);
   const statePlugin = selectors.getPlugin(pluginObject.id);
+  const currentFocusedNode = selectors.getFocusedNode();
 
   if (!statePlugin.enabled) {
     return;
@@ -156,47 +221,16 @@ export function* handleKeyboardNavigation(e?: any) {
     return;
   }
 
-  // TODO: Switch to `e.key` as `e.which` is deprecated
-  switch (e.which) {
-    case KeyCodes.T:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return yield changeFocus({ searchTags: table, isReverse: e.shiftKey });
-    case KeyCodes.G:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return yield changeFocus({ searchTags: image, isReverse: e.shiftKey });
-    case KeyCodes.L:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return yield changeFocus({
-        searchTags: listAndMenu,
-        isReverse: e.shiftKey
-      });
-    case KeyCodes.I:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return yield changeFocus({
-        searchTags: listAndMenuItems,
-        isReverse: e.shiftKey
-      });
-    case KeyCodes.F:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return yield changeFocus({
-        searchTags: elements,
-        isReverse: e.shiftKey
-      });
-    case KeyCodes.H:
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return yield changeFocus({
-        searchTags: headings,
-        isReverse: e.shiftKey
-      });
-    default:
-      return;
+  const match = find(mapKeysToParams, ['key', e.key]);
+  if (!match) {
+    return;
   }
+
+  return yield changeFocus({
+    focusedNode: currentFocusedNode,
+    searchTags: match.searchTags,
+    isReverse: match.isReverse
+  });
 }
 
 /**

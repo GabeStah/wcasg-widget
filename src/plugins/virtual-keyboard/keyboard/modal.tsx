@@ -1,3 +1,4 @@
+import { KeyboardLayoutENUS } from 'classes/keyboard/key';
 import Keyboard from 'plugins/virtual-keyboard/keyboard/keyboard';
 import React from 'react';
 import styles from '../styles.scss';
@@ -8,7 +9,7 @@ const Modal = ({ isVisible }: { isVisible: boolean }) => (
       isVisible ? styles.visible : styles.hidden
     }`}
   >
-    <Keyboard />
+    <Keyboard layout={KeyboardLayoutENUS} />
   </div>
 );
 

@@ -18,8 +18,22 @@ export const Scalable = ({
   return (
     <>
       <p>Value: {displayFactor}</p>
-      <button onClick={() => actions.decrement(plugin.id)}>-</button>
-      <button onClick={() => actions.increment(plugin.id)}>+</button>
+      <button
+        onClick={() => actions.decrement(plugin.id)}
+        aria-label={`Decrement ${plugin.title}`}
+        aria-roledescription={'button'}
+        role={'button'}
+      >
+        -
+      </button>
+      <button
+        onClick={() => actions.increment(plugin.id)}
+        aria-label={`Increment ${plugin.title}`}
+        aria-roledescription={'button'}
+        role={'button'}
+      >
+        +
+      </button>
     </>
   );
 };

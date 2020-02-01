@@ -21,6 +21,9 @@ export const PluginComponent = ({
             actions.enable(plugin.id);
           }
         }}
+        aria-label={`${plugin.enabled ? 'Disable' : 'Enable'} ${plugin.title}`}
+        aria-roledescription={'button'}
+        role={'button'}
       >
         {plugin.enabled ? 'Disable' : 'Enable'}
       </button>

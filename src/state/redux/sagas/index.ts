@@ -1,4 +1,3 @@
-// import { Plugins } from '@/globals';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import { AudioUtilities } from '@/utility/audio';
@@ -6,23 +5,21 @@ import Store, { StorageDataType } from '@/utility/store';
 import PluginManager from 'classes/plugin/manager';
 import config, { TextToSpeechEngine } from 'config';
 import { isAction, isActionFrom } from 'immer-reducer';
-import Kefir from 'kefir';
 import { Ids } from 'plugins/data';
-import { handleKeyboardNavigation } from 'plugins/keyboard-navigation/plugin';
 import { Action } from 'redux';
 import { buffers, END, eventChannel } from 'redux-saga';
 import {
   all,
   call,
   debounce,
-  delay,
   put,
   select,
-  takeEvery,
-  takeLatest
+  takeEvery
 } from 'redux-saga/effects';
 import { ActionCreators } from 'state/redux/actions';
 import { BaseReducer } from 'state/redux/reducers';
+import { watchFocus } from 'state/redux/sagas/on-focus';
+import { watchKeyDown } from 'state/redux/sagas/on-key-down';
 import { Selectors } from 'state/redux/selectors';
 
 let speechToTextAudioElement: any;
@@ -39,14 +36,12 @@ export function* onPluginEnable(action: Action) {
     return;
   }
   // On keyboard nav enable
-  if (action.payload.id === Ids.KeyboardNavigation) {
+  if (
+    action.payload.id === Ids.KeyboardNavigation ||
+    action.payload.id === Ids.VirtualKeyboard
+  ) {
     // Enable keyboard
     yield put(ActionCreators.enableKeyboard());
-  }
-  // On text to speech enable
-  if (action.payload.id === Ids.TextToSpeech) {
-    // Enable keyboard navigation
-    yield put(ActionCreators.enable({ id: Ids.KeyboardNavigation }));
   }
 }
 
@@ -54,12 +49,13 @@ export function* onPluginDisable(action: Action) {
   if (!isAction(action, ActionCreators.disable)) {
     return;
   }
-  // On keyboard nav disable
-  if (action.payload.id === Ids.KeyboardNavigation) {
+  // On keyboard plugin disable
+  if (
+    action.payload.id === Ids.KeyboardNavigation ||
+    action.payload.id === Ids.VirtualKeyboard
+  ) {
     // Disable keyboard
     yield put(ActionCreators.disableKeyboard());
-    // Disable text to speech
-    yield put(ActionCreators.disable({ id: Ids.TextToSpeech }));
   }
   // On text-to-speech, disable any active speaker
   if (action.payload.id === Ids.TextToSpeech) {
@@ -154,13 +150,6 @@ export function* watchPluginTasks(action: any) {
 }
 
 /**
- * Observable stream for all `keydown` actions on document.
- *
- * @type {Stream<unknown, unknown>}
- */
-const keyDownStream = Kefir.fromEvents(document, 'keydown');
-
-/**
  * Converts stream into Redux-saga channel.
  *
  * @see https://redux-saga.js.org/docs/advanced/Channels.html
@@ -195,31 +184,6 @@ export function toChannel(stream: any, limit: number = 5) {
   return channel;
 }
 
-/**
- * Watches all `keydown` events.
- *
- * @returns {Generator<<"CALL", CallEffectDescriptor> | <"FORK", ForkEffectDescriptor>, void, unknown>}
- */
-export function* watchKeyDown() {
-  // Convert observable stream to channel
-  const channel = yield call(toChannel, keyDownStream);
-
-  yield takeLatest(channel, function*(val: any) {
-    const state = yield select();
-    if (new Selectors(state).isKeyboardEnabled()) {
-      // Immediately dispatch keyDown action for pressed key.
-      yield put(ActionCreators.keyDown({ key: val.key }));
-      // Handle key down
-      const node = yield handleKeyboardNavigation(val);
-      yield put(ActionCreators.focusNode({ node }));
-      // Delay before finalizing
-      yield delay(2500);
-      // Placeholder for cleanup logic
-      yield put({ type: 'placeholder', payload: { id: 'something' } });
-    }
-  });
-}
-
 export function* saveStateToLocalStorage() {
   const state = yield select();
   if (state) {
@@ -242,6 +206,9 @@ export function* watchAll() {
       (action: Action) => isActionFrom(action, BaseReducer),
       watchPluginTasks
     ),
+    // Track all focus events
+    call(watchFocus),
+    // Track all keydown events
     call(watchKeyDown),
     // Save on store update, after localStorageDebounceDelay seconds of non-interaction
     debounce(

@@ -7,6 +7,7 @@ import { DOMValueType } from 'classes/plugin/action';
 import config from 'config';
 import { Ids } from 'plugins/data';
 import styles from './styles.scss';
+// @ts-ignore
 import template from './template.html';
 
 interface ILocalState {

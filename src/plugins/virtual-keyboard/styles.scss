@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import 'src/styles/variables';
 
 .#{$widget-prefix}-keyboard-modal * {
   all: unset;
@@ -16,8 +16,10 @@
   margin: 0 auto;
   position:fixed;
   bottom:5%;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
   transform: translate(-50%,-50%);
-  width: 500px;
+  width: 700px;
 
   &.visible {
     display: flex;
@@ -32,31 +34,56 @@
   box-shadow: #121212;
   margin: 0 auto;
   text-align: center;
-  width: 520px;
+  width: 620px;
 }
 
 .key-row {
   display: block;
 }
 
-button.key {
+$key-width: 36px;
+$key-font-size: 24px;
+
+// Use higher specificity to override other styling.
+a.key {
   align-items: center;
   background-color: #f2f2f2;
   border: 1px solid #2b2b2b;
   box-sizing: border-box;
+  cursor: pointer;
   display: inline-flex;
-  font-size: 24px;
+  //font-size: $key-font-size;
   height: 36px;
   justify-content: center;
   margin: 1px;
   padding: 0;
-  width: 36px;
+  width: $key-width;
+
+  &.Normal {
+    //font-size: ($key-font-size * 1);
+    width: ($key-width * 1);
+  }
+
+  &.Large {
+    //font-size: ($key-font-size * 0.5);
+    width: ($key-width * 2);
+  }
+
+  &.XLarge {
+    //font-size: ($key-font-size * 0.35);
+    width: ($key-width * 3);
+  }
+
+  &.XXLarge {
+    //font-size: ($key-font-size * 0.25);
+    width: ($key-width * 4);
+  }
 }
 
 .key:hover {
-  //color: $default-highlight-color-primary;
-  //border-color: $default-highlight-color-secondary;
-  //background-color: rgba(160, 183, 160, 0.29)
+  background-color: rgba($default-highlight-color-secondary, 1) !important;
+  outline: 2px solid rgba($default-highlight-color-primary, 0.5) !important;
+  outline-offset: 1px !important;
 }
 
 
