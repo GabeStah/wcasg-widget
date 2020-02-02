@@ -73,6 +73,17 @@ export class Selectors {
   public getActiveTextToSpeechVoice() {
     return this.state.services.googleCloud.textToSpeech.activeVoice;
   }
+  public getTextToSpeechVoice(name: string) {
+    const voice = this.state.services.googleCloud.textToSpeech.voices[
+      this.state.services.googleCloud.textToSpeech.voices.findIndex(
+        p => p.name === name
+      )
+    ];
+    if (!voice) {
+      throw new Error(`Voice with name [${name}] does not exist.`);
+    }
+    return voice;
+  }
   public getTextToSpeechVoices() {
     return this.state.services.googleCloud.textToSpeech.voices;
   }

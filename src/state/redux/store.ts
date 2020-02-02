@@ -12,7 +12,7 @@ import { BaseReducer } from 'state/redux/reducers';
 import { Selectors } from 'state/redux/selectors';
 
 import { ActionCreators } from './actions';
-import { watchAll } from './sagas';
+import { rootSagas } from './sagas';
 import { defaultState, State } from './state';
 
 export const createConnector = makeConnector({
@@ -50,17 +50,20 @@ function composeReducers<S>(...reducers: Reducer<S, any>[]): Reducer<any, any> {
 }
 
 export function createPluginStore() {
-  const reducer = composeReducers<State>(
-    createReducerFunction(BaseReducer, defaultState)
-  );
+  // const reducer = composeReducers<State>(
+  //   createReducerFunction(BaseReducer, defaultState)
+  // );
+  const reducer = createReducerFunction(BaseReducer, defaultState);
   const sagaMiddleware = createSagaMiddleware();
+
+  // const reducerFunction = createReducerFunction(MyImmerReducer, initialState);
 
   const store = createStore(
     reducer,
     composeEnhancers(applyMiddleware(sagaMiddleware))
   );
 
-  sagaMiddleware.run(watchAll);
+  sagaMiddleware.run(rootSagas);
 
   return store;
 }

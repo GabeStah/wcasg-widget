@@ -28,6 +28,7 @@
       "config": ["config.ts"],
       "components/*": ["src/components/*"],
       "plugins/*": ["src/plugins/*"],
+      "services/*": ["src/services/*"],
       "state/*": ["src/state/*"],
       "styles/*": ["src/styles/*"]
     },

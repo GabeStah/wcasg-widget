@@ -1,3 +1,4 @@
+import { ActionCreators } from 'immer-reducer';
 import React, { useEffect } from 'react';
 import PluginManager from 'classes/plugin/manager';
 import { PluginComponent } from 'components/plugin';
@@ -9,6 +10,8 @@ import PageNavigationPlugin from 'plugins/page-navigation/plugin';
 
 import VirtualKeyboardComponent from 'plugins/virtual-keyboard';
 import VirtualKeyboardPlugin from 'plugins/virtual-keyboard/plugin';
+import { Connector } from 'state/redux/connectors';
+import { BaseReducer } from 'state/redux/reducers';
 
 import { Selectors } from 'state/redux/selectors';
 import { State } from 'state/redux/state';
@@ -42,7 +45,13 @@ import styles from './styles.scss';
 import TextToSpeechComponent from 'plugins/text-to-speech';
 import TextToSpeechPlugin from 'plugins/text-to-speech/plugin';
 
-const Widget = ({ state, actions }: { state: State; actions: any }) => {
+const Widget = ({
+  state,
+  actions
+}: {
+  state: State;
+  actions: typeof Connector.__actions;
+}) => {
   useEffect(() => {
     // One-time dispatch of enabled plugins on initial render.
     const ids = new Selectors(state).getEnabledIds();

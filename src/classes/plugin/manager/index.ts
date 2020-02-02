@@ -89,27 +89,4 @@ export default class PluginManager {
       this.plugins[matchIndex] = { ...this.plugins[matchIndex], ...plugin };
     }
   }
-
-  public loadFromLocalStorage(): any {
-    const full = Store.getFromLocalStorage({
-      type: StorageDataType.All,
-      withCompression: config.useLocalStorageCompression
-    });
-    if (!full || !full.plugins) {
-      return;
-    }
-    full.plugins.forEach((plugin: any) => {
-      this.setPluginInstanceState(plugin);
-    });
-  }
-
-  public saveToLocalStorage() {
-    this.plugins.forEach(plugin => {
-      Store.saveToLocalStorage({
-        type: StorageDataType.Plugin,
-        value: plugin,
-        withCompression: config.useLocalStorageCompression
-      });
-    });
-  }
 }

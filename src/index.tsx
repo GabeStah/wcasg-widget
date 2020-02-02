@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Connector } from 'state/redux/connectors';
+import { State } from 'state/redux/state';
 import { createPluginStore } from 'state/redux/store';
 import styles from 'styles/global.scss';
 import './load-plugins';
@@ -22,7 +23,9 @@ document.getElementsByTagName('html')[0].append(modal);
 ReactDOM.render(
   <Provider store={createPluginStore()}>
     <Connector>
-      {(state, actions) => <Widget state={state} actions={actions} />}
+      {(state: State, actions: typeof Connector.__actions) => (
+        <Widget state={state} actions={actions} />
+      )}
     </Connector>
   </Provider>,
   modal

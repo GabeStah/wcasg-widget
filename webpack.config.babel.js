@@ -2,6 +2,8 @@ import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import FileManagerPlugin from 'filemanager-webpack-plugin';
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 const environment = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const isDev = environment === 'development';
@@ -26,6 +28,7 @@ module.exports = {
       config: path.resolve(__dirname, 'config.ts'),
       components: path.resolve(__dirname, 'src/components'),
       plugins: path.resolve(__dirname, 'src/plugins'),
+      services: path.resolve(__dirname, 'src/services'),
       state: path.resolve(__dirname, 'src/state'),
       styles: path.resolve(__dirname, 'src/styles'),
       react: 'preact/compat',
@@ -137,6 +140,12 @@ module.exports = {
       cwd: process.cwd()
     }),
     new CompressionPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      defaultSizes: 'parsed',
+      openAnalyzer: false,
+      reportFilename: '../../build/bundle-analysis.html'
+    }),
     new FileManagerPlugin({
       onEnd: [
         {

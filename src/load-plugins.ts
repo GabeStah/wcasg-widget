@@ -45,5 +45,3 @@ PluginManager.getInstance().add([
   Tooltip,
   VirtualKeyboard
 ]);
-
-PluginManager.getInstance().loadFromLocalStorage();

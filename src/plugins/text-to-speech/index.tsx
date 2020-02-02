@@ -1,19 +1,24 @@
 import { PluginComponentParams } from '@/enum';
+import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
 import { Radio } from 'components/radio';
 import { Scalable } from 'components/scalable';
 import config from 'config';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Selectors } from 'state/redux/selectors';
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
-import { IGoogleCloudVoice } from 'state/redux/state';
 
 export const Component = ({ state, actions, id }: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
   const voices = new Selectors(state).getTextToSpeechVoices();
   const activeVoice = new Selectors(state).getActiveTextToSpeechVoice();
-  // console.log()
-  console.log(state);
-  console.log(voices);
+
+  const handleChange = (event: React.ChangeEvent<{ value: any }>) => {
+    const voice = new Selectors(state).getTextToSpeechVoice(event.target.value);
+    if (voice) {
+      actions.setActiveTextToSpeechVoice(voice);
+    }
+  };
+
   return (
     <div>
       <h2>{plugin.title}</h2>
@@ -41,10 +46,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={activeVoice?.name}
-            onChange={(e: any) => {
-              console.log(`changing select dropdown`);
-              console.log(e);
-            }}
+            onChange={handleChange}
           >
             {voices.map((voice: IGoogleCloudVoice) => (
               <MenuItem value={voice.name}>{voice.name}</MenuItem>

@@ -1,4 +1,10 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import {
+  GOOGLE_CLOUD_DEFAULT_VOICE,
+  IGoogleCloudVoice,
+  IGoogleCloudVoiceSelectionParams,
+  IGoogleCloudVoiceSsmlVoiceGender
+} from 'services/google-cloud/text-to-speech/declarations';
 import PluginManager from 'classes/plugin/manager';
 
 type FunctionType = (params?: any) => any;
@@ -11,18 +17,11 @@ export interface PluginAction {
   func?: FunctionType[];
 }
 
-export interface IGoogleCloudVoice {
-  languageCodes: string[];
-  name: string;
-  ssmlGender: 'MALE' | 'FEMALE';
-  naturalSampleRateHertz: number;
-}
-
 interface StateServices {
   services: {
     googleCloud: {
       textToSpeech: {
-        activeVoice: IGoogleCloudVoice | undefined;
+        activeVoice: IGoogleCloudVoiceSelectionParams;
         voices: IGoogleCloudVoice[];
       };
     };
@@ -48,12 +47,7 @@ export const defaultState: State = {
   services: {
     googleCloud: {
       textToSpeech: {
-        activeVoice: {
-          languageCodes: ['en-US'],
-          name: 'en-US-Wavenet-D',
-          naturalSampleRateHertz: 24000,
-          ssmlGender: 'FEMALE'
-        },
+        activeVoice: GOOGLE_CLOUD_DEFAULT_VOICE,
         voices: []
       }
     }

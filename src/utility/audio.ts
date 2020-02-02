@@ -1,3 +1,7 @@
+import {
+  IGoogleCloudVoice,
+  IGoogleCloudVoiceSelectionParams
+} from 'services/google-cloud/text-to-speech/declarations';
 import Auth from '@/utility/auth';
 import Utility from '@/utility/index';
 import config from 'config';
@@ -32,24 +36,10 @@ export const AudioUtilities = {
 function* getSpeechToTextVoices(
   params: { languageCode?: string } = { languageCode: 'en-US' }
 ) {
-  const voices = yield Auth.makeFetchRequest({
+  const result = yield Auth.makeFetchRequest({
     url: `https://texttospeech.googleapis.com/v1/voices?languageCode=${params.languageCode}`,
     options: {
       method: 'GET',
-      // body: JSON.stringify({
-      //   audioConfig: {
-      //     audioEncoding: 'LINEAR16',
-      //     pitch: 0,
-      //     speakingRate: 1
-      //   },
-      //   input: {
-      //     text
-      //   },
-      //   voice: {
-      //     languageCode: 'en-US',
-      //     name: 'en-US-Wavenet-D'
-      //   }
-      // }),
       headers: {
         'Content-Type': 'application/json',
         // tslint:disable-next-line:object-literal-key-quotes
@@ -58,10 +48,7 @@ function* getSpeechToTextVoices(
     }
   });
 
-  console.log(`getSpeechToTextVoices`);
-  console.log(voices);
-
-  return yield put(ActionCreators.setTextToSpeechVoices(voices));
+  return yield put(ActionCreators.setTextToSpeechVoices(result.voices));
 }
 
 /**
@@ -69,8 +56,15 @@ function* getSpeechToTextVoices(
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount#jwt-auth
  * @see https://github.com/googleapis/googleapis/blob/master/google/cloud/texttospeech/tts_v1.yaml#L7
  * @param {string} text
+ * @param voice
  */
-function* synthesizeSpeechFromText({ text }: { text: string }) {
+function* synthesizeSpeechFromText({
+  text,
+  voice = config.services.GoogleCloud.TextToSpeech.defaultVoice
+}: {
+  text: string;
+  voice?: IGoogleCloudVoiceSelectionParams;
+}) {
   return yield Auth.makeFetchRequest({
     url: 'https://texttospeech.googleapis.com/v1/text:synthesize',
     options: {
@@ -84,10 +78,7 @@ function* synthesizeSpeechFromText({ text }: { text: string }) {
         input: {
           text
         },
-        voice: {
-          languageCode: 'en-US',
-          name: 'en-US-Wavenet-D'
-        }
+        voice
       }),
       headers: {
         'Content-Type': 'application/json',

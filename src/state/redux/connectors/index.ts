@@ -1,4 +1,5 @@
-import { IGoogleCloudVoice } from 'state/redux/state';
+import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
+import { defaultState, State } from 'state/redux/state';
 import { createConnector } from 'state/redux/store';
 
 export const Connector = createConnector({
@@ -32,13 +33,13 @@ export const Connector = createConnector({
     keyUp(key: string) {
       actions.keyUp({ key });
     },
-    reset() {
-      actions.reset();
+    reset(newState?: State) {
+      actions.reset({ newState });
     },
     selectOption(id: string, selectId: number) {
       actions.selectOption({ id, selectId });
     },
-    setTextToSpeechVoice(voice: IGoogleCloudVoice) {
+    setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {
       actions.setActiveTextToSpeechVoice(voice);
     },
     setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {

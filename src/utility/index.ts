@@ -1,12 +1,8 @@
-// import { AudioUtilities as Audio } from '@/utility/audio';
-// import Auth from '@/utility/auth';
-// import Html from '@/utility/html';
-// import Store from '@/utility/store';
+import isEqual from 'lodash/isEqual';
+import isObject from 'lodash/isObject';
+import transform from 'lodash/transform';
 import times from 'lodash/times';
 import config from 'config';
-// import Aria from '@/utility/aria';
-// import Css from '@/utility/css';
-// import Data from '@/utility/data';
 
 enum DOMValueType {
   Attribute = 'attribute',
@@ -15,14 +11,6 @@ enum DOMValueType {
 }
 
 const Utility = {
-  // Aria,
-  // Audio,
-  // Auth,
-  // Css,
-  // Data,
-  // Html,
-  // Store,
-
   /**
    * Converts bytes into larger readable format.
    *
@@ -41,6 +29,28 @@ const Utility = {
     }
     return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
   },
+
+  /**
+   * Deep diff between two object, using lodash
+   *
+   * @source https://gist.github.com/Yimiprod/7ee176597fef230d1451
+   * @param  {Object} object Object compared
+   * @param  {Object} base   Object to compare with
+   * @return {Object}        Return a new object who represent the diff
+   */
+  difference: (object: any, base: any) => {
+    function changes(o: any, b: any[]) {
+      return transform(o, (result: unknown[], value: object, key: any) => {
+        if (!isEqual(value, b[key])) {
+          result[key] =
+            isObject(value) && isObject(b[key])
+              ? changes(value, b[key])
+              : value;
+        }
+      });
+    }
+    return changes(object, base);
+  } ,
 
   /**
    * Get value by name and ValueType of specified node.

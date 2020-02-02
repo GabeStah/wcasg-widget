@@ -1,6 +1,8 @@
+import Utility from '@/utility';
+import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
 import { ImmerReducer } from 'immer-reducer';
 import findIndex from 'lodash/findIndex';
-import { defaultState, IGoogleCloudVoice, State } from 'state/redux/state';
+import { defaultState, State } from 'state/redux/state';
 
 const getPluginIndexById = (plugins: any, id: any) => {
   return findIndex(plugins, (plugin: any) => plugin.id === id);
@@ -57,8 +59,8 @@ export class BaseReducer extends ImmerReducer<State> {
     this.draftState.keyboard.pressedKeys[payload.key] = false;
   }
 
-  public reset() {
-    this.draftState = defaultState;
+  public reset(payload: { newState?: State }) {
+    this.draftState = payload.newState ? payload.newState : defaultState;
   }
 
   public selectOption(payload: { id: string; selectId: number }) {
@@ -74,7 +76,12 @@ export class BaseReducer extends ImmerReducer<State> {
   }
 
   public setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {
-    this.draftState.services.googleCloud.textToSpeech.activeVoice = voice;
+    // Convert between IGoogleCloudVoice and IGoogleCloudVoiceSelectionParams
+    this.draftState.services.googleCloud.textToSpeech.activeVoice = {
+      languageCode: voice.languageCodes[0],
+      name: voice.name,
+      ssmlGender: voice.ssmlGender
+    };
   }
 
   public setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {

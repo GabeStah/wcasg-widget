@@ -1,5 +1,8 @@
 import { ValueManipulationType } from 'classes/plugin/action';
-import { PluginAction } from 'state/redux/state';
+import { Actions } from 'immer-reducer';
+import { Connector } from 'state/redux/connectors';
+import { BaseReducer } from 'state/redux/reducers';
+import { PluginAction, State } from 'state/redux/state';
 
 export enum PluginActionTypes {
   decrement = 'decrement',
@@ -26,9 +29,9 @@ export interface PluginOption {
 }
 
 export interface PluginComponentParams {
-  actions: any;
+  actions: typeof Connector.__actions;
   id: string;
-  state: any;
+  state: State;
 }
 
 export interface PluginLocalState {
