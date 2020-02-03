@@ -18,7 +18,7 @@
   },
   "scripts": {
     "bump": "npm version patch",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
+    "dev": "cross-env NODE_ENV=development serve tests/sites",
     "start": "serve build -s -c 1",
     "prestart": "npm run build",
     "build": "cross-env NODE_ENV=production webpack -p --progress",
@@ -78,6 +78,7 @@
     "reselect": "^4.0.0",
     "resolve-url-loader": "^3.1.1",
     "sass-loader": "^8.0.2",
+    "serve": "^11.3.0",
     "store2": "^2.10.0",
     "style-loader": "^1.1.2",
     "svg-url-loader": "^3.0.3",

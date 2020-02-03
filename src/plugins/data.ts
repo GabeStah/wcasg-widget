@@ -11,6 +11,7 @@ export enum Ids {
   InvertColors = 'invert-colors',
   KeyboardNavigation = 'keyboard-navigation',
   LargeCursor = 'large-cursor',
+  LargeIcons = 'large-icons',
   LetterSpacing = 'text-spacing',
   LightContrast = 'light-contrast',
   MuteAudio = 'mute-audio',

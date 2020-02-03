@@ -113,7 +113,7 @@ module.exports = {
     port: process.env.PORT || 8080,
     host: 'localhost',
     colors: true,
-    publicPath: '/build/out',
+    publicPath: '/test/test-page/index.html',
     contentBase: './',
     historyApiFallback: true,
     open: true
@@ -133,7 +133,7 @@ module.exports = {
       include: /src/,
       // add errors to webpack instead of warnings
       failOnError: false,
-      // allow import cycles that include an asyncronous import,
+      // allow import cycles that include an asynchronous import,
       // e.g. via import(/* webpackMode: "weak" */ './file.js')
       allowAsyncCycles: false,
       // set the current working directory for displaying module paths
@@ -150,7 +150,13 @@ module.exports = {
     new FileManagerPlugin({
       onEnd: [
         {
-          copy: [{ source: './build/temp/*.*', destination: './build' }]
+          copy: [
+            { source: './build/temp/*.*', destination: './build' },
+            {
+              source: './build/index.js',
+              destination: './tests/sites/basic/js/index.js'
+            }
+          ]
         },
         {
           delete: ['./build/temp']

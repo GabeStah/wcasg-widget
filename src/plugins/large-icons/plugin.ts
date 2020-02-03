@@ -1,17 +1,41 @@
 import { Plugin, PluginActionTypes } from '@/enum';
 import { PluginActionClass } from 'classes/plugin/action/class';
 import { Ids } from 'plugins/data';
-import styles from './styles.scss';
+// import styles from './styles.scss';
 
 const actionClass = new PluginActionClass({
-  name: 'emphasize-titles-action',
-  klass: [styles.emphasizeTitles],
+  name: 'large-icons-action',
+  // klass: [styles.largeCursor],
   query: 'html'
 });
 
+/**
+ * Tags for icons
+ * button
+ * i
+ * svg
+ * a
+ * span
+ */
+
+/**
+ * attributes for icons
+ * <span>type</span>
+ * <a>type</a>
+ * *[class*="type"]
+ * *[id*="type"]
+ * *[data-item*="type"]
+ * *[aria-label*="type"]
+ */
+
+/**
+ * ::before { content: "\f030"; }
+ *
+ */
+
 export const pluginObject: Plugin = {
-  id: Ids.EmphasizeTitles,
-  title: 'Emphasize Titles',
+  id: Ids.LargeIcons,
+  title: 'Large Icons',
   enabled: false,
   options: [],
   tasks: [

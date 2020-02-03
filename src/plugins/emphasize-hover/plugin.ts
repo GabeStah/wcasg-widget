@@ -5,7 +5,8 @@ import styles from './styles.scss';
 
 const actionClass = new PluginActionClass({
   name: 'emphasize-hover-action',
-  klass: [styles.emphasizeHover]
+  klass: [styles.emphasizeHover],
+  query: 'html'
 });
 
 export const pluginObject: Plugin = {

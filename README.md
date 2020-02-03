@@ -383,6 +383,11 @@ public template = (self: any) => {
 
 ### Manual Testing
 
+1. Run `yarn run dev`.
+2. Open [http://localhost:5000/basic/](http://localhost:5000/basic/) to test local page.
+
+OR
+
 1. Visit a web page to be tested.
 2. Copy raw contents from [build/index.js](http://gitlab.solarixdigital.com/solarix/wcasg-ada-app/raw/master/build/index.js).
 3. Paste into Chrome Dev Tools.

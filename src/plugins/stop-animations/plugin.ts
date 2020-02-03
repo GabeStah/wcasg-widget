@@ -6,7 +6,7 @@ import styles from './styles.scss';
 const actionClass = new PluginActionClass({
   name: 'stop-css-animations-action',
   klass: [styles.stopGlobalAnimations],
-  query: 'body'
+  query: 'html'
 });
 
 export const pluginObject: Plugin = {

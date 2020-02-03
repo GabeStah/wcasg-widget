@@ -1,0 +1,27 @@
+@import 'src/styles/variables';
+
+.largeIcons,
+.largeIcons * {
+  cursor: url(../../assets/svg-minified/cursor-arrow.svg), auto !important;
+}
+
+.largeIcons * p,
+.largeIcons * code,
+.largeIcons * span {
+  // Set x y coords to move interaction point to center of icon
+  cursor: url(../../assets/svg-minified/cursor-i-beam.svg) 7 14, auto !important;
+}
+
+.largeIcons * a,
+.largeIcons * input,
+.largeIcons * textarea,
+.largeIcons * select,
+.largeIcons * button,
+.largeIcons * a *,
+.largeIcons * input *,
+.largeIcons * textarea *,
+.largeIcons * select *,
+.largeIcons * button * {
+  // Set x y coords to move interaction point to tip of finger
+  cursor: url(../../assets/svg-minified/cursor-hand.svg) 5 0, auto !important;
+}
