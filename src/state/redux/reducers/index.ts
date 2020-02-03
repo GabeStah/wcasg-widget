@@ -9,8 +9,8 @@ const getPluginIndexById = (plugins: any, id: any) => {
 };
 
 export class BaseReducer extends ImmerReducer<State> {
-  public decrement(payload: { id: string }) {
-    const i = getPluginIndexById(this.draftState.plugins, payload.id);
+  public decrement({ id }: { id: string }) {
+    const i = getPluginIndexById(this.draftState.plugins, id);
     const scaling = this.draftState.plugins[i].scaling;
     if (scaling) {
       scaling.factor = scaling.factor
@@ -19,8 +19,8 @@ export class BaseReducer extends ImmerReducer<State> {
     }
   }
 
-  public disable(payload: { id: string }) {
-    const i = getPluginIndexById(this.draftState.plugins, payload.id);
+  public disable({ id }: { id: string }) {
+    const i = getPluginIndexById(this.draftState.plugins, id);
     this.draftState.plugins[i].enabled = false;
   }
 
@@ -28,8 +28,8 @@ export class BaseReducer extends ImmerReducer<State> {
     this.draftState.keyboard.enabled = false;
   }
 
-  public enable(payload: { id: string }) {
-    const i = getPluginIndexById(this.draftState.plugins, payload.id);
+  public enable({ id }: { id: string }) {
+    const i = getPluginIndexById(this.draftState.plugins, id);
     this.draftState.plugins[i].enabled = true;
   }
 
@@ -41,8 +41,8 @@ export class BaseReducer extends ImmerReducer<State> {
     this.draftState.focusedNode = payload.node;
   }
 
-  public increment(payload: { id: string }) {
-    const i = getPluginIndexById(this.draftState.plugins, payload.id);
+  public increment({ id }: { id: string }) {
+    const i = getPluginIndexById(this.draftState.plugins, id);
     const scaling = this.draftState.plugins[i].scaling;
     if (scaling) {
       scaling.factor = scaling.factor
@@ -51,31 +51,31 @@ export class BaseReducer extends ImmerReducer<State> {
     }
   }
 
-  public keyDown(payload: { key: string }) {
-    this.draftState.keyboard.pressedKeys[payload.key] = true;
+  public keyDown({ key }: { key: string }) {
+    this.draftState.keyboard.pressedKeys[key] = true;
   }
 
-  public keyUp(payload: { key: string }) {
-    this.draftState.keyboard.pressedKeys[payload.key] = false;
+  public keyUp({ key }: { key: string }) {
+    this.draftState.keyboard.pressedKeys[key] = false;
   }
 
-  public reset(payload: { newState?: State }) {
-    this.draftState = payload.newState ? payload.newState : defaultState;
+  public reset({ newState }: { newState?: State }) {
+    this.draftState = newState ? newState : defaultState;
   }
 
-  public selectOption(payload: { id: string; selectId: number }) {
-    const i = getPluginIndexById(this.draftState.plugins, payload.id);
+  public selectOption({ id, selectId }: { id: string; selectId: number }) {
+    const i = getPluginIndexById(this.draftState.plugins, id);
     const plugin = this.draftState.plugins[i];
     if (plugin && plugin.options) {
       // Reset all
       for (const option of plugin.options) {
         option.selected = false;
       }
-      plugin.options[payload.selectId].selected = true;
+      plugin.options[selectId].selected = true;
     }
   }
 
-  public setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {
+  public setActiveTextToSpeechVoice({ voice }: { voice: IGoogleCloudVoice }) {
     // Convert between IGoogleCloudVoice and IGoogleCloudVoiceSelectionParams
     this.draftState.services.googleCloud.textToSpeech.activeVoice = {
       languageCode: voice.languageCodes[0],
@@ -84,7 +84,19 @@ export class BaseReducer extends ImmerReducer<State> {
     };
   }
 
-  public setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {
+  public setTextToSpeechPitch({ value }: { value: number }) {
+    this.draftState.services.googleCloud.textToSpeech.audioConfig.pitch = value;
+  }
+
+  public setTextToSpeechSpeakingRate({ value }: { value: number }) {
+    this.draftState.services.googleCloud.textToSpeech.audioConfig.speakingRate = value;
+  }
+
+  public setTextToSpeechVolumeGainDb({ value }: { value: number }) {
+    this.draftState.services.googleCloud.textToSpeech.audioConfig.volumeGainDb = value;
+  }
+
+  public setTextToSpeechVoices({ voices }: { voices: IGoogleCloudVoice[] }) {
     this.draftState.services.googleCloud.textToSpeech.voices = voices;
   }
 }

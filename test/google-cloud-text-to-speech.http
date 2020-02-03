@@ -1,15 +1,18 @@
 POST https://texttospeech.googleapis.com/v1/text:synthesize
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImMxNGY3Nzg5MzhhZjY0MDc3OGRhYTE2MjhlN2I2YzM5NmUyNTE4ZDUifQ.eyJpc3MiOiJ0ZXh0MnNwZWVjaC1zeW50aGVzaXplckB3Y2FzZy1hZGEtYXBwLWRldi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6InRleHQyc3BlZWNoLXN5bnRoZXNpemVyQHdjYXNnLWFkYS1hcHAtZGV2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly90ZXh0dG9zcGVlY2guZ29vZ2xlYXBpcy5jb20vIiwiaWF0IjoxNTgwMjQ2MDAxLCJleHAiOjE1ODAyNDk2MDF9.GY7iYHXSGEtnxQGhaDvqNUuKbZcDOQEc78TH5Wq-_esUbJHGDxw1Xf2w0DefxU--etSybUuWHU0IcbeJnCEx3wM27lzyxdmtJGPGWvAb93JAYjEBHTieB9ZTXzGpBjXzVZYsdW8mg9yFrcfyhFFKxl5GkjeQZ8uA0KD1M4gJ3SHyetsxVz6btng5Hgp7h86f77ngFc6CJruzDOrct8SJZkQ_s_MQXJy_p8tAFrR7zVcMFp8IJNgIzOUA6Un8QPgCUA0quJ6oDYp42x4gquljhQzL0nQpbFm_ROmKlz3EoTHjo5N10IOqSJPKkO8ZaBdH9zqRAfC4evuxV0y_fdOseQ
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImMxNGY3Nzg5MzhhZjY0MDc3OGRhYTE2MjhlN2I2YzM5NmUyNTE4ZDUifQ.eyJpc3MiOiJ0ZXh0MnNwZWVjaC1zeW50aGVzaXplckB3Y2FzZy1hZGEtYXBwLWRldi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6InRleHQyc3BlZWNoLXN5bnRoZXNpemVyQHdjYXNnLWFkYS1hcHAtZGV2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly90ZXh0dG9zcGVlY2guZ29vZ2xlYXBpcy5jb20vIiwiaWF0IjoxNTgwNjkyNjQ1LCJleHAiOjE1ODA2OTYyNDV9.hRdwcK5s9nTXCqMwJSXNfJV1EXKhi2ZAv5GOnQdVn-IiNtkPsSFH-I12YUtrhw50ZCyZb75i0TpvPhZ8kYaQn3_rmbuJ53dMbGuM3Kezf55--t8i7hlxxIIR1ig99BuFNHZ-gERs-DPBmOQGPcV6SloDPIenN9zW0R68BZZIkiwFGEd0a1Ud-zLvwZ18S4dg5ucEq_187uImOJgB2S20mbyzvmcJ41qSFMcvHRQ5WSXyBzJtocS2BLT3XOL3QjvwCwmqMGBz-_QUquqImO9s-zalzTeTwMq8zVVuOk9r5eYcea58kqx602jslqOOOrvd8aN-MM04IaUqsoRLrIZtkw
 Accept: application/json
 
 {
   "audioConfig": {
     "audioEncoding": "LINEAR16",
-    "pitch": 0,
-    "speakingRate": 1
+    "pitch": -14,
+    "speakingRate": 1,
+    "sampleRateHertz": 24000,
+    "volumeGainDb": 0,
+    "effectsProfileId": [ "handset-class-device" ]
   },
   "input": {
-    "text": "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me."
+    "text": "Call me Ishmael."
   },
   "voice": {
     "languageCode": "en-US",

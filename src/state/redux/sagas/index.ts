@@ -1,19 +1,29 @@
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
-import {AudioUtilities} from '@/utility/audio';
+import { AudioUtilities } from '@/utility/audio';
 import PluginManager from 'classes/plugin/manager';
-import config, {TextToSpeechEngine} from 'config';
-import {isAction, isActionFrom} from 'immer-reducer';
-import {Ids} from 'plugins/data';
-import {Action} from 'redux';
-import {buffers, END, eventChannel} from 'redux-saga';
-import {all, call, debounce, put, select, takeEvery} from 'redux-saga/effects';
-import {ActionCreators} from 'state/redux/actions';
-import {BaseReducer} from 'state/redux/reducers';
-import {watchFocus} from 'state/redux/sagas/on-focus';
-import {watchKeyDown} from 'state/redux/sagas/on-key-down';
-import {loadStateFromLocalStorage, saveStateToLocalStorage} from 'state/redux/sagas/state';
-import {Selectors} from 'state/redux/selectors';
+import config, { TextToSpeechEngine } from 'config';
+import { isAction, isActionFrom } from 'immer-reducer';
+import { Ids } from 'plugins/data';
+import { Action } from 'redux';
+import { buffers, END, eventChannel } from 'redux-saga';
+import {
+  all,
+  call,
+  debounce,
+  put,
+  select,
+  takeEvery
+} from 'redux-saga/effects';
+import { ActionCreators } from 'state/redux/actions';
+import { BaseReducer } from 'state/redux/reducers';
+import { watchFocus } from 'state/redux/sagas/on-focus';
+import { watchKeyDown } from 'state/redux/sagas/on-key-down';
+import {
+  loadStateFromLocalStorage,
+  saveStateToLocalStorage
+} from 'state/redux/sagas/state';
+import { Selectors } from 'state/redux/selectors';
 
 let speechToTextAudioElement: any;
 
@@ -80,9 +90,11 @@ function* synthesizeSpeech({
   } else if (engine === TextToSpeechEngine.GoogleCloud) {
     try {
       const state = yield select();
+      const audioConfig = new Selectors(state).getTextToSpeechAudioConfig();
       const voice = new Selectors(state).getActiveTextToSpeechVoice();
       console.time('Google Cloud transaction time');
       const response = yield AudioUtilities.synthesizeSpeechFromText({
+        audioConfig,
         text,
         voice
       });
@@ -103,7 +115,8 @@ function* synthesizeSpeech({
         console.log(`No valid response returned.`);
       }
     } catch (error) {
-      Utility.throwError(error);
+      console.error(error);
+      // Utility.throwError(error);
     }
   }
 }

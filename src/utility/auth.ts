@@ -1,3 +1,4 @@
+import Utility from '@/utility/index';
 import { sign } from 'jsonwebtoken';
 import keys from '../../credentials/wcasg-ada-app-dev-c14f778938af.json';
 
@@ -41,12 +42,20 @@ export const Auth = {
   }) => {
     return sign(payload, privateKey, options);
   },
+
   /**
    * @returns {Promise<void>}
    */
   makeFetchRequest: async ({ options, url }: { options: any; url: string }) => {
-    const response = await fetch(url, options);
-    return await response.json();
+    try {
+      const response = await fetch(url, options);
+      if (response.status === 400) {
+        console.error(await response.json());
+      }
+      return response.json();
+    } catch (error) {
+      Utility.throwError(error);
+    }
   }
 };
 

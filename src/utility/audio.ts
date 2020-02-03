@@ -1,5 +1,5 @@
 import {
-  IGoogleCloudVoice,
+  IGoogleCloudAudioConfig,
   IGoogleCloudVoiceSelectionParams
 } from 'services/google-cloud/text-to-speech/declarations';
 import Auth from '@/utility/auth';
@@ -7,7 +7,6 @@ import Utility from '@/utility/index';
 import config from 'config';
 import { put, select } from 'redux-saga/effects';
 import { ActionCreators } from 'state/redux/actions';
-import { Selectors } from 'state/redux/selectors';
 
 export const AudioUtilities = {
   createHTMLAudioElement: ({
@@ -48,20 +47,25 @@ function* getSpeechToTextVoices(
     }
   });
 
-  return yield put(ActionCreators.setTextToSpeechVoices(result.voices));
+  return yield put(
+    ActionCreators.setTextToSpeechVoices({ voices: result.voices })
+  );
 }
 
 /**
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount#jwt-auth
  * @see https://github.com/googleapis/googleapis/blob/master/google/cloud/texttospeech/tts_v1.yaml#L7
+ * @param audioConfig
  * @param {string} text
  * @param voice
  */
 function* synthesizeSpeechFromText({
+  audioConfig = config.services.GoogleCloud.TextToSpeech.defaultAudioConfig,
   text,
   voice = config.services.GoogleCloud.TextToSpeech.defaultVoice
 }: {
+  audioConfig: IGoogleCloudAudioConfig;
   text: string;
   voice?: IGoogleCloudVoiceSelectionParams;
 }) {
@@ -70,11 +74,7 @@ function* synthesizeSpeechFromText({
     options: {
       method: 'POST',
       body: JSON.stringify({
-        audioConfig: {
-          audioEncoding: 'LINEAR16',
-          pitch: 0,
-          speakingRate: 1
-        },
+        audioConfig,
         input: {
           text
         },

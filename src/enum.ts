@@ -2,7 +2,7 @@ import { ValueManipulationType } from 'classes/plugin/action';
 import { Actions } from 'immer-reducer';
 import { Connector } from 'state/redux/connectors';
 import { BaseReducer } from 'state/redux/reducers';
-import { PluginAction, State } from 'state/redux/state';
+import { IPluginAction, State } from 'state/redux/state';
 
 export enum PluginActionTypes {
   decrement = 'decrement',
@@ -48,6 +48,6 @@ export interface Plugin {
   enabled: boolean;
   options: PluginOption[];
   scaling?: PluginScaling;
-  tasks: PluginAction[];
+  tasks: IPluginAction[];
   title: string;
 }

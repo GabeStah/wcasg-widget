@@ -143,6 +143,7 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       defaultSizes: 'parsed',
+      generateStatsFile: false,
       openAnalyzer: false,
       reportFilename: '../../build/bundle-analysis.html'
     }),

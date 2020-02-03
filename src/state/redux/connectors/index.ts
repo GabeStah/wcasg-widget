@@ -36,14 +36,29 @@ export const Connector = createConnector({
     reset(newState?: State) {
       actions.reset({ newState });
     },
+
     selectOption(id: string, selectId: number) {
       actions.selectOption({ id, selectId });
     },
+
     setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {
-      actions.setActiveTextToSpeechVoice(voice);
+      actions.setActiveTextToSpeechVoice({ voice });
     },
+
+    setTextToSpeechPitch(value: number) {
+      actions.setTextToSpeechPitch({ value });
+    },
+
+    setTextToSpeechSpeakingRate(value: number) {
+      actions.setTextToSpeechSpeakingRate({ value });
+    },
+
+    setTextToSpeechVolumeGainDb(value: number) {
+      actions.setTextToSpeechVolumeGainDb({ value });
+    },
+
     setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {
-      actions.setTextToSpeechVoices(voices);
+      actions.setTextToSpeechVoices({ voices });
     }
   })
 });

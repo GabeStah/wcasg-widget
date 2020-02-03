@@ -36,10 +36,10 @@ export function* watchKeyDown() {
         yield handleKeyboardNavigation(val);
       }
 
-      // Delay before finalizing
-      yield delay(2500);
-      // Placeholder for cleanup logic
-      yield put({ type: 'placeholder', payload: { id: 'something' } });
+      // // Delay before finalizing
+      // yield delay(2500);
+      // // Placeholder for cleanup logic
+      // yield put({ type: 'placeholder', payload: { id: 'something' } });
     }
   });
 }

@@ -1,15 +1,19 @@
 import { Plugin, PluginActionTypes } from '@/enum';
 import {
-  GOOGLE_CLOUD_DEFAULT_VOICE,
   IGoogleCloudVoice,
   IGoogleCloudVoiceSelectionParams,
-  IGoogleCloudVoiceSsmlVoiceGender
+  GoogleCloudVoiceSsmlVoiceGender,
+  IGoogleCloudAudioConfig
 } from 'services/google-cloud/text-to-speech/declarations';
 import PluginManager from 'classes/plugin/manager';
+import {
+  GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
+  GOOGLE_CLOUD_DEFAULT_VOICE
+} from 'services/google-cloud/text-to-speech/defaults';
 
 type FunctionType = (params?: any) => any;
 
-export interface PluginAction {
+export interface IPluginAction {
   id?: string;
   name?: string;
   query?: string;
@@ -17,18 +21,19 @@ export interface PluginAction {
   func?: FunctionType[];
 }
 
-interface StateServices {
+interface IStateServices {
   services: {
     googleCloud: {
       textToSpeech: {
         activeVoice: IGoogleCloudVoiceSelectionParams;
+        audioConfig: IGoogleCloudAudioConfig;
         voices: IGoogleCloudVoice[];
       };
     };
   };
 }
 
-export interface State extends StateServices {
+export interface State extends IStateServices {
   focusedNode: any;
   keyboard: {
     enabled: boolean;
@@ -48,6 +53,7 @@ export const defaultState: State = {
     googleCloud: {
       textToSpeech: {
         activeVoice: GOOGLE_CLOUD_DEFAULT_VOICE,
+        audioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
         voices: []
       }
     }

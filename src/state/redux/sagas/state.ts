@@ -13,16 +13,18 @@ import { defaultState, State } from 'state/redux/state';
  * @returns {Generator<never, void, unknown>}
  */
 export function* loadStateFromLocalStorage() {
-  const full = Store.getFromLocalStorage({
+  const localState = Store.getFromLocalStorage({
     type: StorageDataType.All,
     withCompression: config.useLocalStorageCompression
   });
 
-  full.plugins.forEach((plugin: any) => {
-    PluginManager.getInstance().setPluginInstanceState(plugin);
-  });
+  if (localState) {
+    localState.plugins.forEach((plugin: any) => {
+      PluginManager.getInstance().setPluginInstanceState(plugin);
+    });
+  }
 
-  const newState: State = { ...defaultState, ...full };
+  const newState: State = { ...defaultState, ...localState };
   return yield put(ActionCreators.reset({ newState }));
 }
 

@@ -1,1 +1,9 @@
 @import 'src/styles/variables';
+
+.slider {
+  color: #fff;
+
+  & span {
+    background-color: #3f51b5;
+  }
+}

@@ -1,8 +1,12 @@
 import {
-  GOOGLE_CLOUD_DEFAULT_VOICE,
   IGoogleCloudVoiceSelectionParams,
-  IGoogleCloudVoiceSsmlVoiceGender
+  GoogleCloudVoiceSsmlVoiceGender,
+  IGoogleCloudAudioConfig
 } from 'services/google-cloud/text-to-speech/declarations';
+import {
+  GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
+  GOOGLE_CLOUD_DEFAULT_VOICE
+} from 'services/google-cloud/text-to-speech/defaults';
 
 export enum TextToSpeechEngine {
   Browser,
@@ -24,7 +28,10 @@ export interface IConfig {
   textToSpeechEngine: TextToSpeechEngine;
   services: {
     GoogleCloud: {
-      TextToSpeech: { defaultVoice: IGoogleCloudVoiceSelectionParams };
+      TextToSpeech: {
+        defaultAudioConfig: IGoogleCloudAudioConfig;
+        defaultVoice: IGoogleCloudVoiceSelectionParams;
+      };
     };
   };
   widgetTitle: string;
@@ -47,6 +54,7 @@ const config: IConfig = {
   services: {
     GoogleCloud: {
       TextToSpeech: {
+        defaultAudioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
         defaultVoice: GOOGLE_CLOUD_DEFAULT_VOICE
       }
     }

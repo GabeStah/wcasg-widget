@@ -73,6 +73,11 @@ export class Selectors {
   public getActiveTextToSpeechVoice() {
     return this.state.services.googleCloud.textToSpeech.activeVoice;
   }
+
+  public getTextToSpeechAudioConfig() {
+    return this.state.services.googleCloud.textToSpeech.audioConfig;
+  }
+
   public getTextToSpeechVoice(name: string) {
     const voice = this.state.services.googleCloud.textToSpeech.voices[
       this.state.services.googleCloud.textToSpeech.voices.findIndex(
@@ -84,6 +89,7 @@ export class Selectors {
     }
     return voice;
   }
+
   public getTextToSpeechVoices() {
     return this.state.services.googleCloud.textToSpeech.voices;
   }
