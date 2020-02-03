@@ -1,29 +1,26 @@
+import MenuItem from '@material-ui/core/MenuItem';
 import config from 'config';
 import React from 'react';
 
 const SelectOptionComponent = ({
   // state,
-  data,
   actions,
   plugin,
-  onChangeHandler,
-  options
+  item
 }: {
   // state: any;
-  data: any;
   actions: any;
   plugin: any;
-  onChangeHandler: any;
-  options: any;
+  item: any;
 }) => (
-  <select
-    id={`${config.widgetId}-${plugin.id}-select`}
-    name={`${plugin.id}-select`}
-    size={1}
-    onChange={onChangeHandler}
+  <MenuItem
+    id={`${plugin.id}-${item.value}-option`}
+    key={item.value}
+    aria-label={`${item.text}`}
+    value={item.value}
   >
-    {options}
-  </select>
+    {item.text}
+  </MenuItem>
 );
 
 export default SelectOptionComponent;

@@ -144,7 +144,7 @@ function* changeFocus({
   return nodeList[matchIndex];
 }
 
-const mapKeysToParams = [
+export const mapKeysToParams = [
   {
     key: 't',
     searchTags: table,

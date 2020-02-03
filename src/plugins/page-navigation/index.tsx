@@ -1,12 +1,17 @@
 import { PluginComponentParams } from '@/enum';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
-import config from 'config';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Typography from '@material-ui/core/Typography';
 import findLast from 'lodash/findLast';
 import React from 'react';
-import { PluginComponent } from 'components/plugin';
 import { Selectors } from 'state/redux/selectors';
-import styles from 'styles/plugin/element.scss';
+import styles from './styles.scss';
 
 let isInitialized = false;
 
@@ -17,10 +22,43 @@ function initialize() {
   isInitialized = true;
 }
 
+const headerTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+const allTags = headerTags.concat('A');
+
+function selectOptions() {
+  // const allTags = headerTags.concat(`A > *:not(${config.widgetId}))`);
+  const elements = document.querySelectorAll(
+    allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
+  );
+  const options: any[] = [];
+  // Iterate nodes
+  elements.forEach((element: any) => {
+    // Get ARIA text of element
+    const text = Aria.getElementText({ element }).trim();
+    // If header
+    if (headerTags.includes(element.tagName)) {
+      options.push({
+        tagName: element.tagName,
+        text,
+        element,
+        links: []
+      });
+    } else {
+      options.push({
+        tagName: element.tagName,
+        text,
+        href: element.href,
+        element
+      });
+    }
+  });
+  return options;
+}
+
 function getOptions() {
-  const headerTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-  const allTags = headerTags.concat('A');
-  const elements = document.querySelectorAll(allTags.join(', '));
+  const elements = document.querySelectorAll(
+    allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
+  );
   const options: any[] = [];
   // Iterate nodes
   elements.forEach((element: any) => {
@@ -59,26 +97,32 @@ function getOptions() {
   return options.map((item: any, index: any) => {
     if (headerTags.includes(item.tagName)) {
       return (
-        <optgroup key={index} label={`[${item.tagName}]${item.text}`}>
+        <>
+          <ListSubheader
+            key={index}
+            aria-label={`[${item.tagName}]${item.text}`}
+          >
+            {item.text}
+          </ListSubheader>
           {item.links.map((link: any, linkIndex: any) => {
             // Ensure href exists.
             if (link.href) {
               return (
-                <option key={linkIndex} value={link.href}>
+                <MenuItem key={linkIndex} value={link.href}>
                   {link.text}
-                </option>
+                </MenuItem>
               );
             }
           })}
-        </optgroup>
+        </>
       );
     } else {
       // Ensure href exists.
       if (item.href) {
         return (
-          <option key={index} value={item.href}>
+          <MenuItem key={index} value={item.href}>
             {item.text}
-          </option>
+          </MenuItem>
         );
       }
     }
@@ -88,9 +132,12 @@ function getOptions() {
 export const Component = ({ state, actions, id }: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
 
-  const handleOnChange = (e: any) => {
+  const handleOnChange = (
+    event: React.ChangeEvent<{ value: any }>,
+    value: any
+  ) => {
     try {
-      window.location.href = e.target.options[e.target.selectedIndex].value;
+      window.location.href = event.target.value;
     } catch (error) {
       // Likely CORS failure.
       Utility.throwError(error);
@@ -99,15 +146,40 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
 
   return (
     <div>
-      <h2>{plugin.title}</h2>
-      <select
-        id={`${config.widgetId}-page-navigation-select`}
-        name={'page-navigation'}
-        size={1}
-        onChange={handleOnChange}
-      >
-        {getOptions()}
-      </select>
+      <Typography component={'h2'}>{plugin.title}</Typography>
+      <FormControl>
+        <InputLabel htmlFor={`${plugin.id}-select-label`}>
+          Page Select
+        </InputLabel>
+        <Select
+          id={`${plugin.id}-select`}
+          labelId={`${plugin.id}-select-label`}
+          name={'page-navigation'}
+          onChange={handleOnChange}
+          className={styles.pageNavigation}
+          defaultValue={''}
+          input={<Input id={`${plugin.id}-select-label`} />}
+        >
+          {selectOptions().map((item: any, index: any) => {
+            if (headerTags.includes(item.tagName)) {
+              return (
+                <ListSubheader
+                  key={index}
+                  aria-label={`[${item.tagName}]${item.text}`}
+                >
+                  {item.text}
+                </ListSubheader>
+              );
+            } else {
+              return (
+                <MenuItem key={index} value={item.href}>
+                  {item.text}
+                </MenuItem>
+              );
+            }
+          })}
+        </Select>
+      </FormControl>
     </div>
   );
 };

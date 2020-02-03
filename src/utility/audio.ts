@@ -53,6 +53,8 @@ function* getSpeechToTextVoices(
 }
 
 /**
+ * Invoke Google Cloud Text to Speech API to synthesize passed 'text' to speech.
+ *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount#jwt-auth
  * @see https://github.com/googleapis/googleapis/blob/master/google/cloud/texttospeech/tts_v1.yaml#L7

@@ -1,13 +1,15 @@
 import { PluginComponentParams } from '@/enum';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+import RadioComponent from 'components/radio';
+import Scalable from 'components/scalable';
+import ToggleButton from 'components/toggle-button';
+import React, { ChangeEvent } from 'react';
 import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
-import { Radio } from 'components/radio';
-import { Scalable } from 'components/scalable';
-import config from 'config';
-import React, { ChangeEvent, useEffect } from 'react';
 import { Selectors } from 'state/redux/selectors';
-import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import styles from './styles.scss';
 
 export const Component = ({ state, actions, id }: PluginComponentParams) => {
@@ -58,30 +60,35 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
 
   return (
     <div>
-      <h2>{plugin.title}</h2>
-      <button
-        onClick={() => {
-          if (plugin.enabled) {
-            actions.disable(plugin.id);
-          } else {
-            actions.enable(plugin.id);
-          }
-        }}
-        aria-label={`${plugin.enabled ? 'Disable' : 'Enable'} ${plugin.title}`}
-        aria-roledescription={'button'}
-        role={'button'}
-      >
-        {plugin.enabled ? 'Disable' : 'Enable'}
-      </button>
+      <Typography component={'h2'}>{plugin.title}</Typography>
+      <ToggleButton plugin={plugin} actions={actions} />
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    if (plugin.enabled) {*/}
+      {/*      actions.disable(plugin.id);*/}
+      {/*    } else {*/}
+      {/*      actions.enable(plugin.id);*/}
+      {/*    }*/}
+      {/*  }}*/}
+      {/*  aria-label={`${plugin.enabled ? 'Disable' : 'Enable'} ${plugin.title}`}*/}
+      {/*  aria-roledescription={'button'}*/}
+      {/*  role={'button'}*/}
+      {/*>*/}
+      {/*  {plugin.enabled ? 'Disable' : 'Enable'}*/}
+      {/*</button>*/}
       {plugin.options.length > 0 && (
-        <Radio data={plugin.options} plugin={plugin} actions={actions} />
+        <RadioComponent
+          data={plugin.options}
+          plugin={plugin}
+          actions={actions}
+        />
       )}
       {voices && voices.length > 0 && (
         <>
-          <InputLabel id='demo-simple-select-helper-label'>Voice</InputLabel>
+          <InputLabel id={`${plugin.id}-voice-label`}>Voice</InputLabel>
           <Select
-            labelId='demo-simple-select-helper-label'
-            id='demo-simple-select-helper'
+            id={`${plugin.id}-voice`}
+            labelId={`${plugin.id}-voice-label`}
             value={activeVoice?.name}
             onChange={handleVoiceChange}
           >
@@ -91,10 +98,11 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
           </Select>
         </>
       )}
-      <Typography id={'pitch-slider'} gutterBottom>
+      <Typography id={`${plugin.id}-pitch-label`} gutterBottom>
         Pitch
       </Typography>
       <Slider
+        id={`${plugin.id}-pitch`}
         value={audioConfig.pitch}
         defaultValue={audioConfig.pitch}
         valueLabelDisplay='auto'
@@ -105,10 +113,11 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
         onChange={handlePitchChange}
         className={styles.slider}
       />
-      <Typography id={'rate-slider'} gutterBottom>
+      <Typography id={`${plugin.id}-rate-label`} gutterBottom>
         Rate
       </Typography>
       <Slider
+        id={`${plugin.id}-rate`}
         value={audioConfig.speakingRate}
         defaultValue={audioConfig.speakingRate}
         valueLabelDisplay='auto'
@@ -119,10 +128,11 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
         onChange={handleRateChange}
         className={styles.slider}
       />
-      <Typography id={'volume-slider'} gutterBottom>
+      <Typography id={`${plugin.id}-volume-label`} gutterBottom>
         Volume
       </Typography>
       <Slider
+        id={`${plugin.id}-volume`}
         value={audioConfig.volumeGainDb}
         defaultValue={audioConfig.volumeGainDb}
         valueLabelDisplay='auto'

@@ -37,3 +37,5 @@ export const Scalable = ({
     </>
   );
 };
+
+export default Scalable;

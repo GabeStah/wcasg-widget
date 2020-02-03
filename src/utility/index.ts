@@ -50,7 +50,7 @@ const Utility = {
       });
     }
     return changes(object, base);
-  } ,
+  },
 
   /**
    * Get value by name and ValueType of specified node.
