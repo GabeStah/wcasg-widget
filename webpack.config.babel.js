@@ -15,7 +15,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build/temp'),
     publicPath: '/',
-    filename: 'index.js',
+    filename: 'widget.base.js',
     libraryTarget: 'umd'
   },
 
@@ -153,8 +153,8 @@ module.exports = {
           copy: [
             { source: './build/temp/*.*', destination: './build' },
             {
-              source: './build/index.js',
-              destination: './tests/sites/basic/js/index.js'
+              source: './build/widget.base.js',
+              destination: './tests/sites/basic/js/widget.base.js'
             }
           ]
         },

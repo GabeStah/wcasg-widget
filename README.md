@@ -385,10 +385,18 @@ public template = (self: any) => {
 };
 ```
 
-### Manual Testing
+### Widget Testing
+
+#### Local Widget + Local Test Site
 
 1. Run `yarn run dev`.
 2. Open [http://localhost:5000/basic/](http://localhost:5000/basic/) to test local page.
+
+#### Local Widget + Local API Server
+
+1. Run SaaS dashboard app locally.
+2. Run `yarn run dev`.
+3. Open [http://localhost:5000/api/](http://localhost:5000/api/) to the `tests/sites/api` page, which includes script at localhost API address (default: `http://localhost:84/api/widget`).
 
 OR
 
