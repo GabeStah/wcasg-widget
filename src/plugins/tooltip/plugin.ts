@@ -125,7 +125,7 @@ function* onEnable() {
   nodeList.forEach((node: any) => {
     LocalState.mouseEvents.forEach(event => {
       if (node && typeof node.addEventListener === 'function') {
-        node.addEventListener(event, handleMouseEvent);
+        node.addEventListener(event, handleMouseEvent, {passive: true, capture: true});
       }
     });
   });
@@ -140,7 +140,7 @@ function* onDisable() {
   nodeList.forEach((node: any) => {
     LocalState.mouseEvents.forEach(event => {
       if (node && typeof node.addEventListener === 'function') {
-        node.removeEventListener(event, handleMouseEvent);
+        node.removeEventListener(event, handleMouseEvent, {passive: true, capture: true});
       }
     });
   });

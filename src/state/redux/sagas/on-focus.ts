@@ -16,7 +16,7 @@ document.addEventListener(
     PREVIOUS_FOCUSED = undefined;
     FOCUSED = undefined;
   },
-  true
+  { capture: true, passive: true }
 );
 
 /**
@@ -27,7 +27,7 @@ document.addEventListener(
   e => {
     FOCUSED = e.target;
   },
-  true
+  { capture: true, passive: true }
 );
 
 /**

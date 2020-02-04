@@ -1,5 +1,6 @@
 import Store, { StorageDataType } from '@/utility/store';
 import PluginManager from 'classes/plugin/manager';
+import { Plugin } from '@/enum';
 import config from 'config';
 import cloneDeep from 'lodash/cloneDeep';
 import { put, select } from 'redux-saga/effects';
@@ -18,11 +19,21 @@ export function* loadStateFromLocalStorage() {
     withCompression: config.useLocalStorageCompression
   });
 
-  if (localState) {
-    localState.plugins.forEach((plugin: any) => {
-      PluginManager.getInstance().setPluginInstanceState(plugin);
-    });
-  }
+  // Iterate default plugins and find matches in local storage
+  PluginManager.getInstance().plugins.forEach((plugin: Plugin) => {
+    // Find in localState
+    if (localState && localState.plugins) {
+      const match = localState.plugins.find(
+        (statePlugin: any) => statePlugin.id === plugin.id
+      );
+      if (match) {
+        PluginManager.getInstance().setPluginInstanceState(match);
+      }
+    }
+  });
+
+  // Remove plugins prop from localState to retain updates
+  delete localState.plugins;
 
   const newState: State = { ...defaultState, ...localState };
   return yield put(ActionCreators.reset({ newState }));

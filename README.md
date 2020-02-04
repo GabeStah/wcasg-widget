@@ -12,6 +12,10 @@ Much of this document is out of date.  Will update in the near future.
 - SASS: Advanced styling.
 - Webpack + Babel: General tooling to generate final build UMD output.
 
+## Creating a New Plugin
+
+
+
 ## Editing the Widget
 
 The **WCASG ADA Widget** is constructed out of individual plugins, each of which can be toggled independently. Plugins are designed to be as modular as possible, to make it easier to add more functionality/plugins in the future.

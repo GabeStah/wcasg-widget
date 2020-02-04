@@ -12,6 +12,7 @@ import HighlightLinks from 'plugins/highlight-links/plugin';
 import InvertColors from 'plugins/invert-colors/plugin';
 import KeyboardNavigation from 'plugins/keyboard-navigation/plugin';
 import LargeCursor from 'plugins/large-cursor/plugin';
+import LargeIcons from 'plugins/large-icons/plugin';
 import LetterSpacing from 'plugins/letter-spacing/plugin';
 import LightContrast from 'plugins/light-contrast/plugin';
 import MuteAudio from 'plugins/mute-audio/plugin';
@@ -35,6 +36,7 @@ PluginManager.getInstance().add([
   InvertColors,
   KeyboardNavigation,
   LargeCursor,
+  LargeIcons,
   LetterSpacing,
   LightContrast,
   MuteAudio,

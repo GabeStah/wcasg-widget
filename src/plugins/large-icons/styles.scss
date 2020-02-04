@@ -1,5 +1,9 @@
 @import 'src/styles/variables';
 
+.iconStop::before {
+
+}
+
 .largeIcons,
 .largeIcons * {
   cursor: url(../../assets/svg-minified/cursor-arrow.svg), auto !important;
