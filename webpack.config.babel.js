@@ -62,12 +62,16 @@ module.exports = {
           }
         ]
       },
+      // {
+      //   test: /\.svg$/,
+      //   use: {
+      //     loader: 'svg-url-loader',
+      //     options: {}
+      //   }
+      // },
       {
         test: /\.svg$/,
-        use: {
-          loader: 'svg-url-loader',
-          options: {}
-        }
+        use: ['@svgr/webpack']
       },
       {
         test: /\.(scss|css)$/,

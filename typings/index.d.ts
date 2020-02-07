@@ -1,5 +1,9 @@
 declare module '*.html';
 declare module '*.scss';
+declare module '*.svg' {
+  const content: any;
+  export default content;
+}
 declare module 'lodash/mapValues';
 
 /**

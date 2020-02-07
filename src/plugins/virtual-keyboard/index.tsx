@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { PluginComponent } from 'components/plugin';
 import Radio from 'components/radio';
 import Scalable from 'components/scalable';
-import ToggleButton from 'components/toggle-button';
+import ToggleSwitch from 'components/toggle-switch';
 import config from 'config';
 import Modal from 'plugins/virtual-keyboard/keyboard/modal';
 import React from 'react';
@@ -14,7 +14,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
   return (
     <div className={`${config.widgetId}-virtual-keyboard`}>
       <Typography component={'h2'}>{plugin.title}</Typography>
-      <ToggleButton plugin={plugin} actions={actions} />
+      <ToggleSwitch plugin={plugin} actions={actions} />
       {plugin.options.length > 0 && (
         <Radio data={plugin.options} plugin={plugin} actions={actions} />
       )}

@@ -1,4 +1,4 @@
-import { Key as NonPrintableKey } from '@/declaration';
+import { Key as NonPrintableKey } from '../../../typings';
 import Dom from '@/utility/dom';
 
 interface IKey {

@@ -59,7 +59,7 @@ const config: IConfig = {
       }
     }
   },
-  widgetTitle: 'WCASG ADA Widget'
+  widgetTitle: 'Accessibility Toolbar'
 };
 
 export default config;

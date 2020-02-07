@@ -6,7 +6,7 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import RadioComponent from 'components/radio';
 import Scalable from 'components/scalable';
-import ToggleButton from 'components/toggle-button';
+import ToggleSwitch from 'components/toggle-switch';
 import React, { ChangeEvent } from 'react';
 import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
 import { Selectors } from 'state/redux/selectors';
@@ -61,7 +61,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
   return (
     <div>
       <Typography component={'h2'}>{plugin.title}</Typography>
-      <ToggleButton plugin={plugin} actions={actions} />
+      <ToggleSwitch plugin={plugin} actions={actions} />
       {/*<button*/}
       {/*  onClick={() => {*/}
       {/*    if (plugin.enabled) {*/}
