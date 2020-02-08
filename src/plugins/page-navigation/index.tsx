@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
+import { PluginComponent } from 'components/plugin';
 import findLast from 'lodash/findLast';
 import React from 'react';
 import { Selectors } from 'state/redux/selectors';
@@ -26,7 +26,6 @@ const headerTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
 const allTags = headerTags.concat('A');
 
 function selectOptions() {
-  // const allTags = headerTags.concat(`A > *:not(${config.widgetId}))`);
   const elements = document.querySelectorAll(
     allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
   );
@@ -145,8 +144,12 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
   };
 
   return (
-    <div>
-      <Typography component={'h2'}>{plugin.title}</Typography>
+    <PluginComponent
+      actions={actions}
+      state={state}
+      id={id}
+      toggleDisabled={true}
+    >
       <FormControl>
         <InputLabel htmlFor={`${plugin.id}-select-label`}>
           Page Select
@@ -180,7 +183,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
           })}
         </Select>
       </FormControl>
-    </div>
+    </PluginComponent>
   );
 };
 

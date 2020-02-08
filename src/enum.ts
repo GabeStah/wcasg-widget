@@ -30,7 +30,18 @@ export interface PluginOption {
 
 export interface PluginComponentParams {
   actions: typeof Connector.__actions;
+  toggleDisabled?: boolean;
+  children?: any;
   id: string;
+  state: State;
+}
+
+export interface PluginScalableComponentParams {
+  actions: any;
+  autoToggle?: boolean;
+  plugin: Plugin;
+  scaling: PluginScaling;
+  showFactor?: boolean;
   state: State;
 }
 

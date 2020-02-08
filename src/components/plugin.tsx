@@ -9,7 +9,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
 import ToggleSwitch from 'components/toggle-switch';
-import {Icons, Ids} from 'plugins/data';
+import { Icons, Ids } from 'plugins/data';
 import React from 'react';
 import RadioComponent from 'components/radio';
 import Scalable from 'components/scalable';
@@ -18,7 +18,7 @@ import { Selectors } from 'state/redux/selectors';
 const useStyles = makeStyles({
   root: {
     border: `1px solid ${colors.greyBorder}`,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
     // boxSizing: 'border-box',
     // textAlign: 'center',
     // '&$enabled': {
@@ -51,16 +51,24 @@ const useStyles = makeStyles({
 export const PluginComponent = ({
   state,
   actions,
-  id
+  id,
+  children,
+  toggleDisabled
 }: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
   const classes = useStyles();
   return (
-    <Card variant={'outlined'} square classes={{ root: plugin.enabled ? classes.enabled : classes.root }}>
+    <Card
+      variant={'outlined'}
+      square
+      classes={{ root: plugin.enabled ? classes.enabled : classes.root }}
+    >
       <CardContent>
         <SvgIcon component={Icons[plugin.id]} />
-        <Typography variant={'h3'} component={'h3'}>{plugin.title}</Typography>
-        <ToggleSwitch plugin={plugin} actions={actions} />
+        <Typography variant={'h3'} component={'h3'}>
+          {plugin.title}
+        </Typography>
+        {!toggleDisabled && <ToggleSwitch plugin={plugin} actions={actions} />}
         {/*<Button*/}
         {/*  onClick={() => {*/}
         {/*    if (plugin.enabled) {*/}
@@ -88,8 +96,10 @@ export const PluginComponent = ({
             plugin={plugin}
             actions={actions}
             scaling={plugin.scaling}
+            state={state}
           />
         )}
+        {children}
       </CardContent>
     </Card>
   );

@@ -10,6 +10,8 @@ import VirtualKeyboardComponent from 'plugins/virtual-keyboard';
 import VirtualKeyboardPlugin from 'plugins/virtual-keyboard/plugin';
 import KeyboardNavigationComponent from 'plugins/keyboard-navigation';
 import KeyboardNavigationPlugin from 'plugins/keyboard-navigation/plugin';
+import PageNavigationComponent from 'plugins/page-navigation';
+import PageNavigationPlugin from 'plugins/page-navigation/plugin';
 import TextToSpeechComponent from 'plugins/text-to-speech';
 import TextToSpeechPlugin from 'plugins/text-to-speech/plugin';
 
@@ -59,6 +61,13 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={KeyboardNavigationPlugin.id}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <PageNavigationComponent
+          state={state}
+          actions={actions}
+          id={PageNavigationPlugin.id}
         />
       </Grid>
       <Grid item xs={12}>

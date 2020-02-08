@@ -1,10 +1,5 @@
 import { PluginComponentParams } from '@/enum';
-import { Typography } from '@material-ui/core';
 import { PluginComponent } from 'components/plugin';
-import Radio from 'components/radio';
-import Scalable from 'components/scalable';
-import ToggleSwitch from 'components/toggle-switch';
-import config from 'config';
 import Modal from 'plugins/virtual-keyboard/keyboard/modal';
 import React from 'react';
 import { Selectors } from 'state/redux/selectors';
@@ -12,17 +7,9 @@ import { Selectors } from 'state/redux/selectors';
 export const Component = ({ state, actions, id }: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
   return (
-    <div className={`${config.widgetId}-virtual-keyboard`}>
-      <Typography component={'h2'}>{plugin.title}</Typography>
-      <ToggleSwitch plugin={plugin} actions={actions} />
-      {plugin.options.length > 0 && (
-        <Radio data={plugin.options} plugin={plugin} actions={actions} />
-      )}
-      {plugin.scaling && (
-        <Scalable plugin={plugin} actions={actions} scaling={plugin.scaling} />
-      )}
+    <PluginComponent actions={actions} state={state} id={id}>
       <Modal isVisible={plugin.enabled} />
-    </div>
+    </PluginComponent>
   );
 };
 

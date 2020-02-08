@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+import {PluginComponent} from 'components/plugin';
 import RadioComponent from 'components/radio';
 import Scalable from 'components/scalable';
 import ToggleSwitch from 'components/toggle-switch';
@@ -59,30 +60,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
   };
 
   return (
-    <div>
-      <Typography component={'h2'}>{plugin.title}</Typography>
-      <ToggleSwitch plugin={plugin} actions={actions} />
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    if (plugin.enabled) {*/}
-      {/*      actions.disable(plugin.id);*/}
-      {/*    } else {*/}
-      {/*      actions.enable(plugin.id);*/}
-      {/*    }*/}
-      {/*  }}*/}
-      {/*  aria-label={`${plugin.enabled ? 'Disable' : 'Enable'} ${plugin.title}`}*/}
-      {/*  aria-roledescription={'button'}*/}
-      {/*  role={'button'}*/}
-      {/*>*/}
-      {/*  {plugin.enabled ? 'Disable' : 'Enable'}*/}
-      {/*</button>*/}
-      {plugin.options.length > 0 && (
-        <RadioComponent
-          data={plugin.options}
-          plugin={plugin}
-          actions={actions}
-        />
-      )}
+    <PluginComponent actions={actions} state={state} id={id}>
       {voices && voices.length > 0 && (
         <>
           <InputLabel id={`${plugin.id}-voice-label`}>Voice</InputLabel>
@@ -143,10 +121,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
         onChange={handleVolumeChange}
         className={styles.slider}
       />
-      {plugin.scaling && (
-        <Scalable plugin={plugin} actions={actions} scaling={plugin.scaling} />
-      )}
-    </div>
+    </PluginComponent>
   );
 };
 
