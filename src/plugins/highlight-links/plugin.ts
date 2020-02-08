@@ -62,8 +62,7 @@ export const pluginObject: Plugin = {
       id: 0,
       name: 'style',
       text: 'Block',
-      value: 'block',
-      selected: true
+      value: 'block'
     },
     {
       id: 1,
@@ -78,6 +77,7 @@ export const pluginObject: Plugin = {
       value: 'both'
     }
   ],
+  optionName: 'Default',
   tasks: [
     {
       on: PluginActionTypes.enable,

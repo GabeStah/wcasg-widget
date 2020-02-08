@@ -28,7 +28,7 @@ export const Component = ({
             aria-checked={datum.selected ? 'true' : 'false'}
             aria-label={`${plugin.title} Option: ${datum.text}`}
             tabIndex={datum.selected ? 0 : -1}
-            onChange={() => actions.selectOption(plugin.id, datum.id)}
+            onChange={() => actions.selectOption(plugin.id, datum.value)}
           />
         </>
       ))}

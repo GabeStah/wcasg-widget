@@ -35,23 +35,22 @@ const TextPluginSet = ({
     <Grid container spacing={1}>
       <Grid item xs={6}>
         <FontSizeComponent
-          key={FontSizePlugin.id}
           state={state}
           actions={actions}
           id={FontSizePlugin.id}
+          toggleDisabled={true}
         />
       </Grid>
       <Grid item xs={6}>
         <LetterSpacingComponent
-          key={LetterSpacingPlugin.id}
           state={state}
           actions={actions}
           id={LetterSpacingPlugin.id}
+          toggleDisabled={true}
         />
       </Grid>
       <Grid item xs={6}>
         <EmphasizeHoverComponent
-          key={EmphasizeHoverPlugin.id}
           state={state}
           actions={actions}
           id={EmphasizeHoverPlugin.id}
@@ -59,7 +58,6 @@ const TextPluginSet = ({
       </Grid>
       <Grid item xs={6}>
         <EmphasizeTitlesComponent
-          key={EmphasizeTitlesPlugin.id}
           state={state}
           actions={actions}
           id={EmphasizeTitlesPlugin.id}
@@ -67,10 +65,10 @@ const TextPluginSet = ({
       </Grid>
       <Grid item xs={12}>
         <ReadableFontsComponent
-          key={ReadableFontsPlugin.id}
           state={state}
           actions={actions}
           id={ReadableFontsPlugin.id}
+          toggleDisabled={true}
         />
       </Grid>
     </Grid>

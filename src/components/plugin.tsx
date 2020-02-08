@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
+import SelectComponent from 'components/select';
 import ToggleSwitch from 'components/toggle-switch';
 import { Icons, Ids } from 'plugins/data';
 import React from 'react';
@@ -85,11 +86,18 @@ export const PluginComponent = ({
         {/*  {plugin.enabled ? 'Disable' : 'Enable'}*/}
         {/*</Button>*/}
         {plugin.options.length > 0 && (
-          <RadioComponent
-            data={plugin.options}
-            plugin={plugin}
+          <SelectComponent
             actions={actions}
+            plugin={plugin}
+            // onChangeHandler={}
+            options={plugin.options}
+            state={state}
           />
+          // <RadioComponent
+          //   data={plugin.options}
+          //   plugin={plugin}
+          //   actions={actions}
+          // />
         )}
         {plugin.scaling && (
           <Scalable

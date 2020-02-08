@@ -1,8 +1,20 @@
 import { Plugin, PluginScalableComponentParams, PluginScaling } from '@/enum';
 import { areEqual, round } from '@/utility/number';
+import Button from '@material-ui/core/Button';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { ValueManipulationType } from 'classes/plugin/action';
 import React, { useEffect } from 'react';
 import { Selectors } from 'state/redux/selectors';
+// @ts-ignore
+import ChevronThinUpIcon from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    rotated: {
+      transform: 'rotate(0.5turn)'
+    }
+  })
+);
 
 export const Scalable = ({
   actions,
@@ -10,8 +22,10 @@ export const Scalable = ({
   plugin,
   scaling,
   showFactor = false,
-  state
+  state,
+  theme
 }: PluginScalableComponentParams) => {
+  const styles = useStyles(theme);
   const statePlugin = new Selectors(state).getPlugin(plugin.id);
   let displayFactor = statePlugin.scaling?.factor.toFixed(2);
   if (statePlugin.scaling?.type === ValueManipulationType.PercentageScaling) {
@@ -43,22 +57,25 @@ export const Scalable = ({
   return (
     <>
       {showFactor && <p>Value: {displayFactor}</p>}
-      <button
-        onClick={() => actions.decrement(plugin.id)}
-        aria-label={`Decrement ${plugin.title}`}
-        aria-roledescription={'button'}
-        role={'button'}
-      >
-        -
-      </button>
-      <button
+      <Button
         onClick={() => actions.increment(plugin.id)}
         aria-label={`Increment ${plugin.title}`}
         aria-roledescription={'button'}
         role={'button'}
-      >
-        +
-      </button>
+        variant={'outlined'}
+        color={'primary'}
+        startIcon={<ChevronThinUpIcon />}
+      />
+      <Button
+        onClick={() => actions.decrement(plugin.id)}
+        className={styles.rotated}
+        aria-label={`Decrement ${plugin.title}`}
+        aria-roledescription={'button'}
+        role={'button'}
+        variant={'outlined'}
+        color={'primary'}
+        startIcon={<ChevronThinUpIcon />}
+      />
     </>
   );
 };

@@ -5,22 +5,43 @@ import React from 'react';
 const SelectOptionComponent = ({
   // state,
   actions,
+  isNative = true,
   plugin,
-  item
+  item,
+  selected
 }: {
   // state: any;
   actions: any;
+  isNative?: boolean;
   plugin: any;
   item: any;
-}) => (
-  <MenuItem
-    id={`${plugin.id}-${item.value}-option`}
-    key={item.value}
-    aria-label={`${item.text}`}
-    value={item.value}
-  >
-    {item.text}
-  </MenuItem>
-);
+  selected?: boolean;
+}) => {
+  if (isNative) {
+    return (
+      <option
+        aria-label={`${item.text}`}
+        id={`${plugin.id}-${item.value}-option`}
+        key={item.value}
+        selected={selected}
+        value={item.value}
+      >
+        {item.text}
+      </option>
+    );
+  } else {
+    return (
+      <MenuItem
+        aria-label={`${item.text}`}
+        id={`${plugin.id}-${item.value}-option`}
+        key={item.value}
+        selected={selected}
+        value={item.value}
+      >
+        {item.text}
+      </MenuItem>
+    );
+  }
+};
 
 export default SelectOptionComponent;

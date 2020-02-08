@@ -1,3 +1,4 @@
+import { Theme } from '@material-ui/core/styles';
 import { ValueManipulationType } from 'classes/plugin/action';
 import { Actions } from 'immer-reducer';
 import { Connector } from 'state/redux/connectors';
@@ -37,12 +38,24 @@ export interface PluginComponentParams {
 }
 
 export interface PluginScalableComponentParams {
-  actions: any;
+  actions: typeof Connector.__actions;
   autoToggle?: boolean;
   plugin: Plugin;
   scaling: PluginScaling;
   showFactor?: boolean;
   state: State;
+  theme?: Theme;
+}
+
+export interface PluginSelectComponentParams {
+  actions: typeof Connector.__actions;
+  autoToggle?: boolean;
+  name?: string;
+  onChangeHandler?: any;
+  options: any;
+  plugin: any;
+  showLabel?: boolean;
+  state: any;
 }
 
 export interface PluginLocalState {
@@ -57,6 +70,7 @@ export interface Plugin {
   id: string;
   customComponent?: boolean;
   enabled: boolean;
+  optionName?: string;
   options: PluginOption[];
   scaling?: PluginScaling;
   tasks: IPluginAction[];

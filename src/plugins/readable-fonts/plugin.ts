@@ -98,8 +98,7 @@ export const pluginObject: Plugin = {
       id: 0,
       name: 'font',
       text: 'Arial',
-      value: 'Arial',
-      selected: true
+      value: 'Arial'
     },
     {
       id: 1,
@@ -132,6 +131,7 @@ export const pluginObject: Plugin = {
       value: 'Ubuntu'
     }
   ],
+  optionName: 'Default',
   tasks: [
     {
       on: PluginActionTypes.enable,

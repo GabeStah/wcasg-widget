@@ -1,7 +1,13 @@
+import { PluginOption } from '@/enum';
 import Utility from '@/utility';
+import PluginManager from 'classes/plugin/manager';
 import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
 import { ImmerReducer } from 'immer-reducer';
 import findIndex from 'lodash/findIndex';
+import {
+  GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
+  GOOGLE_CLOUD_DEFAULT_VOICE
+} from 'services/google-cloud/text-to-speech/defaults';
 import { defaultState, State } from 'state/redux/state';
 
 const getPluginIndexById = (plugins: any, id: any) => {
@@ -60,10 +66,42 @@ export class BaseReducer extends ImmerReducer<State> {
   }
 
   public reset({ newState }: { newState?: State }) {
-    this.draftState = newState ? newState : defaultState;
+    if (newState === undefined) {
+      // const state: State = {
+      //   focusedNode: undefined,
+      //   keyboard: {
+      //     enabled: false,
+      //     pressedKeys: {}
+      //   },
+      //   plugins: [],
+      //   services: {
+      //     googleCloud: {
+      //       textToSpeech: {
+      //         activeVoice: GOOGLE_CLOUD_DEFAULT_VOICE,
+      //         audioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
+      //         voices: []
+      //       }
+      //     }
+      //   }
+      // };
+      //
+      // PluginManager.getInstance().plugins.forEach((plugin: Plugin) => )
+      // this.draftState.plugins.forEach(
+      //   (plugin: any) => (plugin.enabled = false)
+      // );
+      // this.draftState = state;
+    } else {
+      this.draftState = newState ? newState : defaultState;
+    }
   }
 
-  public selectOption({ id, selectId }: { id: string; selectId: number }) {
+  public selectOption({
+    id,
+    value
+  }: {
+    id: string;
+    value: number | string | undefined;
+  }) {
     const i = getPluginIndexById(this.draftState.plugins, id);
     const plugin = this.draftState.plugins[i];
     if (plugin && plugin.options) {
@@ -71,7 +109,15 @@ export class BaseReducer extends ImmerReducer<State> {
       for (const option of plugin.options) {
         option.selected = false;
       }
-      plugin.options[selectId].selected = true;
+      if (value !== undefined) {
+        const index = findIndex(
+          plugin.options,
+          (option: PluginOption) => option.value === value
+        );
+        if (index !== -1) {
+          plugin.options[index].selected = true;
+        }
+      }
     }
   }
 

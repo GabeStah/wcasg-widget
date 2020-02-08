@@ -32,8 +32,10 @@ export function* loadStateFromLocalStorage() {
     }
   });
 
-  // Remove plugins prop from localState to retain updates
-  delete localState.plugins;
+  if (localState && localState.plugins) {
+    // Remove plugins prop from localState to retain updates
+    delete localState.plugins;
+  }
 
   const newState: State = { ...defaultState, ...localState };
   return yield put(ActionCreators.reset({ newState }));

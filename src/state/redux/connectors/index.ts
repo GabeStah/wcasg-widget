@@ -37,8 +37,8 @@ export const Connector = createConnector({
       actions.reset({ newState });
     },
 
-    selectOption(id: string, selectId: number) {
-      actions.selectOption({ id, selectId });
+    selectOption(id: string, value: number | string | undefined) {
+      actions.selectOption({ id, value });
     },
 
     setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {

@@ -1,5 +1,5 @@
 import { State } from 'state/redux/state';
-import { Plugin, PluginLocalState } from '@/enum';
+import { Plugin, PluginLocalState, PluginOption } from '@/enum';
 import cloneDeep from 'lodash/cloneDeep';
 
 /**
@@ -52,6 +52,17 @@ export class Selectors {
     const plugin = this.getPlugin(id);
     if (plugin && plugin.options) {
       return plugin.options;
+    }
+  }
+
+  public getPluginSelectedOption(id: string): any {
+    const plugin = this.getPlugin(id);
+    if (plugin && plugin.options) {
+      for (const option of plugin.options) {
+        if (option.selected) {
+          return option;
+        }
+      }
     }
   }
 

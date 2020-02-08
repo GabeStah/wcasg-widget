@@ -40,6 +40,7 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={HighlightLinksPlugin.id}
+          toggleDisabled={true}
         />
       </Grid>
       <Grid item xs={6}>

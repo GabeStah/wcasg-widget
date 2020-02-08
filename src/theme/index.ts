@@ -1,7 +1,7 @@
 /* tslint:disable:object-literal-key-quotes */
 import { createMuiTheme } from '@material-ui/core';
 
-import palette from './palette';
+import palette, { colors } from './palette';
 import typography from './typography';
 
 const theme = createMuiTheme({
@@ -12,11 +12,36 @@ const theme = createMuiTheme({
     drawer: 1100
   },
   overrides: {
+    MuiButton: {
+      root: {
+        minWidth: '22px',
+        padding: '1px'
+      },
+      outlined: {
+        padding: '1px',
+        margin: '7px'
+      },
+      startIcon: {
+        fill: colors.primaryBlue,
+        marginLeft: '0px',
+        marginRight: '0px',
+        textAlign: 'center'
+      }
+    },
     MuiCard: {
       root: {
         boxSizing: 'border-box',
-        textAlign: 'center',
-      },
+        minHeight: '124px',
+        textAlign: 'center'
+      }
+    },
+    MuiCardContent: {
+      root: {
+        padding: '12px',
+        '&:last-child': {
+          paddingBottom: '12px'
+        }
+      }
     },
     MuiExpansionPanelSummary: {
       root: {
