@@ -40,7 +40,12 @@ export const PluginComponent = ({
         />
       )}
       {plugin.scaling && (
-        <Scalable plugin={plugin} actions={actions} scaling={plugin.scaling} state={state}/>
+        <Scalable
+          plugin={plugin}
+          actions={actions}
+          scaling={plugin.scaling}
+          state={state}
+        />
       )}
     </div>
   );

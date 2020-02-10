@@ -21,7 +21,7 @@ export const ToggleSwitch = ({
       aria-roledescription={'button'}
       checked={plugin.enabled}
       color={'primary'}
-      inputProps={{'aria-label': value}}
+      inputProps={{ 'aria-label': value }}
       onChange={() => {
         if (plugin.enabled) {
           actions.disable(plugin.id);
