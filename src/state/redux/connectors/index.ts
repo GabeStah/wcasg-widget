@@ -1,5 +1,5 @@
 import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
-import { defaultState, State } from 'state/redux/state';
+import { State } from 'state/redux/state';
 import { createConnector } from 'state/redux/store';
 
 export const Connector = createConnector({

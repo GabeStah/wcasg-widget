@@ -1,5 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 import { ValueManipulationType } from 'classes/plugin/action';
+import { PluginConfig } from 'classes/plugin/config';
 import { Actions } from 'immer-reducer';
 import { Connector } from 'state/redux/connectors';
 import { BaseReducer } from 'state/redux/reducers';
@@ -77,6 +78,7 @@ export interface PluginLocalState {
 
 export interface Plugin {
   id: string;
+  config?: PluginConfig;
   customComponent?: boolean;
   enabled: boolean;
   optionName?: string;
