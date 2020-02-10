@@ -24,9 +24,18 @@ export interface PluginScaling {
 export interface PluginOption {
   id: number;
   name: string;
-  value: string | number | boolean;
-  text: string;
   selected?: boolean;
+  text: string;
+  value: string | number | boolean;
+}
+
+export interface SelectOption {
+  id?: number;
+  isGroup?: boolean;
+  options?: SelectOption[];
+  selected?: boolean;
+  text?: string;
+  value: string | number | boolean;
 }
 
 export interface PluginComponentParams {
@@ -52,7 +61,7 @@ export interface PluginSelectComponentParams {
   autoToggle?: boolean;
   name?: string;
   onChangeHandler?: any;
-  options: any;
+  options: PluginOption[] | SelectOption[];
   plugin: any;
   showLabel?: boolean;
   state: any;

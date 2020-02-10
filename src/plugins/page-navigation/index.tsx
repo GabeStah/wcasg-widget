@@ -1,4 +1,4 @@
-import { PluginComponentParams } from '@/enum';
+import { PluginComponentParams, SelectOption } from '@/enum';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import FormControl from '@material-ui/core/FormControl';
@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import SelectComponent from 'components/select';
 import { PluginComponent } from 'components/plugin';
 import findLast from 'lodash/findLast';
 import React from 'react';
@@ -29,7 +30,8 @@ function selectOptions() {
   const elements = document.querySelectorAll(
     allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
   );
-  const options: any[] = [];
+  const options: SelectOption[] = [];
+  // const options: any[] = [];
   // Iterate nodes
   elements.forEach((element: any) => {
     // Get ARIA text of element
@@ -37,22 +39,49 @@ function selectOptions() {
     // If header
     if (headerTags.includes(element.tagName)) {
       options.push({
-        tagName: element.tagName,
+        isGroup: true,
         text,
-        element,
-        links: []
+        value: element.href
       });
     } else {
       options.push({
-        tagName: element.tagName,
+        isGroup: false,
         text,
-        href: element.href,
-        element
+        value: element.href
       });
     }
   });
   return options;
 }
+
+// function selectOptions() {
+//   const elements = document.querySelectorAll(
+//     allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
+//   );
+//   const options: any[] = [];
+//   // Iterate nodes
+//   elements.forEach((element: any) => {
+//     // Get ARIA text of element
+//     const text = Aria.getElementText({ element }).trim();
+//     // If header
+//     if (headerTags.includes(element.tagName)) {
+//       options.push({
+//         tagName: element.tagName,
+//         text,
+//         element,
+//         links: []
+//       });
+//     } else {
+//       options.push({
+//         tagName: element.tagName,
+//         text,
+//         href: element.href,
+//         element
+//       });
+//     }
+//   });
+//   return options;
+// }
 
 function getOptions() {
   const elements = document.querySelectorAll(
@@ -136,6 +165,8 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
     value: any
   ) => {
     try {
+      console.log(value);
+      console.log(event.target.value);
       window.location.href = event.target.value;
     } catch (error) {
       // Likely CORS failure.
@@ -151,37 +182,54 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
       toggleDisabled={true}
     >
       <FormControl>
-        <InputLabel htmlFor={`${plugin.id}-select-label`}>
-          Page Select
-        </InputLabel>
-        <Select
-          id={`${plugin.id}-select`}
-          labelId={`${plugin.id}-select-label`}
-          name={'page-navigation'}
-          onChange={handleOnChange}
-          className={styles.pageNavigation}
-          defaultValue={''}
-          input={<Input id={`${plugin.id}-select-label`} />}
-        >
-          {selectOptions().map((item: any, index: any) => {
-            if (headerTags.includes(item.tagName)) {
-              return (
-                <ListSubheader
-                  key={index}
-                  aria-label={`[${item.tagName}]${item.text}`}
-                >
-                  {item.text}
-                </ListSubheader>
-              );
-            } else {
-              return (
-                <MenuItem key={index} value={item.href}>
-                  {item.text}
-                </MenuItem>
-              );
-            }
-          })}
-        </Select>
+        {/*<InputLabel htmlFor={`${plugin.id}-select-label`}>*/}
+        {/*  Page Select*/}
+        {/*</InputLabel>*/}
+        {/*<Select*/}
+        {/*  id={`${plugin.id}-select`}*/}
+        {/*  labelId={`${plugin.id}-select-label`}*/}
+        {/*  name={'page-navigation'}*/}
+        {/*  onChange={handleOnChange}*/}
+        {/*  className={styles.pageNavigation}*/}
+        {/*  defaultValue={''}*/}
+        {/*  input={<Input id={`${plugin.id}-select-label`} />}*/}
+        {/*>*/}
+        <SelectComponent
+          actions={actions}
+          plugin={plugin}
+          name={'Select Page'}
+          autoToggle={false}
+          showLabel={false}
+          onChangeHandler={handleOnChange}
+          options={selectOptions()}
+          state={state}
+          // id={`${plugin.id}-select`}
+          // labelId={`${plugin.id}-select-label`}
+          // name={'page-navigation'}
+          // onChange={handleOnChange}
+          // className={styles.pageNavigation}
+          // defaultValue={''}
+          // input={<Input id={`${plugin.id}-select-label`} />}
+        />
+
+        {/*{selectOptions().map((item: any, index: any) => {*/}
+        {/*  if (headerTags.includes(item.tagName)) {*/}
+        {/*    return (*/}
+        {/*      <ListSubheader*/}
+        {/*        key={index}*/}
+        {/*        aria-label={`[${item.tagName}]${item.text}`}*/}
+        {/*      >*/}
+        {/*        {item.text}*/}
+        {/*      </ListSubheader>*/}
+        {/*    );*/}
+        {/*  } else {*/}
+        {/*    return (*/}
+        {/*      <MenuItem key={index} value={item.href}>*/}
+        {/*        {item.text}*/}
+        {/*      </MenuItem>*/}
+        {/*    );*/}
+        {/*  }*/}
+        {/*})}*/}
       </FormControl>
     </PluginComponent>
   );

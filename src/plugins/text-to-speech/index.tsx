@@ -1,17 +1,61 @@
-import { PluginComponentParams } from '@/enum';
+import { PluginComponentParams, SelectOption } from '@/enum';
+import Aria from '@/utility/aria';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-import {PluginComponent} from 'components/plugin';
+import { PluginComponent } from 'components/plugin';
 import RadioComponent from 'components/radio';
 import Scalable from 'components/scalable';
+import SelectComponent from 'components/select';
 import ToggleSwitch from 'components/toggle-switch';
 import React, { ChangeEvent } from 'react';
-import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
+import {
+  IGoogleCloudVoice,
+  IGoogleCloudVoiceSelectionParams
+} from 'services/google-cloud/text-to-speech/declarations';
 import { Selectors } from 'state/redux/selectors';
 import styles from './styles.scss';
+
+function selectOptions(
+  voices: IGoogleCloudVoice[],
+  selectedVoice: IGoogleCloudVoiceSelectionParams
+): SelectOption[] {
+  return voices.map((voice: IGoogleCloudVoice, key: number) => {
+    return {
+      value: voice.name,
+      text: voice.name,
+      id: key,
+      selected: selectedVoice.name === voice.name
+    };
+  });
+  // const elements = document.querySelectorAll(
+  //   allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
+  // );
+  // const options: SelectOption[] = [];
+  // // const options: any[] = [];
+  // // Iterate nodes
+  // elements.forEach((element: any) => {
+  //   // Get ARIA text of element
+  //   const text = Aria.getElementText({ element }).trim();
+  //   // If header
+  //   if (headerTags.includes(element.tagName)) {
+  //     options.push({
+  //       isGroup: true,
+  //       text,
+  //       value: element.href
+  //     });
+  //   } else {
+  //     options.push({
+  //       isGroup: false,
+  //       text,
+  //       value: element.href
+  //     });
+  //   }
+  // });
+  // return options;
+}
 
 export const Component = ({ state, actions, id }: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
@@ -20,9 +64,22 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
   const audioConfig = new Selectors(state).getTextToSpeechAudioConfig();
 
   const handleVoiceChange = (event: React.ChangeEvent<{ value: any }>) => {
-    const voice = new Selectors(state).getTextToSpeechVoice(event.target.value);
-    if (voice) {
-      actions.setActiveTextToSpeechVoice(voice);
+    const enabled = plugin.enabled;
+    if (event.target.value === undefined || event.target.value === '') {
+      if (enabled) {
+        actions.disable(plugin.id);
+      }
+    } else {
+      const voice = new Selectors(state).getTextToSpeechVoice(
+        event.target.value
+      );
+      if (voice) {
+        actions.setActiveTextToSpeechVoice(voice);
+        // Enable if needed
+        if (!enabled) {
+          actions.enable(plugin.id);
+        }
+      }
     }
   };
 
@@ -60,21 +117,41 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
   };
 
   return (
-    <PluginComponent actions={actions} state={state} id={id}>
+    <PluginComponent
+      actions={actions}
+      state={state}
+      id={id}
+      toggleDisabled={true}
+    >
       {voices && voices.length > 0 && (
         <>
-          <InputLabel id={`${plugin.id}-voice-label`}>Voice</InputLabel>
-          <Select
-            id={`${plugin.id}-voice`}
-            labelId={`${plugin.id}-voice-label`}
-            value={activeVoice?.name}
-            onChange={handleVoiceChange}
-          >
-            {voices.map((voice: IGoogleCloudVoice) => (
-              <MenuItem value={voice.name}>{voice.name}</MenuItem>
-            ))}
-          </Select>
+          <SelectComponent
+            // id={`${plugin.id}-voice`}
+            // labelId={`${plugin.id}-voice-label`}
+            // value={activeVoice?.name}
+            name={'Select Voice'}
+            onChangeHandler={handleVoiceChange}
+            autoToggle={true}
+            state={state}
+            plugin={plugin}
+            options={selectOptions(voices, activeVoice)}
+            actions={actions}
+          />
         </>
+        // <>
+        //   <InputLabel id={`${plugin.id}-voice-label`}>Voice</InputLabel>
+        //   <Select
+        //     id={`${plugin.id}-voice`}
+        //     labelId={`${plugin.id}-voice-label`}
+        //     value={activeVoice?.name}
+        //     onChange={handleVoiceChange}
+        //     native={true}
+        //   >
+        //     {voices.map((voice: IGoogleCloudVoice) => (
+        //       <MenuItem value={voice.name}>{voice.name}</MenuItem>
+        //     ))}
+        //   </Select>
+        // </>
       )}
       <Typography id={`${plugin.id}-pitch-label`} gutterBottom>
         Pitch

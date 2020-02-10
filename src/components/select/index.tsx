@@ -1,4 +1,8 @@
-import { PluginSelectComponentParams } from '@/enum';
+import {
+  PluginOption,
+  PluginSelectComponentParams,
+  SelectOption
+} from '@/enum';
 import { areEqual } from '@/utility/number';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -8,6 +12,7 @@ import SelectOptionComponent from 'components/select/select-options';
 import config from 'config';
 import React, { useEffect } from 'react';
 import { Selectors } from 'state/redux/selectors';
+import map from 'lodash/map';
 
 const SelectComponent = ({
   actions,
@@ -46,6 +51,29 @@ const SelectComponent = ({
   // Toggle based on factor
   useEffect(() => handleToggle(), [selectedOption]);
 
+  const getSelectOptions = (opts: SelectOption[] | PluginOption[]) => {
+    const selectOptionComponents: any[] = [];
+    opts.forEach((option: PluginOption | SelectOption) => {
+      if (!('isGroup' in option && option.isGroup)) {
+        selectOptionComponents.push(
+          <SelectOptionComponent
+            actions={actions}
+            plugin={plugin}
+            isGroup={
+              'isGroup' in option && option.isGroup ? option.isGroup : false
+            }
+            item={option}
+            selected={
+              selectedOption !== undefined &&
+              selectedOption.value === option.value
+            }
+          />
+        );
+      }
+    });
+    return selectOptionComponents;
+  };
+
   return (
     <FormControl>
       {showLabel && (
@@ -72,28 +100,11 @@ const SelectComponent = ({
           {name ? name : plugin.optionName ? plugin.optionName : plugin.title}
           {/*-- {name ? name.toUpperCase() : plugin.title} --*/}
         </option>
-        {options.map((option: any) => (
-          <SelectOptionComponent
-            actions={actions}
-            plugin={plugin}
-            item={option}
-            selected={
-              selectedOption !== undefined &&
-              selectedOption.value === option.value
-            }
-          />
-        ))}
+        {getSelectOptions(options)}
+        })}
       </NativeSelect>
     </FormControl>
   );
 };
-
-// export interface PluginOption {
-//   id: number;
-//   name: string;
-//   value: string | number | boolean;
-//   text: string;
-//   selected?: boolean;
-// }
 
 export default SelectComponent;
