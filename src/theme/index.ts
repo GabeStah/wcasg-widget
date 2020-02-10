@@ -15,7 +15,12 @@ const theme = createMuiTheme({
     MuiButton: {
       root: {
         minWidth: '22px',
-        padding: '1px'
+        padding: '1px',
+        '&$focused': {
+          backgroundColor: `rgba(${'#14f176'}, 1) !important`,
+          outline: `2px solid rgba(${'#14f176'}, 0.5) !important`,
+          outlineOffset: `1px !important`
+        }
       },
       outlined: {
         padding: '1px',
@@ -61,7 +66,17 @@ const theme = createMuiTheme({
     // Name of the component
     MuiButtonBase: {
       // The properties to apply
-      disableRipple: true // No more ripple, on the whole application
+      disableRipple: true, // No more ripple, on the whole application
+      tabIndex: -4
+    },
+    MuiSwitch: {
+      inputProps: {
+        tabIndex: -4
+      },
+      tabIndex: -4
+    },
+    MuiButton: {
+      tabIndex: -4
     }
   }
 });

@@ -86,9 +86,12 @@ export const Scalable = ({
         onClick={() => actions.increment(plugin.id)}
         role={'button'}
         startIcon={<ChevronThinUpIcon />}
+        tabIndex={0}
         variant={'outlined'}
       />
       <Button
+        aria-label={`Decrement ${plugin.title}`}
+        aria-roledescription={'button'}
         onClick={() => actions.decrement(plugin.id)}
         className={`${styles.rotated} ${
           lessThan(scaling.factor, scaling.baseFactor) ? styles.active : ''
@@ -98,12 +101,11 @@ export const Scalable = ({
             ? styles.startIcon
             : ''
         }}
-        aria-label={`Decrement ${plugin.title}`}
-        aria-roledescription={'button'}
-        role={'button'}
-        variant={'outlined'}
         color={'primary'}
+        role={'button'}
         startIcon={<ChevronThinUpIcon />}
+        tabIndex={0}
+        variant={'outlined'}
       />
     </>
   );

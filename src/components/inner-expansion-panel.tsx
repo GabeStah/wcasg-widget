@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+let isExpanded = true;
+
 const Component = ({
   state,
   actions,
@@ -53,9 +55,17 @@ const Component = ({
 }) => {
   const classes = useStyles(theme);
 
+  const handleKeyDown = (e: any) => {
+    if (e && e.key === 'Space') {
+      console.log(`space for ${'asd'}`);
+      isExpanded = !isExpanded;
+    }
+  };
+
   return (
     <ExpansionPanel
-      defaultExpanded={true}
+      expanded={isExpanded}
+      defaultExpanded={isExpanded}
       elevation={0}
       square={false}
       classes={{ expanded: classes.expansionPanelSummaryExpanded }}
@@ -66,11 +76,14 @@ const Component = ({
         }}
         expandIcon={
           <SvgIcon
+            aria-label={`${isExpanded ? 'Close' : 'Open'} ${title}`}
             className={classes.expandIconSvg}
             component={ChevronThinUp}
+            onKeyDown={handleKeyDown}
           />
         }
         aria-controls={`${slugify(title)}-options-content`}
+        aria-label={title}
         id={`${slugify(title)}-options-summary`}
       >
         <Typography variant={'h2'} className={classes.headerTypography}>

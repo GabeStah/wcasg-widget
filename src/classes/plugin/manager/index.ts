@@ -3,6 +3,38 @@ import Store, { StorageDataType } from '@/utility/store';
 import config from 'config';
 
 /**
+ * {
+ *   id: 'plugin-id' (static)
+ *   stateFields:
+ *   nonStateFields: {
+ *     title,
+ *     options: [
+ *       [
+ *             {
+                id: 0,
+                name: 'style',
+                text: 'Block',
+                value: 'block'
+              },
+              {
+                id: 1,
+                name: 'style',
+                text: 'Border',
+                value: 'border'
+              },
+              {
+                id: 2,
+                name: 'style',
+                text: 'Both',
+                value: 'both'
+              }
+ *       ]
+ *     ]
+ *   }
+ * }
+ */
+
+/**
  * Singleton class that handles active Plugins across app.
  */
 export default class PluginManager {
@@ -30,8 +62,8 @@ export default class PluginManager {
     return PluginManager.instance;
   }
   private static instance: PluginManager;
-  // tslint:disable-next-line:variable-name
   private readonly _plugins: Plugin[] = [];
+  private readonly _pluginsDefault: Plugin[] = [];
 
   private constructor() {}
 
