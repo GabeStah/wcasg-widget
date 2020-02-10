@@ -125,7 +125,10 @@ function* onEnable() {
   nodeList.forEach((node: any) => {
     LocalState.mouseEvents.forEach(event => {
       if (node && typeof node.addEventListener === 'function') {
-        node.addEventListener(event, handleMouseEvent, {passive: true, capture: true});
+        node.addEventListener(event, handleMouseEvent, {
+          passive: true,
+          capture: true
+        });
       }
     });
   });
@@ -140,7 +143,10 @@ function* onDisable() {
   nodeList.forEach((node: any) => {
     LocalState.mouseEvents.forEach(event => {
       if (node && typeof node.addEventListener === 'function') {
-        node.removeEventListener(event, handleMouseEvent, {passive: true, capture: true});
+        node.removeEventListener(event, handleMouseEvent, {
+          passive: true,
+          capture: true
+        });
       }
     });
   });
@@ -150,7 +156,7 @@ function* onDisable() {
 
 export const pluginObject: Plugin = {
   id: Ids.Tooltip,
-  title: 'Tooltip',
+  title: 'Tooltips',
   enabled: false,
   options: [],
   tasks: [

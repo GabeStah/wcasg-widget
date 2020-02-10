@@ -145,4 +145,8 @@ export class BaseReducer extends ImmerReducer<State> {
   public setTextToSpeechVoices({ voices }: { voices: IGoogleCloudVoice[] }) {
     this.draftState.services.googleCloud.textToSpeech.voices = voices;
   }
+
+  public setWidgetIsExpanded({ value }: { value: boolean }) {
+    this.draftState.isExpanded = value;
+  }
 }

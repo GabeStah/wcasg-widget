@@ -91,7 +91,7 @@ function* updateFont() {
 
 export const pluginObject: Plugin = {
   id: Ids.ReadableFonts,
-  title: 'Readable Fonts',
+  title: 'Alternative Fonts',
   enabled: false,
   options: [
     {

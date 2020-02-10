@@ -79,8 +79,35 @@ module.exports = {
       // },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack']
+        // issuer: {
+        //   test: /\.tsx?$/
+        // },
+        use: ['@svgr/webpack', 'svg-url-loader']
       },
+      // {
+      //   test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      //   loader: 'svg-url-loader'
+      // },
+      // {
+      //   test: /\.svg$/,
+      //   use: [
+      //     '@svgr/webpack',
+      //     {
+      //       loader: 'svg-url-loader',
+      //       options: {}
+      //     }
+      //   ]
+      // },
+      // {
+      //   test: /\.svg$/,
+      //   use: [
+      //     '@svgr/webpack',
+      //     {
+      //       loader: 'svg-url-loader',
+      //       options: {}
+      //     }
+      //   ]
+      // },
       {
         test: /\.(scss|css)$/,
         use: [

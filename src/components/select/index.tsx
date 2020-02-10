@@ -69,11 +69,7 @@ const SelectComponent = ({
           value={undefined}
           selected={!statePlugin.enabled}
         >
-          {name
-            ? name.toUpperCase()
-            : plugin.optionName
-            ? plugin.optionName.toUpperCase()
-            : plugin.title}
+          {name ? name : plugin.optionName ? plugin.optionName : plugin.title}
           {/*-- {name ? name.toUpperCase() : plugin.title} --*/}
         </option>
         {options.map((option: any) => (

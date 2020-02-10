@@ -25,6 +25,11 @@ export function* watchKeyDown() {
 
   yield takeLatest(channel, function*(val: any) {
     const state = yield select();
+    // Minimize widget if expanded and Escape key pressed.
+    if (new Selectors(state).isWidgetExpanded() && val.key === 'Escape') {
+      yield put(ActionCreators.setWidgetIsExpanded({ value: false }));
+    }
+
     if (new Selectors(state).isKeyboardEnabled()) {
       // Immediately dispatch keyDown action for pressed key.
       yield put(ActionCreators.keyDown({ key: val.key }));

@@ -112,4 +112,8 @@ export class Selectors {
   public isKeyEnabled(key: string) {
     return this.state.keyboard.pressedKeys[key].enabled;
   }
+
+  public isWidgetExpanded() {
+    return this.state.isExpanded;
+  }
 }

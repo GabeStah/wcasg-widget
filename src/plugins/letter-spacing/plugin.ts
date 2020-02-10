@@ -29,7 +29,7 @@ function* onEnableOrChange() {
 
 export const pluginObject: Plugin = {
   id: Ids.LetterSpacing,
-  title: 'Letter Spacing',
+  title: 'Text Spacing',
   enabled: false,
   options: [],
   scaling: {

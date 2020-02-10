@@ -59,6 +59,10 @@ export const Connector = createConnector({
 
     setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {
       actions.setTextToSpeechVoices({ voices });
+    },
+
+    setWidgetExpanded(value: boolean) {
+      actions.setWidgetIsExpanded({ value });
     }
   })
 });

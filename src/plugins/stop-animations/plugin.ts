@@ -11,7 +11,7 @@ const actionClass = new PluginActionClass({
 
 export const pluginObject: Plugin = {
   id: Ids.StopAnimations,
-  title: 'Stop Animations',
+  title: 'Pause Animations',
   enabled: false,
   options: [],
   tasks: [

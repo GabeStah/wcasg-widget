@@ -2,7 +2,7 @@ import { createStyles, Theme } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 // @ts-ignore
-import ResetIcon from 'assets/svg-minified/plugins/reset.svg';
+import { ReactComponent as ResetIcon } from 'assets/svg-minified/plugins/reset.svg';
 import React from 'react';
 import { Connector } from 'state/redux/connectors';
 import { State } from 'state/redux/state';

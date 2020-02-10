@@ -24,7 +24,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
 // @ts-ignore
-import CloseIcon from 'assets/svg-minified/accessibility-icons/close.svg';
+import { ReactComponent as CloseIcon } from 'assets/svg-minified/accessibility-icons/close.svg';
 import { Connector } from 'state/redux/connectors';
 import { Selectors } from 'state/redux/selectors';
 import { State } from 'state/redux/state';

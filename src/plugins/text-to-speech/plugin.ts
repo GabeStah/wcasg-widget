@@ -3,7 +3,7 @@ import { Ids } from 'plugins/data';
 
 export const pluginObject: Plugin = {
   id: Ids.TextToSpeech,
-  title: 'Text-to-Speech',
+  title: 'Text to Speech',
   enabled: false,
   options: [],
   customComponent: true,

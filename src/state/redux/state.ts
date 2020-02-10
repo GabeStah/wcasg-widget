@@ -34,6 +34,7 @@ interface IStateServices {
 }
 
 export interface State extends IStateServices {
+  isExpanded: boolean;
   focusedNode: any;
   keyboard: {
     enabled: boolean;
@@ -43,6 +44,7 @@ export interface State extends IStateServices {
 }
 
 export const defaultState: State = {
+  isExpanded: false,
   focusedNode: undefined,
   keyboard: {
     enabled: false,

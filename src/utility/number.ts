@@ -14,6 +14,38 @@ export const areEqual = (
   return round(a, precision) === round(b, precision);
 };
 
+export const lessThan = (
+  a: number | string,
+  b: number | string,
+  precision: number = 6
+) => {
+  return round(a, precision) < round(b, precision);
+};
+
+export const lessThanOrEqual = (
+  a: number | string,
+  b: number | string,
+  precision: number = 6
+) => {
+  return round(a, precision) <= round(b, precision);
+};
+
+export const greaterThan = (
+  a: number | string,
+  b: number | string,
+  precision: number = 6
+) => {
+  return round(a, precision) > round(b, precision);
+};
+
+export const greaterThanOrEqual = (
+  a: number | string,
+  b: number | string,
+  precision: number = 6
+) => {
+  return round(a, precision) >= round(b, precision);
+};
+
 /**
  * Round a number to precision number of significant digits.
  *

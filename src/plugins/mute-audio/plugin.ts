@@ -16,7 +16,7 @@ const actionProperty = new PluginActionProperty({
 
 export const pluginObject: Plugin = {
   id: Ids.MuteAudio,
-  title: 'Mute Audio',
+  title: 'Mute Sounds',
   enabled: false,
   options: [],
   tasks: [

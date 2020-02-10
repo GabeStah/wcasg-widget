@@ -8,7 +8,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 // @ts-ignore
-import ChevronThinUp from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
+import { ReactComponent as ChevronThinUp } from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
 import React from 'react';
 import { Connector } from 'state/redux/connectors';
 import { State } from 'state/redux/state';
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     expansionPanelSummaryRoot: {
       borderBottom: `1px solid ${colors.primaryBlue}`
+    },
+    expandIconSvg: {
+      fill: colors.primaryBlue
     },
     expansionPanelSummaryExpanded: {
       // Styles for inner wrapper, while expanded
@@ -58,8 +61,15 @@ const Component = ({
       classes={{ expanded: classes.expansionPanelSummaryExpanded }}
     >
       <ExpansionPanelSummary
-        classes={{ root: classes.expansionPanelSummaryRoot }}
-        expandIcon={<SvgIcon component={ChevronThinUp} />}
+        classes={{
+          root: classes.expansionPanelSummaryRoot
+        }}
+        expandIcon={
+          <SvgIcon
+            className={classes.expandIconSvg}
+            component={ChevronThinUp}
+          />
+        }
         aria-controls={`${slugify(title)}-options-content`}
         id={`${slugify(title)}-options-summary`}
       >

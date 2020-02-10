@@ -1,46 +1,45 @@
 // @ts-ignore
-import IconBadge from 'assets/svg-minified/plugins/badge.svg';
+import { ReactComponent as IconBadge } from 'assets/svg-minified/plugins/badge.svg';
 // @ts-ignore
-import IconBook from 'assets/svg-minified/plugins/book.svg';
+import { ReactComponent as IconBook } from 'assets/svg-minified/plugins/book.svg';
 // @ts-ignore
-import IconContrast from 'assets/svg-minified/plugins/contrast.svg';
+import { ReactComponent as IconContrast } from 'assets/svg-minified/plugins/contrast.svg';
 // @ts-ignore
-import IconCursor from 'assets/svg-minified/plugins/cursor.svg';
+import { ReactComponent as IconCursor } from 'assets/svg-minified/plugins/cursor.svg';
 // @ts-ignore
-import IconDisableImages from 'assets/svg-minified/plugins/disable-images.svg';
+import { ReactComponent as IconDisableImages } from 'assets/svg-minified/plugins/disable-images.svg';
 // @ts-ignore
-import IconEmphasizeHover from 'assets/svg-minified/plugins/emphasize-hover.svg';
+import { ReactComponent as IconEmphasizeHover } from 'assets/svg-minified/plugins/emphasize-hover.svg';
 // @ts-ignore
-import IconEmphasizeLinks from 'assets/svg-minified/plugins/emphasize-links.svg';
+import { ReactComponent as IconEmphasizeLinks } from 'assets/svg-minified/plugins/emphasize-links.svg';
 // @ts-ignore
-import IconEmphasizeTitles from 'assets/svg-minified/plugins/emphasize-titles.svg';
+import { ReactComponent as IconEmphasizeTitles } from 'assets/svg-minified/plugins/emphasize-titles.svg';
 // @ts-ignore
-import IconEmphasizeTitlesAlt from 'assets/svg-minified/plugins/emphasize-titles-alt.svg';
+import { ReactComponent as IconEmphasizeTitlesAlt } from 'assets/svg-minified/plugins/emphasize-titles-alt.svg';
 // @ts-ignore
-import IconFontSize from 'assets/svg-minified/plugins/font-size.svg';
+import { ReactComponent as IconFontSize } from 'assets/svg-minified/plugins/font-size.svg';
 // @ts-ignore
-import IconFontSpacing from 'assets/svg-minified/plugins/font-spacing.svg';
+import { ReactComponent as IconFontSpacing } from 'assets/svg-minified/plugins/font-spacing.svg';
 // @ts-ignore
-import IconFontType from 'assets/svg-minified/plugins/font-type.svg';
+import { ReactComponent as IconFontType } from 'assets/svg-minified/plugins/font-type.svg';
 // @ts-ignore
-import IconInvertColors from 'assets/svg-minified/plugins/invert-colors.svg';
+import { ReactComponent as IconInvertColors } from 'assets/svg-minified/plugins/invert-colors.svg';
 // @ts-ignore
-import IconKeyboardNavigation from 'assets/svg-minified/plugins/keyboard-nav.svg';
+import { ReactComponent as IconKeyboardNavigation } from 'assets/svg-minified/plugins/keyboard-nav.svg';
 // @ts-ignore
-import IconMute from 'assets/svg-minified/plugins/mute.svg';
+import { ReactComponent as IconMute } from 'assets/svg-minified/plugins/mute.svg';
 // @ts-ignore
-import IconNote from 'assets/svg-minified/plugins/note.svg';
+import { ReactComponent as IconNote } from 'assets/svg-minified/plugins/note.svg';
 // @ts-ignore
-import IconOnscreenKeyboard from 'assets/svg-minified/plugins/onscreen-keyboard.svg';
+import { ReactComponent as IconOnscreenKeyboard } from 'assets/svg-minified/plugins/onscreen-keyboard.svg';
 // @ts-ignore
-import IconPauseAnimations from 'assets/svg-minified/plugins/pause-animations.svg';
+import { ReactComponent as IconPauseAnimations } from 'assets/svg-minified/plugins/pause-animations.svg';
 // @ts-ignore
-import IconReset from 'assets/svg-minified/plugins/reset.svg';
+import { ReactComponent as IconReset } from 'assets/svg-minified/plugins/reset.svg';
 // @ts-ignore
-import IconTextToSpeech from 'assets/svg-minified/plugins/text-to-speech.svg';
+import { ReactComponent as IconTextToSpeech } from 'assets/svg-minified/plugins/text-to-speech.svg';
 // @ts-ignore
-import IconTooltip from 'assets/svg-minified/plugins/tooltip.svg';
-
+import { ReactComponent as IconTooltip } from 'assets/svg-minified/plugins/tooltip.svg';
 
 export enum Ids {
   BlackAndYellow = 'black-and-yellow',

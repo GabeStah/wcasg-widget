@@ -11,8 +11,14 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// @ts-ignore
-import ChevronThinUp from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
+import closeIconUrl, {
+  ReactComponent as CloseIcon
+  // @ts-ignore
+} from 'assets/svg-minified/accessibility-icons/close.svg';
+import chevronIconUrl, {
+  ReactComponent as ChevronThinUpIcon
+  // @ts-ignore
+} from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
 
 import LogoComponent from 'components/logo';
 /**
@@ -25,7 +31,8 @@ import ResetButtonComponent from 'components/reset-button';
 import config from 'config';
 
 import React, { useEffect } from 'react';
-
+import { select } from 'redux-saga/effects';
+import { ActionCreators } from 'state/redux/actions';
 import { Connector } from 'state/redux/connectors';
 import { Selectors } from 'state/redux/selectors';
 import { State } from 'state/redux/state';
@@ -40,13 +47,36 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 2 * 2,
       right: 2 * 3
     },
+    expanded: {},
+    expandIcon: {
+      color: '#fff',
+      fontSize: '12px',
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      textTransform: 'uppercase',
+      '&::before': {
+        content: "'ESC'"
+      },
+      '&$expanded': {
+        transform: 'rotate(0deg)'
+      }
+    },
+    closeIcon: {
+      fill: '#fff',
+      height: '70%',
+      width: '70%'
+    },
+    closeIconLarge: {
+      fill: '#fff'
+    },
     expansionPanelSummaryRoot: {
       backgroundColor: colors.primaryBlue,
-      borderRadius: '4px'
+      borderRadius: '4px',
+      fill: '#fff'
     },
     expansionPanelSummaryExpanded: {
       borderTopLeftRadius: '4px',
-      borderTopRightRadius: '4px'
+      borderTopRightRadius: '4px',
+      fill: '#fff'
     },
     headerTypography: {
       color: '#fff'
@@ -90,6 +120,17 @@ const DetailedExpansionPanel = ({
   actions: typeof Connector.__actions;
 }) => {
   const classes = useStyles(theme);
+  const isWidgetExpanded = new Selectors(state).isWidgetExpanded();
+
+  /**
+   * Update expanded state.
+   *
+   * @param e
+   * @param {boolean} expanded
+   */
+  const handleOnChange = (e: any, expanded: boolean) => {
+    actions.setWidgetExpanded(expanded);
+  };
 
   useEffect(() => {
     // One-time dispatch of enabled plugins on initial render.
@@ -100,14 +141,29 @@ const DetailedExpansionPanel = ({
   return (
     <div className={classes.root}>
       <ExpansionPanel
-        defaultExpanded={false}
-        square={false}
         classes={{ expanded: classes.expansionPanelSummaryExpanded }}
+        defaultExpanded={false}
+        expanded={isWidgetExpanded}
+        onChange={handleOnChange}
+        square={false}
+        TransitionProps={{ unmountOnExit: true }}
       >
         <ExpansionPanelSummary
-          classes={{ root: classes.expansionPanelSummaryRoot }}
-          expandIcon={<SvgIcon component={ChevronThinUp} />}
-          // expandIcon={<SvgIcon component={CloseIcon} viewBox='0 0 600 476.6' />}
+          classes={{
+            root: classes.expansionPanelSummaryRoot,
+            expandIcon: isWidgetExpanded ? classes.expandIcon : '',
+            expanded: classes.expanded
+          }}
+          expandIcon={
+            isWidgetExpanded ? (
+              <SvgIcon className={classes.closeIcon} component={CloseIcon} />
+            ) : (
+              <SvgIcon
+                className={classes.closeIconLarge}
+                component={ChevronThinUpIcon}
+              />
+            )
+          }
           aria-controls={`${config.widgetId}-content`}
           id={`${config.widgetId}-summary`}
         >
