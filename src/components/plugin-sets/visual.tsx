@@ -26,7 +26,7 @@ const VisualPluginSet = ({
   actions,
   theme
 }: {
-  theme?: Theme;
+  theme: Theme;
   state: State;
   actions: typeof Connector.__actions;
 }) => (
@@ -42,6 +42,7 @@ const VisualPluginSet = ({
           state={state}
           actions={actions}
           id={MuteAudioPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -50,6 +51,7 @@ const VisualPluginSet = ({
           actions={actions}
           toggleDisabled={true}
           id={ContrastPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -57,6 +59,7 @@ const VisualPluginSet = ({
           state={state}
           actions={actions}
           id={HighlightFormsPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -64,6 +67,7 @@ const VisualPluginSet = ({
           state={state}
           actions={actions}
           id={LargeIconsPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -71,6 +75,7 @@ const VisualPluginSet = ({
           state={state}
           actions={actions}
           id={StopAnimationsPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -78,6 +83,7 @@ const VisualPluginSet = ({
           state={state}
           actions={actions}
           id={LargeCursorPlugin.id}
+          theme={theme}
         />
       </Grid>
     </Grid>

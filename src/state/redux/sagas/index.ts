@@ -1,9 +1,9 @@
-import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import { AudioUtilities } from '@/utility/audio';
 import PluginManager from 'classes/plugin/manager';
 import config, { TextToSpeechEngine } from 'config';
 import { isAction, isActionFrom } from 'immer-reducer';
+import pluginObject from 'plugins/contrast/plugin';
 import { Ids } from 'plugins/data';
 import { Action } from 'redux';
 import { buffers, END, eventChannel } from 'redux-saga';
@@ -24,6 +24,7 @@ import {
   saveStateToLocalStorage
 } from 'state/redux/sagas/state';
 import { Selectors } from 'state/redux/selectors';
+import { ThemeTypes } from 'theme/types';
 
 let speechToTextAudioElement: any;
 
@@ -33,6 +34,63 @@ const getActionTypeFromImmer = (action: Action): string => {
   }
   return '';
 };
+
+export function* updateTheme(action: Action) {
+  if (
+    !isAction(action, ActionCreators.enable) &&
+    !isAction(action, ActionCreators.disable) &&
+    !isAction(action, ActionCreators.selectOption)
+  ) {
+    return;
+  }
+
+  if (action.payload.id !== Ids.Contrast) {
+    return;
+  }
+
+  const state = yield select();
+  const selectors = new Selectors(state);
+  const themeType = new Selectors(state).getTheme();
+  // Get latest state version.
+  const plugin = selectors.getPlugin(action.payload.id);
+  const options = selectors.getPluginOption(action.payload.id);
+
+  if (!options) {
+    return;
+  }
+
+  let newTheme = ThemeTypes.Base;
+
+  if (plugin.enabled) {
+    const selected = options.find(option => option.selected);
+    if (selected && typeof selected.value === 'string') {
+      switch (selected.value) {
+        case 'black-and-yellow':
+          if (themeType !== ThemeTypes.BlackAndYellow) {
+            newTheme = ThemeTypes.BlackAndYellow;
+          }
+          break;
+        case 'dark-contrast':
+          if (themeType !== ThemeTypes.DarkContrast) {
+            newTheme = ThemeTypes.DarkContrast;
+          }
+          break;
+        case 'light-contrast':
+          if (themeType !== ThemeTypes.LightContrast) {
+            newTheme = ThemeTypes.LightContrast;
+          }
+          break;
+        default:
+          if (themeType !== ThemeTypes.Base) {
+            newTheme = ThemeTypes.Base;
+          }
+      }
+    }
+  }
+
+  // Update theme
+  yield put(ActionCreators.setTheme({ theme: newTheme }));
+}
 
 export function* onPluginEnable(action: Action) {
   if (!isAction(action, ActionCreators.enable)) {
@@ -207,6 +265,9 @@ export function* rootSagas() {
     call(AudioUtilities.getSpeechToTextVoices),
     takeEvery(ActionCreators.enable, onPluginEnable),
     takeEvery(ActionCreators.disable, onPluginDisable),
+    takeEvery(ActionCreators.enable, updateTheme),
+    takeEvery(ActionCreators.disable, updateTheme),
+    takeEvery(ActionCreators.selectOption, updateTheme),
     takeEvery(ActionCreators.focusNode, onFocusNode),
     takeEvery(
       // Pattern to track all actions from reducer

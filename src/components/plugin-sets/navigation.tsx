@@ -24,7 +24,7 @@ const NavigationPluginSet = ({
   actions,
   theme
 }: {
-  theme?: Theme;
+  theme: Theme;
   state: State;
   actions: typeof Connector.__actions;
 }) => (
@@ -41,6 +41,7 @@ const NavigationPluginSet = ({
           actions={actions}
           id={HighlightLinksPlugin.id}
           toggleDisabled={true}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -48,6 +49,7 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={TooltipPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -55,6 +57,7 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={VirtualKeyboardPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -62,6 +65,7 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={KeyboardNavigationPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={12}>
@@ -69,6 +73,7 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={PageNavigationPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={12}>
@@ -76,6 +81,7 @@ const NavigationPluginSet = ({
           state={state}
           actions={actions}
           id={TextToSpeechPlugin.id}
+          theme={theme}
         />
       </Grid>
     </Grid>

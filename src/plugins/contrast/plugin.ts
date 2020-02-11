@@ -1,28 +1,27 @@
 import { Plugin, PluginActionTypes } from '@/enum';
-import { Css } from '@/utility/css';
-import { ValueManipulationType } from 'classes/plugin/action';
 import { PluginActionClass } from 'classes/plugin/action/class';
 import { PluginActionStyle } from 'classes/plugin/action/style';
-import { Ids } from 'plugins/data';
-import { select } from 'redux-saga/effects';
-import { Selectors } from 'state/redux/selectors';
 import forEach from 'lodash/forEach';
-import styles from './styles.scss';
 
 import {
-  actionStyle as actionStyleBlackAndYellow,
-  actionClass as actionClassBlackAndYellow
+  actionClass as actionClassBlackAndYellow,
+  actionStyle as actionStyleBlackAndYellow
 } from 'plugins/black-and-yellow/plugin';
 import {
-  actionStyle as actionStyleDarkContrast,
-  actionClass as actionClassDarkContrast
+  actionClass as actionClassDarkContrast,
+  actionStyle as actionStyleDarkContrast
 } from 'plugins/dark-contrast/plugin';
-import {
-  actionStyle as actionStyleLightContrast,
-  actionClass as actionClassLightContrast
-} from 'plugins/light-contrast/plugin';
+import { Ids } from 'plugins/data';
 import { actionClass as actionClassGrayscale } from 'plugins/grayscale/plugin';
 import { actionClass as actionClassInvertColors } from 'plugins/invert-colors/plugin';
+import {
+  actionClass as actionClassLightContrast,
+  actionStyle as actionStyleLightContrast
+} from 'plugins/light-contrast/plugin';
+import { select } from 'redux-saga/effects';
+// import { ActionCreators } from 'state/redux/actions';
+import { Selectors } from 'state/redux/selectors';
+import { ThemeTypes } from 'theme/types';
 
 interface ContrastPlugins {
   [key: string]: Array<PluginActionClass | PluginActionStyle>;
@@ -46,25 +45,13 @@ function* updateStyle() {
       });
     }
   );
-  // const body = document.querySelectorAll('body')[0];
+
   const state = yield select();
   const selectors = new Selectors(state);
+  const themeType = new Selectors(state).getTheme();
   // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
   const options = selectors.getPluginOption(plugin.id);
-
-  // Css.removeClass({
-  //   node: body,
-  //   name: styles.highlightLinksBorder
-  // });
-  // Css.removeClass({
-  //   node: body,
-  //   name: styles.highlightLinksBlock
-  // });
-  // Css.removeClass({
-  //   node: body,
-  //   name: styles.highlightLinksBoth
-  // });
 
   if (options && plugin.enabled) {
     const selected = options.find(option => option.selected);
@@ -75,57 +62,9 @@ function* updateStyle() {
           action.enable();
         }
       );
-      //
-      //
-      // let styleName = styles.highlightLinksBoth;
-      // switch (selected.value) {
-      //   case 'block':
-      //     styleName = styles.highlightLinksBlock;
-      //     break;
-      //   case 'border':
-      //     styleName = styles.highlightLinksBorder;
-      //     break;
-      //   case 'both':
-      //     styleName = styles.highlightLinksBoth;
-      //     break;
-      //   default:
-      //     styleName = styles.highlightLinksBoth;
-      //     break;
-      // }
-      //
-      // Css.addClass({
-      //   node: body,
-      //   name: styleName
-      // });
     }
   }
 }
-//
-// const actionClass = new PluginActionClass({
-//   name: 'dark-contrast-action-style',
-//   klass: [styles.darkContrast],
-//   query: 'html'
-// });
-// const actionStyle = new PluginActionStyle({
-//   name: 'dark-contrast-action-background-image',
-//   style: {
-//     name: 'background-image',
-//     manipulationType: ValueManipulationType.Toggle,
-//     // Value assigned to property when action is enabled.
-//     enabledValue: 'none'
-//   },
-//   query: ['.btn', '.button', 'a', 'span', 'li', 'button'].join(', ')
-// });
-//
-// function* onEnable() {
-//   actionClass.enable();
-//   actionStyle.enable();
-// }
-//
-// function* onDisable() {
-//   actionClass.disable();
-//   actionStyle.disable();
-// }
 
 export const pluginObject: Plugin = {
   id: Ids.Contrast,

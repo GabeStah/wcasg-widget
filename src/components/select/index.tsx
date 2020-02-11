@@ -82,6 +82,13 @@ const SelectComponent = ({
       <NativeSelect
         id={`${config.widgetId}-${plugin.id}-select`}
         name={`${plugin.id}-select`}
+        inputProps={{
+          'aria-label': name
+            ? name
+            : plugin.optionName
+            ? plugin.optionName
+            : plugin.title
+        }}
         onChange={e => {
           if (onChangeHandler) {
             onChangeHandler(e);

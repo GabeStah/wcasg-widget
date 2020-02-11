@@ -1,6 +1,5 @@
 /* tslint:disable:object-literal-key-quotes */
 import { Plugin, PluginScalableComponentParams, PluginScaling } from '@/enum';
-import { colors } from '@/theme/palette';
 import { areEqual, greaterThan, lessThan, round } from '@/utility/number';
 import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -16,15 +15,19 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: 'rotate(0.5turn)'
     },
     active: {
-      backgroundColor: colors.primaryBlue
+      backgroundColor: theme.palette.primary.main,
+      '&:hover': {
+        backgroundColor: theme.palette.primary.main,
+        fill: theme.palette.text.secondary
+      }
     },
     startIcon: {
-      fill: '#fff',
+      fill: theme.palette.text.secondary,
       marginLeft: '0px',
       marginRight: '0px',
       textAlign: 'center',
       '&:hover': {
-        fill: colors.primaryBlue
+        fill: theme.palette.text.secondary
       }
     }
   })

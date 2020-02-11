@@ -45,6 +45,7 @@ export interface PluginComponentParams {
   children?: any;
   id: string;
   state: State;
+  theme: Theme;
 }
 
 export interface PluginScalableComponentParams {

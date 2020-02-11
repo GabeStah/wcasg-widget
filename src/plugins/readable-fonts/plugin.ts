@@ -1,20 +1,10 @@
 import { Plugin, PluginActionTypes } from '@/enum';
-import { Css } from '@/utility/css';
 import { ValueManipulationType } from 'classes/plugin/action';
-import { PluginActionClass } from 'classes/plugin/action/class';
-import { PluginActionProperty } from 'classes/plugin/action/property';
 import { PluginActionStyle } from 'classes/plugin/action/style';
 import { Ids } from 'plugins/data';
 import { select } from 'redux-saga/effects';
 import { Selectors } from 'state/redux/selectors';
-import styles from './styles.scss';
 
-const klassList = [];
-
-const actionClass = new PluginActionClass({
-  name: 'readable-fonts-action',
-  klass: [styles.readableFonts]
-});
 const tags = [
   'p',
   'li',
@@ -38,51 +28,30 @@ const tags = [
   'h6'
 ];
 
-// const actionProperty = new PluginActionProperty({
-//   property: {
-//     name: 'font-family',
-//     manipulationType: ValueManipulationType.Direct,
-//     enabledValue: true,
-//     disabledValue: false
-//   },
-//   query: tags.join(', ')
-// });
-
 const actionProperty = new PluginActionStyle({
   style: {
     name: 'font-family',
     manipulationType: ValueManipulationType.Direct,
     enabledValue: `Arial !important;`
   },
+  cacheNodes: false,
   query: tags.join(', ')
 });
 
 function* updateFont() {
-  const body = document.querySelectorAll('body')[0];
   const state = yield select();
   const selectors = new Selectors(state);
   // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
   const options = selectors.getPluginOption(plugin.id);
 
-  // Css.removeClass({
-  //   node: body,
-  //   name: styles.highlightLinksBorder
-  // });
-  // Css.removeClass({
-  //   node: body,
-  //   name: styles.highlightLinksBlock
-  // });
-  // Css.removeClass({
-  //   node: body,
-  //   name: styles.highlightLinksBoth
-  // });
-
   if (options && plugin.enabled) {
     const selected = options.find(option => option.selected);
     if (selected) {
       actionProperty.style.enabledValue = `${selected.value}`;
       actionProperty.enable();
+    } else {
+      actionProperty.disable();
     }
   } else {
     actionProperty.disable();

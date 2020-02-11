@@ -11,12 +11,12 @@ import { Plugin } from '@/enum';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      color: '#fff',
+      color: theme.palette.text.secondary,
       minWidth: '200px',
       width: '100%'
     },
     startIcon: {
-      fill: '#fff',
+      fill: theme.palette.text.secondary,
       padding: '4px'
     }
   })

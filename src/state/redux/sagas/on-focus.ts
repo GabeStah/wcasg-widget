@@ -41,8 +41,6 @@ const focusStream = Kefir.fromPoll(config.focusPollFrequency, () => {
   // Check if new focus target
   if (FOCUSED && FOCUSED !== document.body && PREVIOUS_FOCUSED !== FOCUSED) {
     PREVIOUS_FOCUSED = FOCUSED;
-    console.log(`focused`);
-    console.log(FOCUSED);
     return FOCUSED;
   }
 });

@@ -22,7 +22,7 @@ const TextPluginSet = ({
   actions,
   theme
 }: {
-  theme?: Theme;
+  theme: Theme;
   state: State;
   actions: typeof Connector.__actions;
 }) => (
@@ -39,6 +39,7 @@ const TextPluginSet = ({
           actions={actions}
           id={FontSizePlugin.id}
           toggleDisabled={true}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -47,6 +48,7 @@ const TextPluginSet = ({
           actions={actions}
           id={LetterSpacingPlugin.id}
           toggleDisabled={true}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -54,6 +56,7 @@ const TextPluginSet = ({
           state={state}
           actions={actions}
           id={EmphasizeHoverPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={6}>
@@ -61,6 +64,7 @@ const TextPluginSet = ({
           state={state}
           actions={actions}
           id={EmphasizeTitlesPlugin.id}
+          theme={theme}
         />
       </Grid>
       <Grid item xs={12}>
@@ -69,6 +73,7 @@ const TextPluginSet = ({
           actions={actions}
           id={ReadableFontsPlugin.id}
           toggleDisabled={true}
+          theme={theme}
         />
       </Grid>
     </Grid>

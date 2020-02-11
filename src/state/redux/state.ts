@@ -1,16 +1,16 @@
-import { Plugin, PluginActionTypes } from '@/enum';
-import { initialPlugins } from '@/load-plugins';
-import {
-  IGoogleCloudVoice,
-  IGoogleCloudVoiceSelectionParams,
-  GoogleCloudVoiceSsmlVoiceGender,
-  IGoogleCloudAudioConfig
-} from 'services/google-cloud/text-to-speech/declarations';
+import {Plugin, PluginActionTypes} from '@/enum';
+import {initialPlugins} from '@/load-plugins';
 import PluginManager from 'classes/plugin/manager';
+import {
+  IGoogleCloudAudioConfig,
+  IGoogleCloudVoice,
+  IGoogleCloudVoiceSelectionParams
+} from 'services/google-cloud/text-to-speech/declarations';
 import {
   GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
   GOOGLE_CLOUD_DEFAULT_VOICE
 } from 'services/google-cloud/text-to-speech/defaults';
+import {ThemeTypes} from 'theme/types';
 
 type FunctionType = (params?: any) => any;
 
@@ -42,6 +42,7 @@ export interface State extends IStateServices {
     pressedKeys: any;
   };
   plugins: Plugin[];
+  theme: ThemeTypes;
 }
 
 export const defaultState: State = {
@@ -60,7 +61,8 @@ export const defaultState: State = {
         voices: []
       }
     }
-  }
+  },
+  theme: ThemeTypes.Base
 };
 
 export const initialState: State = {
@@ -79,5 +81,6 @@ export const initialState: State = {
         voices: []
       }
     }
-  }
+  },
+  theme: ThemeTypes.Base
 };

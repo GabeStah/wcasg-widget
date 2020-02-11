@@ -1,6 +1,7 @@
 import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
 import { State } from 'state/redux/state';
 import { createConnector } from 'state/redux/store';
+import { ThemeTypes } from 'theme/types';
 
 export const Connector = createConnector({
   mapState: selectors => selectors.state,
@@ -59,6 +60,10 @@ export const Connector = createConnector({
 
     setTextToSpeechVoices(voices: IGoogleCloudVoice[]) {
       actions.setTextToSpeechVoices({ voices });
+    },
+
+    setTheme(value: ThemeTypes) {
+      actions.setTheme({ theme: value });
     },
 
     setWidgetExpanded(value: boolean) {

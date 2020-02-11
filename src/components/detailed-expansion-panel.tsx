@@ -1,5 +1,4 @@
 /* tslint:disable:object-literal-key-quotes */
-import { colors } from '@/theme/palette';
 import { SvgIcon } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     expanded: {},
     expandIcon: {
-      color: '#fff',
+      color: theme.palette.text.secondary,
       fontSize: '12px',
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       textTransform: 'uppercase',
@@ -61,32 +60,32 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     closeIcon: {
-      fill: '#fff',
+      fill: theme.palette.text.secondary,
       height: '70%',
       width: '70%'
     },
     closeIconLarge: {
-      fill: '#fff'
+      fill: theme.palette.text.secondary
     },
     expansionPanelSummaryRoot: {
-      backgroundColor: colors.primaryBlue,
+      backgroundColor: theme.palette.primary.main,
       borderRadius: '4px',
-      fill: '#fff'
+      fill: theme.palette.text.secondary
     },
     expansionPanelSummaryExpanded: {
       borderTopLeftRadius: '4px',
       borderTopRightRadius: '4px',
-      fill: '#fff'
+      fill: theme.palette.text.secondary
     },
     headerTypography: {
-      color: '#fff'
+      color: theme.palette.text.secondary
     },
     gridRoot: {
       flexGrow: 1,
       maxHeight: '600px',
       overflow: 'auto',
       // Attempt to integrate scrollbar styling, but very much unsupported by most browsers.
-      scrollbarColor: '#fff',
+      scrollbarColor: theme.palette.text.secondary,
       scrollbarWidth: 'thin',
       '&:webkit-scrollbar': {
         width: '1em'
@@ -95,8 +94,8 @@ const useStyles = makeStyles((theme: Theme) =>
         // webkitBoxShadow: '1em',
       },
       '&:webkit-scrollbar-thumb': {
-        backgroundColor: '#fff',
-        outline: `1px solid ${colors.primaryBlue}`
+        backgroundColor: theme.palette.text.secondary,
+        outline: `1px solid ${theme.palette.primary.main}`
       }
     },
     gridCentered: {
@@ -115,7 +114,7 @@ const DetailedExpansionPanel = ({
   actions,
   theme
 }: {
-  theme?: Theme;
+  theme: Theme;
   state: State;
   actions: typeof Connector.__actions;
 }) => {

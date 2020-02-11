@@ -27,7 +27,8 @@
       "plugins/*": ["src/plugins/*"],
       "services/*": ["src/services/*"],
       "state/*": ["src/state/*"],
-      "styles/*": ["src/styles/*"]
+      "styles/*": ["src/styles/*"],
+      "theme/*": ["src/theme/*"]
     },
     "lib": [
       "esnext",

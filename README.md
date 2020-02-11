@@ -12,9 +12,33 @@ Much of this document is out of date.  Will update in the near future.
 - SASS: Advanced styling.
 - Webpack + Babel: General tooling to generate final build UMD output.
 
-## Creating a New Plugin
+## Widget Theme
 
+Widget theming provides an easy way to customize the look and feel of the widget with just a few palette color changes, or a total overhaul of element behavior and styling.  Existing themes can be found in the [src/theme](src/theme) directory.  The [base](src/theme/base) theme is the default Widget theme, based on design mockups.
 
+### Adding a New Theme
+
+1. Create a new directory in [src/theme](src/theme).
+2. Copy an existing theme [index.ts](src/theme/base/index.ts) and [palette.ts](src/theme/base/pelette.ts) into the new directory.
+3. Modify the new `palette.ts` `colors` constant as needed:
+
+```ts
+const colors = {
+  background: '#fff',
+  backgroundEnabled: '#FAFAFA',
+  border: fade('#999999', 0.5),
+  primary: '#297FCA',
+  primaryDark: '#184570',
+  primaryLight: '#e8f6ff',
+  switchMain: '#fff',
+  textSecondary: '#fff'
+};
+```
+
+4. Add a new entry to the [ThemeTypes](src/theme/types.ts) enum to identify your theme.
+5. Lastly, update the [index.tsx](src/index.tsx) theme section by importing your theme index file and adding it to the theme switch statement matching your new `ThemeTypes` entry.
+
+Now invoke `ActionCreators.setTheme({ theme: ThemeTypes.NewThemeType })` anywhere you wish to dispatch an action to update the theme.  This will disperse the set theme to all Widget components and rerender.  
 
 ## Editing the Widget
 

@@ -1,22 +1,14 @@
 import { PluginComponentParams, SelectOption } from '@/enum';
-import Aria from '@/utility/aria';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { PluginComponent } from 'components/plugin';
-import RadioComponent from 'components/radio';
-import Scalable from 'components/scalable';
 import SelectComponent from 'components/select';
-import ToggleSwitch from 'components/toggle-switch';
 import React, { ChangeEvent } from 'react';
 import {
   IGoogleCloudVoice,
   IGoogleCloudVoiceSelectionParams
 } from 'services/google-cloud/text-to-speech/declarations';
 import { Selectors } from 'state/redux/selectors';
-import styles from './styles.scss';
 
 function selectOptions(
   voices: IGoogleCloudVoice[],
@@ -57,7 +49,12 @@ function selectOptions(
   // return options;
 }
 
-export const Component = ({ state, actions, id }: PluginComponentParams) => {
+export const Component = ({
+  state,
+  actions,
+  id,
+  theme
+}: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
   const voices = new Selectors(state).getTextToSpeechVoices();
   const activeVoice = new Selectors(state).getActiveTextToSpeechVoice();
@@ -122,6 +119,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
       state={state}
       id={id}
       toggleDisabled={true}
+      theme={theme}
     >
       {voices && voices.length > 0 && (
         <>
@@ -166,7 +164,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
         min={-20}
         max={20}
         onChange={handlePitchChange}
-        className={styles.slider}
+        // className={styles.slider}
       />
       <Typography id={`${plugin.id}-rate-label`} gutterBottom>
         Rate
@@ -181,7 +179,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
         min={0.25}
         max={4}
         onChange={handleRateChange}
-        className={styles.slider}
+        // className={styles.slider}
       />
       <Typography id={`${plugin.id}-volume-label`} gutterBottom>
         Volume
@@ -196,7 +194,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
         min={-96}
         max={16}
         onChange={handleVolumeChange}
-        className={styles.slider}
+        // className={styles.slider}
       />
     </PluginComponent>
   );

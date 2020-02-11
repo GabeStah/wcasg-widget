@@ -18,6 +18,12 @@ enum CompressionType {
   Base64
 }
 
+export enum KeyModifier {
+  Ctrl,
+  Shift,
+  Alt
+}
+
 export interface IConfig {
   debug: boolean;
   widgetId: string;
@@ -34,6 +40,8 @@ export interface IConfig {
       };
     };
   };
+  widgetUnlockKey: string;
+  widgetUnlockKeyModifier: KeyModifier;
   widgetTitle: string;
 }
 
@@ -59,6 +67,8 @@ const config: IConfig = {
       }
     }
   },
+  widgetUnlockKey: 'm',
+  widgetUnlockKeyModifier: KeyModifier.Ctrl,
   widgetTitle: 'Accessibility Toolbar'
 };
 

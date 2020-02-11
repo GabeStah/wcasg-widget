@@ -1,5 +1,4 @@
 /* tslint:disable:object-literal-key-quotes */
-import { colors } from '@/theme/palette';
 import { slugify } from '@/utility/string';
 import { SvgIcon } from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -16,10 +15,10 @@ import { State } from 'state/redux/state';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     expansionPanelSummaryRoot: {
-      borderBottom: `1px solid ${colors.primaryBlue}`
+      borderBottom: `1px solid ${theme.palette.primary.main}`
     },
     expandIconSvg: {
-      fill: colors.primaryBlue
+      fill: theme.palette.primary.main
     },
     expansionPanelSummaryExpanded: {
       // Styles for inner wrapper, while expanded
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '8px 0px 0px 0px'
     },
     headerTypography: {
-      color: colors.primaryBlue
+      color: theme.palette.primary.main
     },
     icon: {
       verticalAlign: 'bottom',
@@ -47,7 +46,7 @@ const Component = ({
   title,
   children
 }: {
-  theme?: Theme;
+  theme: Theme;
   state: State;
   actions: typeof Connector.__actions;
   title: string;
@@ -57,14 +56,13 @@ const Component = ({
 
   const handleKeyDown = (e: any) => {
     if (e && e.key === 'Space') {
-      console.log(`space for ${'asd'}`);
       isExpanded = !isExpanded;
     }
   };
 
   return (
     <ExpansionPanel
-      expanded={isExpanded}
+      // expanded={isExpanded}
       defaultExpanded={isExpanded}
       elevation={0}
       square={false}

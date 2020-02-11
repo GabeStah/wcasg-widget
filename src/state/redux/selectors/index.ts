@@ -105,6 +105,10 @@ export class Selectors {
     return this.state.services.googleCloud.textToSpeech.voices;
   }
 
+  public getTheme() {
+    return this.state.theme;
+  }
+
   public isKeyboardEnabled() {
     return this.state.keyboard.enabled;
   }

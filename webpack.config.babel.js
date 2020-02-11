@@ -31,6 +31,7 @@ module.exports = {
       services: path.resolve(__dirname, 'src/services'),
       state: path.resolve(__dirname, 'src/state'),
       styles: path.resolve(__dirname, 'src/styles'),
+      theme: path.resolve(__dirname, 'src/theme'),
       react: 'preact/compat',
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat'

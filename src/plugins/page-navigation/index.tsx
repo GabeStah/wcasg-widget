@@ -157,7 +157,12 @@ function getOptions() {
   });
 }
 
-export const Component = ({ state, actions, id }: PluginComponentParams) => {
+export const Component = ({
+  state,
+  actions,
+  id,
+  theme
+}: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
 
   const handleOnChange = (
@@ -165,8 +170,6 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
     value: any
   ) => {
     try {
-      console.log(value);
-      console.log(event.target.value);
       window.location.href = event.target.value;
     } catch (error) {
       // Likely CORS failure.
@@ -180,6 +183,7 @@ export const Component = ({ state, actions, id }: PluginComponentParams) => {
       state={state}
       id={id}
       toggleDisabled={true}
+      theme={theme}
     >
       <FormControl>
         {/*<InputLabel htmlFor={`${plugin.id}-select-label`}>*/}
