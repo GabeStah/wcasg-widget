@@ -43,6 +43,7 @@ import { ReactComponent as IconTooltip } from 'assets/svg-minified/plugins/toolt
 
 export enum Ids {
   BlackAndYellow = 'black-and-yellow',
+  Contrast = 'contrast',
   DarkContrast = 'dark-contrast',
   EmphasizeHover = 'emphasize-hover',
   EmphasizeTitles = 'emphasize-titles',
@@ -68,6 +69,7 @@ export enum Ids {
 
 export const Icons = {
   [Ids.BlackAndYellow.toString()]: IconContrast,
+  [Ids.Contrast.toString()]: IconContrast,
   [Ids.DarkContrast.toString()]: IconContrast,
   [Ids.EmphasizeHover.toString()]: IconEmphasizeHover,
   [Ids.EmphasizeTitles.toString()]: IconEmphasizeTitles,

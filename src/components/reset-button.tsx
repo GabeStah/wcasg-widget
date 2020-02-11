@@ -39,6 +39,7 @@ const Component = ({
         actions.disable(plugin.id);
       }
     });
+    actions.reset();
   };
 
   return (

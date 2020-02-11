@@ -5,12 +5,12 @@ import { PluginActionStyle } from 'classes/plugin/action/style';
 import { Ids } from 'plugins/data';
 import styles from './styles.scss';
 
-const actionClass = new PluginActionClass({
+export const actionClass = new PluginActionClass({
   name: 'light-contrast-action-style',
   klass: [styles.lightContrast],
   query: 'html'
 });
-const actionStyle = new PluginActionStyle({
+export const actionStyle = new PluginActionStyle({
   name: 'light-contrast-action-background-image',
   style: {
     name: 'background-image',

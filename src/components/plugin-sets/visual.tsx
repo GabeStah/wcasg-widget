@@ -4,8 +4,10 @@ import InnerExpansionPanel from 'components/inner-expansion-panel';
 // Plugins
 import MuteAudioComponent from 'plugins/mute-audio';
 import MuteAudioPlugin from 'plugins/mute-audio/plugin';
-import LightContrastComponent from 'plugins/light-contrast';
-import LightContrastPlugin from 'plugins/light-contrast/plugin';
+import ContrastComponent from 'plugins/contrast';
+import ContrastPlugin from 'plugins/contrast/plugin';
+// import LightContrastComponent from 'plugins/light-contrast';
+// import LightContrastPlugin from 'plugins/light-contrast/plugin';
 import HighlightFormsComponent from 'plugins/highlight-forms';
 import HighlightFormsPlugin from 'plugins/highlight-forms/plugin';
 import LargeIconsComponent from 'plugins/large-icons';
@@ -43,10 +45,11 @@ const VisualPluginSet = ({
         />
       </Grid>
       <Grid item xs={6}>
-        <LightContrastComponent
+        <ContrastComponent
           state={state}
           actions={actions}
-          id={LightContrastPlugin.id}
+          toggleDisabled={true}
+          id={ContrastPlugin.id}
         />
       </Grid>
       <Grid item xs={6}>

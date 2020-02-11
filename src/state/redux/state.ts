@@ -1,4 +1,5 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import { initialPlugins } from '@/load-plugins';
 import {
   IGoogleCloudVoice,
   IGoogleCloudVoiceSelectionParams,
@@ -51,6 +52,25 @@ export const defaultState: State = {
     pressedKeys: {}
   },
   plugins: PluginManager.getInstance().plugins,
+  services: {
+    googleCloud: {
+      textToSpeech: {
+        activeVoice: GOOGLE_CLOUD_DEFAULT_VOICE,
+        audioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
+        voices: []
+      }
+    }
+  }
+};
+
+export const initialState: State = {
+  isExpanded: false,
+  focusedNode: undefined,
+  keyboard: {
+    enabled: false,
+    pressedKeys: {}
+  },
+  plugins: initialPlugins,
   services: {
     googleCloud: {
       textToSpeech: {

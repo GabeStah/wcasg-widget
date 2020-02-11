@@ -8,7 +8,7 @@ import {
   GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
   GOOGLE_CLOUD_DEFAULT_VOICE
 } from 'services/google-cloud/text-to-speech/defaults';
-import { defaultState, State } from 'state/redux/state';
+import { defaultState, initialState, State } from 'state/redux/state';
 
 const getPluginIndexById = (plugins: any, id: any) => {
   return findIndex(plugins, (plugin: any) => plugin.id === id);
@@ -90,7 +90,16 @@ export class BaseReducer extends ImmerReducer<State> {
       //   (plugin: any) => (plugin.enabled = false)
       // );
       // this.draftState = state;
+      console.log(`reset, no newState`);
+      console.log(initialState);
+      const services = initialState.services;
+      services.googleCloud.textToSpeech.voices = this.draftState.services.googleCloud.textToSpeech.voices;
+      this.draftState = newState ? newState : { ...initialState, services };
     } else {
+      // console.log(initialState);
+      // console.log(defaultState);
+      // this.draftState = newState ? newState : defaultState;
+
       this.draftState = newState ? newState : defaultState;
     }
   }

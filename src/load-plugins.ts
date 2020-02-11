@@ -1,6 +1,7 @@
 import PluginManager from 'classes/plugin/manager';
 
 import BlackAndYellow from 'plugins/black-and-yellow/plugin';
+import Contrast from 'plugins/contrast/plugin';
 import DarkContrast from 'plugins/dark-contrast/plugin';
 import EmphasizeHover from 'plugins/emphasize-hover/plugin';
 import EmphasizeTitles from 'plugins/emphasize-titles/plugin';
@@ -23,8 +24,9 @@ import TextToSpeech from 'plugins/text-to-speech/plugin';
 import Tooltip from 'plugins/tooltip/plugin';
 import VirtualKeyboard from 'plugins/virtual-keyboard/plugin';
 
-PluginManager.getInstance().add([
+export const initialPlugins = [
   BlackAndYellow,
+  Contrast,
   DarkContrast,
   EmphasizeHover,
   EmphasizeTitles,
@@ -46,4 +48,6 @@ PluginManager.getInstance().add([
   TextToSpeech,
   Tooltip,
   VirtualKeyboard
-]);
+];
+
+PluginManager.getInstance().add(initialPlugins);

@@ -3,7 +3,7 @@ import { PluginActionClass } from 'classes/plugin/action/class';
 import { Ids } from 'plugins/data';
 import styles from './styles.scss';
 
-const actionClass = new PluginActionClass({
+export const actionClass = new PluginActionClass({
   name: 'invert-colors-action',
   klass: [styles.invert],
   query: 'html'
