@@ -18,7 +18,7 @@
 
   // Content Sections
   @each $element in $elements-content-section {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
     }
@@ -26,7 +26,7 @@
 
   // Text Content
   @each $element in $elements-text-content {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
     }
@@ -34,7 +34,7 @@
 
   // Inline Text Semantics
   @each $element in $elements-inline-text-semantics {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
     }
@@ -42,7 +42,7 @@
 
   // Interactive
   @each $element in $elements-interactive {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
     }
@@ -50,7 +50,7 @@
 
   // Media
   @each $element in $elements-media {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
       //outline: 2px solid $outline-color !important;
@@ -60,7 +60,7 @@
 
   // Tables
   @each $element in $elements-table {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
     }
@@ -68,7 +68,7 @@
 
   // Forms
   @each $element in $elements-forms {
-    #{$element}:not(#{$ignored-elements}) {
+    body #{$element}:not(#{$ignored-elements}) {
       color: $text-color !important;
       background-color: $background-color !important;
       outline: 2px solid $outline-color !important;

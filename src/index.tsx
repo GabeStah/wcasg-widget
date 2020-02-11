@@ -18,6 +18,7 @@ if (config.debug) {
 // Create modal div to contain widget and append to html doc
 const app = document.createElement(`div`);
 app.setAttribute('id', config.widgetId);
+app.setAttribute('class', config.widgetId);
 
 document.getElementsByTagName('html')[0].append(app);
 
