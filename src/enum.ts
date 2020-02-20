@@ -6,6 +6,15 @@ import { Connector } from 'state/redux/connectors';
 import { BaseReducer } from 'state/redux/reducers';
 import { IPluginAction, State } from 'state/redux/state';
 
+export interface DialogComponentParams {
+  state: State;
+  theme?: Theme;
+}
+
+export interface StatementDialogComponentParams extends DialogComponentParams {
+  type?: 'iframe' | 'inline' | 'download';
+}
+
 export enum PluginActionTypes {
   decrement = 'decrement',
   disable = 'disable',

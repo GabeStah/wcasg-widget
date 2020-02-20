@@ -16,7 +16,12 @@ module.exports = {
     path: path.resolve(__dirname, 'build/temp'),
     publicPath: '/',
     filename: 'widget.base.js',
+    library: 'WCASG',
     libraryTarget: 'umd'
+  },
+
+  externals: {
+    WcasgAccessibilityStatement: 'WcasgAccessibilityStatement'
   },
 
   resolve: {

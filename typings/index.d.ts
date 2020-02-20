@@ -5,6 +5,7 @@ declare module '*.svg' {
   export default content;
 }
 declare module 'lodash/mapValues';
+declare module 'WcasgAccessibilityStatement';
 
 /**
  * A const enum that includes all non-printable string values one can expect from $event.key.

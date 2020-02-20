@@ -73,14 +73,12 @@ export function createTypography(palette: Palette): TypographyOptions {
       color: palette.text?.primary,
       fontSize: typographyDefaults.fontSize,
       letterSpacing: '-0.05px',
-      // lineHeight: '21px',
       textTransform: 'uppercase'
     },
     body2: {
-      color: palette.text?.secondary,
-      fontSize: typographyDefaults.fontSize * 0.9,
-      letterSpacing: '-0.04px'
-      // lineHeight: '18px'
+      color: palette.text?.primary,
+      fontSize: typographyDefaults.fontSize,
+      letterSpacing: '-0.05px',
     },
     button: {
       color: palette.text?.primary,

@@ -175,11 +175,6 @@ const Utility = {
 
   throwError: (message: string): void => {
     throw new Error(`[${config.widgetTitle}]: ${message}`);
-  },
-
-  round(value: number, precision: number = 0): number {
-    const y = +value + (precision === undefined ? 0.5 : precision / 2);
-    return y - (y % (precision === undefined ? 1 : +precision));
   }
 };
 

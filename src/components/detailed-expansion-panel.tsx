@@ -18,6 +18,7 @@ import chevronIconUrl, {
   ReactComponent as ChevronThinUpIcon
   // @ts-ignore
 } from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
+import DialogComponent from 'components/statement-dialog';
 
 import LogoComponent from 'components/logo';
 /**
@@ -199,9 +200,9 @@ const DetailedExpansionPanel = ({
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
+          <DialogComponent state={state} theme={theme} type={'inline'} />
           <Button size='small'>Link #1</Button>
           <Button size='small'>Link #2</Button>
-          <Button size='small'>Link #3</Button>
         </ExpansionPanelActions>
       </ExpansionPanel>
     </div>
