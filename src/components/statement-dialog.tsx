@@ -5,6 +5,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 // @ts-ignore
 import { ReactComponent as CloseIcon } from 'assets/svg-minified/accessibility-icons/close.svg';
+import config from 'config';
 import LZString from 'lz-string';
 import React from 'react';
 import Button from '@material-ui/core/Button';
@@ -68,8 +69,9 @@ export const StatementDialog = ({
 
   if (type === 'iframe') {
     statementElement = (
+      // TODO: Dynamically pull token
       <iframe
-        src='http://wcasg.local/api/statement?token=w9n2HLez927CYdvPanMNLPSQEHAWeZmIyIPF'
+        src={`${config.services.Dashboard.url}/api/statement?token=w9n2HLez927CYdvPanMNLPSQEHAWeZmIyIPF`}
         className={classes.iframe}
       />
     );

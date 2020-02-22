@@ -33,6 +33,9 @@ export interface IConfig {
   localCompressionType: CompressionType;
   textToSpeechEngine: TextToSpeechEngine;
   services: {
+    Dashboard: {
+      url: string;
+    };
     GoogleCloud: {
       TextToSpeech: {
         defaultAudioConfig: IGoogleCloudAudioConfig;
@@ -60,6 +63,9 @@ const config: IConfig = {
   localCompressionType: CompressionType.LZString,
   textToSpeechEngine: TextToSpeechEngine.GoogleCloud,
   services: {
+    Dashboard: {
+      url: 'http://wcasg.local'
+    },
     GoogleCloud: {
       TextToSpeech: {
         defaultAudioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,

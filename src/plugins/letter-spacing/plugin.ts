@@ -2,9 +2,9 @@ import { Plugin, PluginActionTypes } from '@/enum';
 import { Ids } from 'plugins/data';
 import { select } from 'redux-saga/effects';
 import TextNodeType from '../../classes/node-types/TextNodeType';
-import { ValueManipulationType } from '../../classes/plugin/action';
-import { PluginActionStyle } from '../../classes/plugin/action/style';
-import { Selectors } from '../../state/redux/selectors';
+import { ValueManipulationType } from 'classes/plugin/action';
+import { PluginActionStyle } from 'classes/plugin/action/style';
+import { Selectors } from 'state/redux/selectors';
 
 const actionStyle = new PluginActionStyle({
   name: 'adjust-letter-spacing-action',

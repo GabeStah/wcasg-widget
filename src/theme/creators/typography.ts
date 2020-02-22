@@ -78,7 +78,7 @@ export function createTypography(palette: Palette): TypographyOptions {
     body2: {
       color: palette.text?.primary,
       fontSize: typographyDefaults.fontSize,
-      letterSpacing: '-0.05px',
+      letterSpacing: '-0.05px'
     },
     button: {
       color: palette.text?.primary,

@@ -36,6 +36,7 @@ import { ActionCreators } from 'state/redux/actions';
 import { Connector } from 'state/redux/connectors';
 import { Selectors } from 'state/redux/selectors';
 import { State } from 'state/redux/state';
+import Extensions from 'wcasg-ada-app-extensions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,8 +63,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     closeIcon: {
       fill: theme.palette.text.secondary,
-      height: '70%',
-      width: '70%'
+      height: '20px',
+      width: '20px'
     },
     closeIconLarge: {
       fill: theme.palette.text.secondary
