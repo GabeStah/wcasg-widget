@@ -15,7 +15,7 @@ import themeBlackAndYellow from 'theme/black-and-yellow';
 import themeDarkContrast from 'theme/dark-contrast';
 import themeLightContrast from 'theme/light-contrast';
 import './load-plugins';
-import Extensions from 'wcasg-ada-app-extensions';
+import Extensions from 'wcasg-extensions';
 
 if (config.debug) {
   console.warn('--- DEBUG ENABLED ---');
