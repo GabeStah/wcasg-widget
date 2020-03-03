@@ -21,7 +21,8 @@ module.exports = {
   },
 
   externals: {
-    WcasgAccessibilityStatement: 'WcasgAccessibilityStatement'
+    WcasgAccessibilityStatement: 'WcasgAccessibilityStatement',
+    WcasgExtensions: 'WcasgExtensions'
   },
 
   resolve: {

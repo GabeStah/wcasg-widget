@@ -2,6 +2,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import DetailedExpansionPanel from 'components/detailed-expansion-panel';
 import config from 'config';
+import LZString from 'lz-string';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -16,11 +17,18 @@ import themeDarkContrast from 'theme/dark-contrast';
 import themeLightContrast from 'theme/light-contrast';
 import './load-plugins';
 import Extensions from 'wcasg-extensions';
+// @ts-ignore
+import WcasgExtensions from 'WcasgExtensions';
 
 if (config.debug) {
   console.warn('--- DEBUG ENABLED ---');
-  Extensions.manager.runExtensions();
 }
+
+const importedExtensions = JSON.parse(
+  LZString.decompressFromBase64(WcasgExtensions)
+);
+Extensions.manager.addImports(importedExtensions);
+Extensions.manager.runExtensions();
 
 // Create modal div to contain widget and append to html doc
 const app = document.createElement(`div`);
