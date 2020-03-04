@@ -27,7 +27,10 @@ if (config.debug) {
 const importedExtensions = JSON.parse(
   LZString.decompressFromBase64(WcasgExtensions)
 );
+console.log(importedExtensions);
 Extensions.manager.addImports(importedExtensions);
+Extensions.manager.processBuiltInImports();
+Extensions.manager.processCustomImports();
 Extensions.manager.runExtensions();
 
 // Create modal div to contain widget and append to html doc
