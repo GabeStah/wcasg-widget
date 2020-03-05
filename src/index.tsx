@@ -31,7 +31,7 @@ console.log(importedExtensions);
 Extensions.manager.addImports(importedExtensions);
 Extensions.manager.processBuiltInImports();
 Extensions.manager.processCustomImports();
-Extensions.manager.runExtensions();
+Extensions.manager.executeExtensions();
 
 // Create modal div to contain widget and append to html doc
 const app = document.createElement(`div`);
