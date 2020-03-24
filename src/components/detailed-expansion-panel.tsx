@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: 'fixed',
-      maxHeight: '80%',
       width: 350,
       margin: 0,
       bottom: 2 * 2,
