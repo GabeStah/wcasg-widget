@@ -71,12 +71,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     expansionPanelSummaryRoot: {
       backgroundColor: theme.palette.primary.main,
-      borderRadius: '4px',
+      borderRadius: '4px 4px 0 0',
       fill: theme.palette.text.secondary
     },
     expansionPanelSummaryExpanded: {
       borderTopLeftRadius: '4px',
       borderTopRightRadius: '4px',
+      borderBottomLeftRadius: '0',
+      borderBottomRightRadius: '0',
       fill: theme.palette.text.secondary
     },
     headerTypography: {
