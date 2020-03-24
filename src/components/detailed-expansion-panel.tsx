@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 350,
       margin: 0,
       bottom: 2 * 2,
-      right: 2 * 3
+      right: 2 * 3,
+      zIndex: 9999
     },
     expanded: {},
     expandIcon: {
