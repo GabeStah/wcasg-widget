@@ -27,7 +27,7 @@ const palette: PaletteOptions = {
   },
   common: {
     white: '#fff',
-    black: '#000'
+    black: '#222'
   },
   divider: colors.border,
   focused: {

@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
     iframe: {
       minHeight: '500px',
       minWidth: '500px'
+    },
+    statementTypography: {
+      '& h2, & p': {
+        color: theme.palette.common.black
+      }
     }
   })
 );
@@ -123,6 +128,7 @@ export const StatementDialog = ({
             ref={descriptionElementRef}
             color={'primary'}
             variant={'body2'}
+            classes={{ root: classes.statementTypography }}
           >
             {statementElement}
           </DialogContentText>

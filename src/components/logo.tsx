@@ -3,7 +3,7 @@ import Link from '@material-ui/core/Link';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SvgIcon from '@material-ui/core/SvgIcon';
 // @ts-ignore
-import { ReactComponent as LogoIcon } from 'assets/svg-minified/logo.svg';
+import { ReactComponent as LogoIcon } from 'assets/images/wcasg_app_brand/wcasg_dark_small.png';
 import React from 'react';
 import { Connector } from 'state/redux/connectors';
 
