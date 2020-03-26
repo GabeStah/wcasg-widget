@@ -1,6 +1,16 @@
 import { State } from 'state/redux/state';
-import { Plugin, PluginLocalState, PluginOption } from '@/enum';
+import { OptionGroup, Plugin, PluginLocalState, PluginOption } from '@/enum';
 import cloneDeep from 'lodash/cloneDeep';
+
+interface GetPluginOptionsParams {
+  pluginId: string;
+  groupId?: string;
+}
+
+interface GetPluginSelectedOptionParams {
+  pluginId: string;
+  groupId?: string;
+}
 
 /**
  * Some state selection helpers. Using helper like makes it easier to refactor
@@ -48,17 +58,29 @@ export class Selectors {
     return plugin;
   }
 
-  public getPluginOption(id: string) {
-    const plugin = this.getPlugin(id);
+  public getPluginOptions({ pluginId, groupId }: GetPluginOptionsParams) {
+    const plugin = this.getPlugin(pluginId);
     if (plugin && plugin.options) {
-      return plugin.options;
+      if (groupId) {
+        return plugin.options.find(
+          (group: OptionGroup) => group.id === groupId
+        );
+      } else {
+        return plugin.options[0];
+      }
     }
   }
 
-  public getPluginSelectedOption(id: string): any {
-    const plugin = this.getPlugin(id);
-    if (plugin && plugin.options) {
-      for (const option of plugin.options) {
+  public getPluginSelectedOption({
+    pluginId,
+    groupId
+  }: GetPluginSelectedOptionParams): PluginOption | void {
+    const options = this.getPluginOptions({
+      pluginId: pluginId,
+      groupId: groupId
+    });
+    if (options) {
+      for (const option of options) {
         if (option.selected) {
           return option;
         }

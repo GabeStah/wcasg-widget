@@ -1,15 +1,68 @@
 import { Plugin, PluginActionTypes } from '@/enum';
+import { Css } from '@/utility/css';
 import {
   PluginPropertyOptionTypes,
   PluginPropertyTypes
 } from 'classes/plugin/config';
 import { Ids } from 'plugins/data';
+import { select } from 'redux-saga/effects';
+import { Selectors } from 'state/redux/selectors';
+
+function* updateOptions() {
+  const body = document.querySelectorAll('body')[0];
+  const state = yield select();
+  const selectors = new Selectors(state);
+  // Get latest state version.
+  const plugin = selectors.getPlugin(pluginObject.id);
+  const options = selectors.getPluginOptions({ pluginId: plugin.id });
+
+  if (options && plugin.enabled) {
+    const selected = options.find(option => option.selected);
+    if (selected) {
+      // let styleName = styles.highlightLinksBoth;
+      // switch (selected.value) {
+      //   case 'block':
+      //     styleName = styles.highlightLinksBlock;
+      //     break;
+      //   case 'border':
+      //     styleName = styles.highlightLinksBorder;
+      //     break;
+      //   case 'both':
+      //     styleName = styles.highlightLinksBoth;
+      //     break;
+      //   default:
+      //     styleName = styles.highlightLinksBoth;
+      //     break;
+      // }
+      //
+      // Css.addClass({
+      //   node: body,
+      //   name: styleName
+      // });
+    }
+  }
+}
 
 export const pluginObject: Plugin = {
   id: Ids.TextToSpeech,
   title: 'Text to Speech',
   enabled: false,
-  options: [],
+  // options: [],
+  options: [
+    {
+      id: 0,
+      name: 'behavior',
+      text: 'All',
+      value: 'all'
+    },
+    {
+      id: 1,
+      name: 'behavior',
+      text: 'Links Only',
+      value: 'links'
+    }
+  ],
+  optionName: 'Select Behavior',
   customComponent: true,
   tasks: [
     {

@@ -43,7 +43,7 @@ function* updateFont() {
   const selectors = new Selectors(state);
   // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
-  const options = selectors.getPluginOption(plugin.id);
+  const options = selectors.getPluginOptions({ pluginId: plugin.id });
 
   if (options && plugin.enabled) {
     const selected = options.find(option => option.selected);

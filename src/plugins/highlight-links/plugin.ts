@@ -11,7 +11,7 @@ function* updateStyle() {
   const selectors = new Selectors(state);
   // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
-  const options = selectors.getPluginOption(plugin.id);
+  const options = selectors.getPluginOptions({ pluginId: plugin.id });
 
   Css.removeClass({
     node: body,

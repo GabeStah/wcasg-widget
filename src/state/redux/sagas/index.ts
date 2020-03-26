@@ -53,7 +53,7 @@ export function* updateTheme(action: Action) {
   const themeType = new Selectors(state).getTheme();
   // Get latest state version.
   const plugin = selectors.getPlugin(action.payload.id);
-  const options = selectors.getPluginOption(action.payload.id);
+  const options = selectors.getPluginOptions({ pluginId: action.payload.id });
 
   if (!options) {
     return;

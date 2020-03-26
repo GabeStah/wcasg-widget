@@ -3,16 +3,13 @@ import {
   PluginSelectComponentParams,
   SelectOption
 } from '@/enum';
-import { areEqual } from '@/utility/number';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import InputBase from '@material-ui/core/InputBase';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import SelectOptionComponent from 'components/select/select-options';
 import config from 'config';
 import React, { useEffect } from 'react';
 import { Selectors } from 'state/redux/selectors';
-import map from 'lodash/map';
 
 const SelectComponent = ({
   actions,
@@ -25,9 +22,9 @@ const SelectComponent = ({
   state
 }: PluginSelectComponentParams) => {
   const statePlugin = new Selectors(state).getPlugin(plugin.id);
-  const selectedOption = new Selectors(state).getPluginSelectedOption(
-    plugin.id
-  );
+  const selectedOption = new Selectors(state).getPluginSelectedOption({
+    pluginId: plugin.id
+  });
 
   /**
    * Toggle based on diff from baseFactor
@@ -105,7 +102,6 @@ const SelectComponent = ({
           selected={!statePlugin.enabled}
         >
           {name ? name : plugin.optionName ? plugin.optionName : plugin.title}
-          {/*-- {name ? name.toUpperCase() : plugin.title} --*/}
         </option>
         {getSelectOptions(options)}
         })}

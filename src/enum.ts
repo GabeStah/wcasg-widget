@@ -31,11 +31,25 @@ export interface PluginScaling {
   type: ValueManipulationType;
 }
 
+export interface OptionGroup {
+  id: string;
+  name?: string;
+  options: PluginOption[] | RadioOption[] | SelectOption[];
+  text?: string;
+}
+
 export interface PluginOption {
   id: number;
   name: string;
   selected?: boolean;
   text: string;
+  value: string | number | boolean;
+}
+
+export interface RadioOption {
+  id?: number;
+  selected?: boolean;
+  text?: string;
   value: string | number | boolean;
 }
 
@@ -91,8 +105,7 @@ export interface Plugin {
   config?: PluginConfig;
   customComponent?: boolean;
   enabled: boolean;
-  optionName?: string;
-  options: PluginOption[];
+  options?: OptionGroup[];
   scaling?: PluginScaling;
   tasks: IPluginAction[];
   title: string;

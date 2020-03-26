@@ -2,17 +2,13 @@ import { PluginComponentParams, SelectOption } from '@/enum';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import SelectComponent from 'components/select';
 import { PluginComponent } from 'components/plugin';
+import SelectComponent from 'components/select';
 import findLast from 'lodash/findLast';
 import React from 'react';
 import { Selectors } from 'state/redux/selectors';
-import styles from './styles.scss';
 
 let isInitialized = false;
 
@@ -53,35 +49,6 @@ function selectOptions() {
   });
   return options;
 }
-
-// function selectOptions() {
-//   const elements = document.querySelectorAll(
-//     allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
-//   );
-//   const options: any[] = [];
-//   // Iterate nodes
-//   elements.forEach((element: any) => {
-//     // Get ARIA text of element
-//     const text = Aria.getElementText({ element }).trim();
-//     // If header
-//     if (headerTags.includes(element.tagName)) {
-//       options.push({
-//         tagName: element.tagName,
-//         text,
-//         element,
-//         links: []
-//       });
-//     } else {
-//       options.push({
-//         tagName: element.tagName,
-//         text,
-//         href: element.href,
-//         element
-//       });
-//     }
-//   });
-//   return options;
-// }
 
 function getOptions() {
   const elements = document.querySelectorAll(
@@ -186,18 +153,6 @@ export const Component = ({
       theme={theme}
     >
       <FormControl>
-        {/*<InputLabel htmlFor={`${plugin.id}-select-label`}>*/}
-        {/*  Page Select*/}
-        {/*</InputLabel>*/}
-        {/*<Select*/}
-        {/*  id={`${plugin.id}-select`}*/}
-        {/*  labelId={`${plugin.id}-select-label`}*/}
-        {/*  name={'page-navigation'}*/}
-        {/*  onChange={handleOnChange}*/}
-        {/*  className={styles.pageNavigation}*/}
-        {/*  defaultValue={''}*/}
-        {/*  input={<Input id={`${plugin.id}-select-label`} />}*/}
-        {/*>*/}
         <SelectComponent
           actions={actions}
           plugin={plugin}
@@ -207,33 +162,7 @@ export const Component = ({
           onChangeHandler={handleOnChange}
           options={selectOptions()}
           state={state}
-          // id={`${plugin.id}-select`}
-          // labelId={`${plugin.id}-select-label`}
-          // name={'page-navigation'}
-          // onChange={handleOnChange}
-          // className={styles.pageNavigation}
-          // defaultValue={''}
-          // input={<Input id={`${plugin.id}-select-label`} />}
         />
-
-        {/*{selectOptions().map((item: any, index: any) => {*/}
-        {/*  if (headerTags.includes(item.tagName)) {*/}
-        {/*    return (*/}
-        {/*      <ListSubheader*/}
-        {/*        key={index}*/}
-        {/*        aria-label={`[${item.tagName}]${item.text}`}*/}
-        {/*      >*/}
-        {/*        {item.text}*/}
-        {/*      </ListSubheader>*/}
-        {/*    );*/}
-        {/*  } else {*/}
-        {/*    return (*/}
-        {/*      <MenuItem key={index} value={item.href}>*/}
-        {/*        {item.text}*/}
-        {/*      </MenuItem>*/}
-        {/*    );*/}
-        {/*  }*/}
-        {/*})}*/}
       </FormControl>
     </PluginComponent>
   );
