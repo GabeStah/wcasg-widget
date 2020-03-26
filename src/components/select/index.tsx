@@ -34,11 +34,13 @@ const SelectComponent = ({
       if (selectedOption) {
         // Only change state if necessary
         if (!statePlugin.enabled) {
+          console.log(`enabling: ${plugin.id}`);
           actions.enable(plugin.id);
         }
       } else {
         // Only change state if necessary
         if (statePlugin.enabled) {
+          console.log(`disabling: ${plugin.id}`);
           actions.disable(plugin.id);
         }
       }

@@ -105,6 +105,8 @@ export interface Plugin {
   config?: PluginConfig;
   customComponent?: boolean;
   enabled: boolean;
+  optionName?: string;
+  optionCustom?: boolean;
   options?: OptionGroup[];
   scaling?: PluginScaling;
   tasks: IPluginAction[];

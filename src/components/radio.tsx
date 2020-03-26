@@ -1,4 +1,5 @@
 import { PluginOption, RadioOption, SelectOption } from '@/enum';
+import { Theme } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
@@ -12,12 +13,14 @@ export const Component = ({
   actions,
   plugin,
   state,
+  theme,
   title
 }: {
   actions: any;
   data: any;
   plugin: any;
   state: any;
+  theme: Theme;
   title?: string;
 }) => {
   const statePlugin = new Selectors(state).getPlugin(plugin.id);

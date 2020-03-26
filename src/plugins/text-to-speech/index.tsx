@@ -1,6 +1,7 @@
 import { PluginComponentParams, SelectOption } from '@/enum';
-import { Css } from '@/utility/css';
+import { createStyles, Theme } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import { PluginComponent } from 'components/plugin';
 import SelectComponent from 'components/select';
@@ -12,19 +13,19 @@ import {
 } from 'services/google-cloud/text-to-speech/declarations';
 import { Selectors } from 'state/redux/selectors';
 
-function behaviorOptions(
-  voices: IGoogleCloudVoice[],
-  selectedVoice: IGoogleCloudVoiceSelectionParams
-): SelectOption[] {
-  return voices.map((voice: IGoogleCloudVoice, key: number) => {
-    return {
-      value: voice.name,
-      text: voice.name,
-      id: key,
-      selected: selectedVoice.name === voice.name
-    };
-  });
-}
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      color: theme.palette.text.secondary,
+      minWidth: '200px',
+      width: '100%'
+    },
+    startIcon: {
+      fill: theme.palette.text.secondary,
+      padding: '4px'
+    }
+  })
+);
 
 function selectOptions(
   voices: IGoogleCloudVoice[],
@@ -46,6 +47,8 @@ export const Component = ({
   id,
   theme
 }: PluginComponentParams) => {
+  const styles = useStyles(theme);
+
   const plugin = new Selectors(state).getPlugin(id);
   const options = new Selectors(state).getPluginOptions({
     pluginId: plugin.id
@@ -221,6 +224,12 @@ export const Component = ({
         ]}
         state={state}
         title={'Behavior'}
+      />
+      <RadioComponent
+        plugin={plugin}
+        data={options}
+        actions={actions}
+        theme={theme}
       />
     </PluginComponent>
   );

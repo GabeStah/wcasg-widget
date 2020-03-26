@@ -70,7 +70,7 @@ export const PluginComponent = ({
         {/*>*/}
         {/*  {plugin.enabled ? 'Disable' : 'Enable'}*/}
         {/*</Button>*/}
-        {plugin.options.length > 0 && (
+        {!plugin.optionCustom && plugin.options.length > 0 && (
           <SelectComponent
             actions={actions}
             plugin={plugin}
