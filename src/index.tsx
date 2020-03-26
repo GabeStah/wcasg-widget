@@ -24,14 +24,16 @@ if (config.debug) {
   console.warn('--- DEBUG ENABLED ---');
 }
 
-const importedExtensions = JSON.parse(
-  LZString.decompressFromBase64(WcasgExtensions)
-);
-console.log(importedExtensions);
-Extensions.manager.addImports(importedExtensions);
-Extensions.manager.processBuiltInImports();
-Extensions.manager.processCustomImports();
-Extensions.manager.executeExtensions();
+const extensionJson = LZString.decompressFromBase64(WcasgExtensions);
+
+if (extensionJson) {
+  const importedExtensions = JSON.parse(extensionJson);
+  console.log(importedExtensions);
+  Extensions.manager.addImports(importedExtensions);
+  Extensions.manager.processBuiltInImports();
+  Extensions.manager.processCustomImports();
+  Extensions.manager.executeExtensions();
+}
 
 // Create modal div to contain widget and append to html doc
 const app = document.createElement(`div`);

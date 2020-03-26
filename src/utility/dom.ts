@@ -2,6 +2,7 @@ const textFieldTags = ['textarea', 'input'];
 
 export const Dom = {
   getFocusedNode: () => document.activeElement,
+  getElementTag: ({ element }: { element: any }): string => element.tagName.toLowerCase(),
   isFocusedNodeInputField: ():
     | HTMLTextAreaElement
     | HTMLInputElement

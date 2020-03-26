@@ -1,5 +1,6 @@
 import Aria from '@/utility/aria';
 import { AudioUtilities } from '@/utility/audio';
+import Dom from '@/utility/dom';
 import PluginManager from 'classes/plugin/manager';
 import config, { TextToSpeechEngine } from 'config';
 import { isAction, isActionFrom } from 'immer-reducer';
@@ -184,11 +185,28 @@ export function* onFocusNode(action: Action) {
     return;
   }
   const state = yield select();
-  if (new Selectors(state).getPlugin(Ids.TextToSpeech).enabled) {
-    const text = Aria.getElementText({ element: action.payload.node });
-    if (text) {
-      // Perform text-to-speech if enabled
-      yield synthesizeSpeech({ text });
+  const textToSpeechPlugin = new Selectors(state).getPlugin(Ids.TextToSpeech);
+  if (textToSpeechPlugin.enabled) {
+    const linkTags = ['a'];
+    const selectedOption = new Selectors(state).getPluginSelectedOption(
+      Ids.TextToSpeech
+    );
+
+    // Process if:
+    //  No option selected
+    //  'all' selected
+    //  'links' selected and focused node is among linked tags.
+    if (
+      !selectedOption ||
+      selectedOption.value === 'all' ||
+      (selectedOption.value === 'links' &&
+        linkTags.includes(Dom.getElementTag({ element: action.payload.node })))
+    ) {
+      const text = Aria.getElementText({ element: action.payload.node });
+      if (text) {
+        // Perform text-to-speech if enabled
+        yield synthesizeSpeech({ text });
+      }
     }
   }
 }

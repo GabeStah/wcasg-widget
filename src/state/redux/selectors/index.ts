@@ -55,7 +55,7 @@ export class Selectors {
     }
   }
 
-  public getPluginSelectedOption(id: string): any {
+  public getPluginSelectedOption(id: string): PluginOption | undefined {
     const plugin = this.getPlugin(id);
     if (plugin && plugin.options) {
       for (const option of plugin.options) {

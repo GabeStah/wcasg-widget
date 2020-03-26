@@ -1,7 +1,10 @@
 import { PluginComponentParams, SelectOption } from '@/enum';
+import { createStyles, Theme } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import { PluginComponent } from 'components/plugin';
+import RadioComponent from 'components/radio';
 import SelectComponent from 'components/select';
 import React, { ChangeEvent } from 'react';
 import {
@@ -9,6 +12,20 @@ import {
   IGoogleCloudVoiceSelectionParams
 } from 'services/google-cloud/text-to-speech/declarations';
 import { Selectors } from 'state/redux/selectors';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      color: theme.palette.text.secondary,
+      minWidth: '200px',
+      width: '100%'
+    },
+    startIcon: {
+      fill: theme.palette.text.secondary,
+      padding: '4px'
+    }
+  })
+);
 
 function selectOptions(
   voices: IGoogleCloudVoice[],
@@ -22,31 +39,6 @@ function selectOptions(
       selected: selectedVoice.name === voice.name
     };
   });
-  // const elements = document.querySelectorAll(
-  //   allTags.map((tag: string) => 'body '.concat(tag)).join(', ')
-  // );
-  // const options: SelectOption[] = [];
-  // // const options: any[] = [];
-  // // Iterate nodes
-  // elements.forEach((element: any) => {
-  //   // Get ARIA text of element
-  //   const text = Aria.getElementText({ element }).trim();
-  //   // If header
-  //   if (headerTags.includes(element.tagName)) {
-  //     options.push({
-  //       isGroup: true,
-  //       text,
-  //       value: element.href
-  //     });
-  //   } else {
-  //     options.push({
-  //       isGroup: false,
-  //       text,
-  //       value: element.href
-  //     });
-  //   }
-  // });
-  // return options;
 }
 
 export const Component = ({
@@ -55,7 +47,10 @@ export const Component = ({
   id,
   theme
 }: PluginComponentParams) => {
+  const styles = useStyles(theme);
+
   const plugin = new Selectors(state).getPlugin(id);
+  const options = new Selectors(state).getPluginOption(id);
   const voices = new Selectors(state).getTextToSpeechVoices();
   const activeVoice = new Selectors(state).getActiveTextToSpeechVoice();
   const audioConfig = new Selectors(state).getTextToSpeechAudioConfig();
@@ -195,6 +190,12 @@ export const Component = ({
         max={16}
         onChange={handleVolumeChange}
         // className={styles.slider}
+      />
+      <RadioComponent
+        plugin={plugin}
+        data={options}
+        actions={actions}
+        theme={theme}
       />
     </PluginComponent>
   );

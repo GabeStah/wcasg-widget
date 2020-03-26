@@ -92,6 +92,7 @@ export interface Plugin {
   customComponent?: boolean;
   enabled: boolean;
   optionName?: string;
+  optionCustom?: boolean;
   options: PluginOption[];
   scaling?: PluginScaling;
   tasks: IPluginAction[];

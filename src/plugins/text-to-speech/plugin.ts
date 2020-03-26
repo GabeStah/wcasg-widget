@@ -9,7 +9,23 @@ export const pluginObject: Plugin = {
   id: Ids.TextToSpeech,
   title: 'Text to Speech',
   enabled: false,
-  options: [],
+  options: [
+    {
+      id: 0,
+      name: 'behavior',
+      text: 'All',
+      value: 'all',
+      selected: true
+    },
+    {
+      id: 1,
+      name: 'behavior',
+      text: 'Links',
+      value: 'links'
+    }
+  ],
+  optionCustom: true,
+  optionName: 'Behavior',
   customComponent: true,
   tasks: [
     {
