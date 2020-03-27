@@ -1,14 +1,11 @@
-import { Plugin, PluginActionTypes } from '@/enum';
-import { PluginActionClass } from 'classes/plugin/action/class';
+import { Plugin } from '@/types';
 import { Ids } from 'plugins/data';
-import styles from './styles.scss';
 
 export const pluginObject: Plugin = {
   id: Ids.PageNavigation,
   title: 'Page Navigation',
   enabled: false,
   customComponent: true,
-  options: [],
   tasks: []
 };
 

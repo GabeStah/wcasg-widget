@@ -19,6 +19,9 @@ export const Css = {
     node: NodeList | any;
     name: string | string[];
   }): void => {
+    if (!node) {
+      return;
+    }
     if (node instanceof NodeList) {
       forEach(node, nodeValue => Css.addClass({ node: nodeValue, name }));
       return;
@@ -84,6 +87,9 @@ export const Css = {
     node: NodeList | any;
     name: string | string[];
   }): void => {
+    if (!node) {
+      return;
+    }
     if (node instanceof NodeList) {
       forEach(node, nodeValue => Css.removeClass({ node: nodeValue, name }));
       return;

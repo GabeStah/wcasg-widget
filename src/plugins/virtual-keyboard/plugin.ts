@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import { Ids } from 'plugins/data';
 
 function* onEnable() {}
@@ -8,7 +8,6 @@ export const pluginObject: Plugin = {
   title: 'Virtual Keyboard',
   enabled: false,
   customComponent: true,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

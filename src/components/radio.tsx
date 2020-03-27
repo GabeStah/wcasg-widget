@@ -1,48 +1,43 @@
-import { PluginOption, RadioOption, SelectOption } from '@/enum';
+import { Plugin, PluginProperty, PluginPropertyOption } from '@/types';
 import { Theme } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import SelectOptionComponent from 'components/select/select-options';
 import React from 'react';
-import { Selectors } from 'state/redux/selectors';
+import { State } from 'state/redux/state';
 
 export const Component = ({
-  data,
   actions,
+  onChangeHandler,
   plugin,
+  property,
   state,
   theme,
   title
 }: {
   actions: any;
-  data: any;
-  plugin: any;
-  state: any;
+  onChangeHandler?: any;
+  plugin: Plugin;
+  property: PluginProperty;
+  state: State;
   theme: Theme;
   title?: string;
 }) => {
-  const statePlugin = new Selectors(state).getPlugin(plugin.id);
-  const selectedOption = new Selectors(state).getPluginSelectedOption({
-    pluginId: plugin.id
-  });
-  const getOptions = (options: RadioOption[]) => {
+  const getOptions = (options: PluginPropertyOption[]) => {
     const selectOptionComponents: any[] = [];
-    options.forEach((option: RadioOption) => {
+    options.forEach((option: PluginPropertyOption) => {
       selectOptionComponents.push(
         <FormControlLabel
           id={`${plugin.id}-${option.value}-option`}
-          color={'primary'}
           control={<Radio />}
           checked={option.selected}
-          name={option.text}
-          label={option.value}
+          name={option.text.toString()}
+          label={option.text ?? option.value}
           value={option.value}
           aria-checked={option.selected ? 'true' : 'false'}
           aria-label={`${plugin.title} Option: ${option.text}`}
           tabIndex={option.selected ? 0 : -1}
-          // onChange={() => actions.selectOption(plugin.id, option.value)}
         />
       );
     });
@@ -56,25 +51,19 @@ export const Component = ({
         role={'radiogroup'}
         aria-label={`${title ?? plugin.title} Options`}
         row={true}
+        onChange={e => {
+          if (onChangeHandler) {
+            onChangeHandler(e);
+          } else if (property) {
+            actions.selectPropertyOption(
+              plugin.id,
+              property.id,
+              e.target.value
+            );
+          }
+        }}
       >
-        {getOptions(data)}
-        {/*{data.map((datum: any) => (*/}
-        {/*  <>*/}
-        {/*    <FormControlLabel*/}
-        {/*      id={datum.id}*/}
-        {/*      color={'primary'}*/}
-        {/*      control={<Radio />}*/}
-        {/*      checked={datum.selected}*/}
-        {/*      name={datum.name}*/}
-        {/*      label={datum.value}*/}
-        {/*      value={datum.value}*/}
-        {/*      aria-checked={datum.selected ? 'true' : 'false'}*/}
-        {/*      aria-label={`${plugin.title} Option: ${datum.text}`}*/}
-        {/*      tabIndex={datum.selected ? 0 : -1}*/}
-        {/*      onChange={() => actions.selectOption(plugin.id, datum.value)}*/}
-        {/*    />*/}
-        {/*  </>*/}
-        {/*))}*/}
+        {property.options && getOptions(property.options)}
       </RadioGroup>
     </>
   );

@@ -1,6 +1,6 @@
 import Store, { StorageDataType } from '@/utility/store';
 import PluginManager from 'classes/plugin/manager';
-import { Plugin } from '@/enum';
+import { Plugin } from '@/types';
 import config from 'config';
 import cloneDeep from 'lodash/cloneDeep';
 import { put, select } from 'redux-saga/effects';

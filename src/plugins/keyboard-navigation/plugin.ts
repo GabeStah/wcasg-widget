@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import { Aria } from '@/utility/aria';
 import Css from '@/utility/css';
 import find from 'lodash/find';
@@ -251,7 +251,6 @@ export const pluginObject: Plugin = {
   id: Ids.KeyboardNavigation,
   title: 'Keyboard Navigation',
   enabled: false,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

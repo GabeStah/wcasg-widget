@@ -28,6 +28,7 @@ export interface IConfig {
   debug: boolean;
   widgetId: string;
   useLocalStorageCompression: boolean;
+  clickPollFrequency: number;
   focusPollFrequency: number;
   localStorageDebounceDelay: number;
   localCompressionType: CompressionType;
@@ -54,6 +55,8 @@ const config: IConfig = {
   // Try to ensure this is likely to be a globally unique id.
   widgetId: `wcasg-ada-app`,
   useLocalStorageCompression: true,
+  // Time (in ms) between poll updates tracking new clicked nodes in DOM.
+  clickPollFrequency: 250,
   // Time (in ms) between poll updates tracking new focused nodes in DOM.
   focusPollFrequency: 250,
   // Minimum number of seconds to wait between localStorage saves.

@@ -1,4 +1,4 @@
-import { PluginComponentParams } from '@/enum';
+import { PluginComponentParams } from '@/types';
 import React from 'react';
 import { PluginComponent } from 'components/plugin';
 

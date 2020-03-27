@@ -1,4 +1,8 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import {
+  Plugin,
+  PluginActionTypes,
+  PluginPropertyComponentTypes
+} from '@/types';
 import styles from '@/plugins/highlight-links/styles.scss';
 import { Css } from '@/utility/css';
 import { Ids } from 'plugins/data';
@@ -11,7 +15,10 @@ function* updateStyle() {
   const selectors = new Selectors(state);
   // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
-  const options = selectors.getPluginOptions({ pluginId: plugin.id });
+  const selected = selectors.getPluginPropertySelectedOption({
+    plugin,
+    property: 'style'
+  });
 
   Css.removeClass({
     node: body,
@@ -26,30 +33,27 @@ function* updateStyle() {
     name: styles.highlightLinksBoth
   });
 
-  if (options && plugin.enabled) {
-    const selected = options.find(option => option.selected);
-    if (selected) {
-      let styleName = styles.highlightLinksBoth;
-      switch (selected.value) {
-        case 'block':
-          styleName = styles.highlightLinksBlock;
-          break;
-        case 'border':
-          styleName = styles.highlightLinksBorder;
-          break;
-        case 'both':
-          styleName = styles.highlightLinksBoth;
-          break;
-        default:
-          styleName = styles.highlightLinksBoth;
-          break;
-      }
-
-      Css.addClass({
-        node: body,
-        name: styleName
-      });
+  if (selected && plugin.enabled) {
+    let styleName: any;
+    switch (selected.value) {
+      case 'block':
+        styleName = styles.highlightLinksBlock;
+        break;
+      case 'border':
+        styleName = styles.highlightLinksBorder;
+        break;
+      case 'both':
+        styleName = styles.highlightLinksBoth;
+        break;
+      default:
+        styleName = styles.highlightLinksBoth;
+        break;
     }
+
+    Css.addClass({
+      node: body,
+      name: styleName
+    });
   }
 }
 
@@ -57,27 +61,34 @@ export const pluginObject: Plugin = {
   id: Ids.HighlightLinks,
   title: 'Highlight Links',
   enabled: false,
-  options: [
-    {
-      id: 0,
-      name: 'style',
-      text: 'Block',
-      value: 'block'
-    },
-    {
-      id: 1,
-      name: 'style',
-      text: 'Border',
-      value: 'border'
-    },
-    {
-      id: 2,
-      name: 'style',
-      text: 'Both',
-      value: 'both'
-    }
-  ],
-  optionName: 'Default',
+  config: {
+    props: [
+      {
+        id: 'style',
+        name: 'Default',
+        componentType: PluginPropertyComponentTypes.Select,
+        enablePluginOnChange: true,
+        disablePluginOnValue: '',
+        options: [
+          {
+            id: 'block',
+            text: 'Block',
+            value: 'block'
+          },
+          {
+            id: 'border',
+            text: 'Border',
+            value: 'border'
+          },
+          {
+            id: 'both',
+            text: 'Both',
+            value: 'both'
+          }
+        ]
+      }
+    ]
+  },
   tasks: [
     {
       on: PluginActionTypes.enable,
@@ -88,7 +99,7 @@ export const pluginObject: Plugin = {
       func: [updateStyle]
     },
     {
-      on: PluginActionTypes.selectOption,
+      on: PluginActionTypes.selectPropertyOption,
       func: [updateStyle]
     }
   ]

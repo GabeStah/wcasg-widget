@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import { Html } from '@/utility/html';
@@ -158,7 +158,6 @@ export const pluginObject: Plugin = {
   id: Ids.Tooltip,
   title: 'Tooltips',
   enabled: false,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

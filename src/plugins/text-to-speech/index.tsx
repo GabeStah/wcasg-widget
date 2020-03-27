@@ -1,4 +1,4 @@
-import { PluginComponentParams, SelectOption } from '@/enum';
+import { PluginComponentParams, SelectOption } from '@/types';
 import { createStyles, Theme } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -50,35 +50,14 @@ export const Component = ({
   const styles = useStyles(theme);
 
   const plugin = new Selectors(state).getPlugin(id);
-  const options = new Selectors(state).getPluginOptions({
-    pluginId: plugin.id
-  });
+
   const voices = new Selectors(state).getTextToSpeechVoices();
   const activeVoice = new Selectors(state).getActiveTextToSpeechVoice();
   const audioConfig = new Selectors(state).getTextToSpeechAudioConfig();
-
-  if (options && plugin.enabled) {
-    const selected = options.find(option => option.selected);
-    if (selected) {
-      // let styleName = styles.highlightLinksBoth;
-      // switch (selected.value) {
-      //   case 'all':
-      //     styleName = styles.highlightLinksBlock;
-      //     break;
-      //   case 'links':
-      //     styleName = styles.highlightLinksBorder;
-      //     break;
-      //   default:
-      //     styleName = styles.highlightLinksBoth;
-      //     break;
-      // }
-      //
-      // Css.addClass({
-      //   node: body,
-      //   name: styleName
-      // });
-    }
-  }
+  const behaviorProperty = new Selectors(state).getPluginProperty({
+    plugin,
+    property: 'behavior'
+  });
 
   const handleVoiceChange = (event: React.ChangeEvent<{ value: any }>) => {
     const enabled = plugin.enabled;
@@ -97,15 +76,6 @@ export const Component = ({
           actions.enable(plugin.id);
         }
       }
-    }
-  };
-
-  const handleBehaviorChange = (event: React.ChangeEvent<{ value: any }>) => {
-    const value = event.target.value;
-    if (Array.isArray(value)) {
-      actions.setTextToSpeechSpeakingRate(value[0]);
-    } else {
-      actions.setTextToSpeechSpeakingRate(value);
     }
   };
 
@@ -155,7 +125,6 @@ export const Component = ({
           <SelectComponent
             name={'Select Voice'}
             onChangeHandler={handleVoiceChange}
-            autoToggle={true}
             state={state}
             plugin={plugin}
             options={selectOptions(voices, activeVoice)}
@@ -205,32 +174,16 @@ export const Component = ({
         max={16}
         onChange={handleVolumeChange}
       />
-      <RadioComponent
-        actions={actions}
-        plugin={plugin}
-        data={[
-          {
-            id: 0,
-            name: 'behavior',
-            text: 'All',
-            value: 'all'
-          },
-          {
-            id: 1,
-            name: 'behavior',
-            text: 'Links Only',
-            value: 'links'
-          }
-        ]}
-        state={state}
-        title={'Behavior'}
-      />
-      <RadioComponent
-        plugin={plugin}
-        data={options}
-        actions={actions}
-        theme={theme}
-      />
+      {behaviorProperty && (
+        <RadioComponent
+          actions={actions}
+          plugin={plugin}
+          property={behaviorProperty}
+          state={state}
+          theme={theme}
+          title={'Behavior'}
+        />
+      )}
     </PluginComponent>
   );
 };

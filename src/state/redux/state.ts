@@ -1,5 +1,5 @@
-import {Plugin, PluginActionTypes} from '@/enum';
-import {initialPlugins} from '@/load-plugins';
+import { Plugin, PluginActionTypes } from '@/types';
+import { initialPlugins } from '@/load-plugins';
 import PluginManager from 'classes/plugin/manager';
 import {
   IGoogleCloudAudioConfig,
@@ -10,7 +10,7 @@ import {
   GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
   GOOGLE_CLOUD_DEFAULT_VOICE
 } from 'services/google-cloud/text-to-speech/defaults';
-import {ThemeTypes} from 'theme/types';
+import { ThemeTypes } from 'theme/types';
 
 type FunctionType = (params?: any) => any;
 

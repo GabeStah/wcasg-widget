@@ -1,6 +1,4 @@
-import { Plugin } from '@/enum';
-import Store, { StorageDataType } from '@/utility/store';
-import config from 'config';
+import { Plugin } from '@/types';
 
 /**
  * {

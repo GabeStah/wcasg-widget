@@ -1,18 +1,21 @@
 /* tslint:disable:object-literal-key-quotes */
-import { PluginComponentParams } from '@/enum';
-import { createStyles, Theme, withStyles } from '@material-ui/core';
-import CardContent from '@material-ui/core/CardContent';
+import {
+  PluginComponentParams,
+  PluginProperty,
+  PluginPropertyComponentTypes
+} from '@/types';
+import { createStyles, Theme } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
-import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
-import SelectComponent from 'components/select';
-import ToggleSwitch from 'components/toggle-switch';
-import { Icons, Ids } from 'plugins/data';
-import React from 'react';
 import RadioComponent from 'components/radio';
 import Scalable from 'components/scalable';
+import SelectComponent from 'components/select';
+import ToggleSwitch from 'components/toggle-switch';
+import { Icons } from 'plugins/data';
+import React from 'react';
 import { Selectors } from 'state/redux/selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,6 +45,42 @@ export const PluginComponent = ({
   toggleDisabled
 }: PluginComponentParams) => {
   const plugin = new Selectors(state).getPlugin(id);
+  const properties = new Selectors(state).getPluginProperties(plugin.id);
+  let autoComponents;
+
+  if (properties) {
+    autoComponents = properties.map((prop: PluginProperty) => {
+      if (prop.componentType) {
+        switch (prop.componentType) {
+          case PluginPropertyComponentTypes.Radio:
+            return (
+              <RadioComponent
+                actions={actions}
+                plugin={plugin}
+                property={prop}
+                state={state}
+                theme={theme}
+              />
+            );
+          case PluginPropertyComponentTypes.Select:
+            return (
+              <SelectComponent
+                actions={actions}
+                plugin={plugin}
+                property={prop}
+                state={state}
+              />
+            );
+          case PluginPropertyComponentTypes.Switch:
+            return (
+              <ToggleSwitch actions={actions} plugin={plugin} state={state} />
+            );
+          default:
+        }
+      }
+    });
+  }
+
   const classes = useStyles(theme);
   return (
     <Card
@@ -54,36 +93,10 @@ export const PluginComponent = ({
         <Typography variant={'h3'} component={'h3'}>
           {plugin.title}
         </Typography>
-        {!toggleDisabled && <ToggleSwitch plugin={plugin} actions={actions} />}
-        {/*<Button*/}
-        {/*  onClick={() => {*/}
-        {/*    if (plugin.enabled) {*/}
-        {/*      actions.disable(plugin.id);*/}
-        {/*    } else {*/}
-        {/*      actions.enable(plugin.id);*/}
-        {/*    }*/}
-        {/*  }}*/}
-        {/*  aria-label={`${plugin.enabled ? 'Disable' : 'Enable'} ${plugin.title}`}*/}
-        {/*  aria-roledescription={'button'}*/}
-        {/*  role={'button'}*/}
-        {/*  variant={'contained'}*/}
-        {/*>*/}
-        {/*  {plugin.enabled ? 'Disable' : 'Enable'}*/}
-        {/*</Button>*/}
-        {!plugin.optionCustom && plugin.options.length > 0 && (
-          <SelectComponent
-            actions={actions}
-            plugin={plugin}
-            // onChangeHandler={}
-            options={plugin.options}
-            state={state}
-          />
-          // <RadioComponent
-          //   data={plugin.options}
-          //   plugin={plugin}
-          //   actions={actions}
-          // />
+        {!toggleDisabled && (
+          <ToggleSwitch plugin={plugin} actions={actions} state={state} />
         )}
+        {!plugin.optionCustom && autoComponents}
         {plugin.scaling && (
           <Scalable
             plugin={plugin}

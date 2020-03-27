@@ -1,4 +1,8 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import {
+  Plugin,
+  PluginActionTypes,
+  PluginPropertyComponentTypes
+} from '@/types';
 import { ValueManipulationType } from 'classes/plugin/action';
 import { PluginActionStyle } from 'classes/plugin/action/style';
 import { Ids } from 'plugins/data';
@@ -43,10 +47,12 @@ function* updateFont() {
   const selectors = new Selectors(state);
   // Get latest state version.
   const plugin = selectors.getPlugin(pluginObject.id);
-  const options = selectors.getPluginOptions({ pluginId: plugin.id });
+  const selected = selectors.getPluginPropertySelectedOption({
+    plugin,
+    property: 'font'
+  });
 
-  if (options && plugin.enabled) {
-    const selected = options.find(option => option.selected);
+  if (plugin.enabled) {
     if (selected) {
       actionProperty.style.enabledValue = `${selected.value}`;
       actionProperty.enable();
@@ -62,45 +68,49 @@ export const pluginObject: Plugin = {
   id: Ids.ReadableFonts,
   title: 'Alternative Fonts',
   enabled: false,
-  options: [
-    {
-      id: 0,
-      name: 'font',
-      text: 'Arial',
-      value: 'Arial'
-    },
-    {
-      id: 1,
-      name: 'font',
-      text: 'Montserrat',
-      value: 'Montserrat'
-    },
-    {
-      id: 2,
-      name: 'font',
-      text: 'Nunito',
-      value: 'Nunito'
-    },
-    {
-      id: 3,
-      name: 'font',
-      text: 'Roboto',
-      value: 'Roboto'
-    },
-    {
-      id: 4,
-      name: 'font',
-      text: 'Rubik',
-      value: 'Rubik'
-    },
-    {
-      id: 5,
-      name: 'font',
-      text: 'Ubuntu',
-      value: 'Ubuntu'
-    }
-  ],
-  optionName: 'Default',
+  config: {
+    props: [
+      {
+        id: 'font',
+        name: 'Default',
+        componentType: PluginPropertyComponentTypes.Select,
+        enablePluginOnChange: true,
+        disablePluginOnValue: '',
+        options: [
+          {
+            id: 'Arial',
+            text: 'Arial',
+            value: 'Arial'
+          },
+          {
+            id: 'Montserrat',
+            text: 'Montserrat',
+            value: 'Montserrat'
+          },
+          {
+            id: 'Nunito',
+            text: 'Nunito',
+            value: 'Nunito'
+          },
+          {
+            id: 'Roboto',
+            text: 'Roboto',
+            value: 'Roboto'
+          },
+          {
+            id: 'Rubik',
+            text: 'Rubik',
+            value: 'Rubik'
+          },
+          {
+            id: 'Ubuntu',
+            text: 'Ubuntu',
+            value: 'Ubuntu'
+          }
+        ]
+      }
+    ]
+  },
   tasks: [
     {
       on: PluginActionTypes.enable,
@@ -111,7 +121,7 @@ export const pluginObject: Plugin = {
       func: [updateFont]
     },
     {
-      on: PluginActionTypes.selectOption,
+      on: PluginActionTypes.selectPropertyOption,
       func: [updateFont]
     }
   ]

@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import { PluginActionClass } from 'classes/plugin/action/class';
 import { Ids } from 'plugins/data';
 import styles from './styles.scss';
@@ -13,7 +13,6 @@ export const pluginObject: Plugin = {
   id: Ids.EmphasizeHover,
   title: 'Emphasize Hover',
   enabled: false,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

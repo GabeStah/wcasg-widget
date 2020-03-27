@@ -1,15 +1,17 @@
 import { State } from 'state/redux/state';
-import { OptionGroup, Plugin, PluginLocalState, PluginOption } from '@/enum';
+import { Plugin, PluginProperty, PluginPropertyOption } from '@/types';
 import cloneDeep from 'lodash/cloneDeep';
+import TypeGuard from '@/utility/type-guard.ts';
 
-interface GetPluginOptionsParams {
-  pluginId: string;
-  groupId?: string;
+export interface GetPluginPropertyParams {
+  plugin: Plugin | string;
+  property: PluginProperty | string;
 }
 
-interface GetPluginSelectedOptionParams {
-  pluginId: string;
-  groupId?: string;
+export interface GetPluginPropertyOptionParams {
+  plugin: Plugin | string;
+  property: PluginProperty | string;
+  option: PluginPropertyOption | string;
 }
 
 /**
@@ -48,7 +50,11 @@ export class Selectors {
     return this.state.focusedNode;
   }
 
-  public getPlugin(id: string) {
+  public getPlugin(id: string | Plugin) {
+    if (TypeGuard.isPlugin(id)) {
+      // Work only with string id so we can lookup fresh state.
+      id = id.id;
+    }
     const plugin = this.state.plugins[
       this.state.plugins.findIndex(p => p.id === id)
     ];
@@ -58,33 +64,59 @@ export class Selectors {
     return plugin;
   }
 
-  public getPluginOptions({ pluginId, groupId }: GetPluginOptionsParams) {
-    const plugin = this.getPlugin(pluginId);
-    if (plugin && plugin.options) {
-      if (groupId) {
-        return plugin.options.find(
-          (group: OptionGroup) => group.id === groupId
-        );
-      } else {
-        return plugin.options[0];
-      }
+  public getPluginProperty({
+    plugin,
+    property
+  }: GetPluginPropertyParams): PluginProperty | void {
+    if (TypeGuard.isPluginProperty(property)) {
+      property = property.id;
+    }
+    // Get plugin instance.
+    plugin = this.getPlugin(plugin);
+    return plugin.config?.props?.find(
+      (prop: PluginProperty) => prop.id === property
+    );
+  }
+
+  public getPluginProperties(id: string | Plugin): PluginProperty[] | void {
+    const plugin = this.getPlugin(id);
+    return plugin?.config?.props;
+  }
+
+  public getPluginPropertyOption({
+    plugin,
+    property,
+    option
+  }: GetPluginPropertyOptionParams): PluginPropertyOption | void {
+    if (TypeGuard.isPluginPropertyOption(option)) {
+      option = option.id;
+    }
+    // Get property instance.
+    const existingProperty = this.getPluginProperty({ plugin, property });
+    if (existingProperty) {
+      return existingProperty.options?.find(
+        (opt: PluginPropertyOption) => opt.id === option
+      );
     }
   }
 
-  public getPluginSelectedOption({
-    pluginId,
-    groupId
-  }: GetPluginSelectedOptionParams): PluginOption | void {
-    const options = this.getPluginOptions({
-      pluginId: pluginId,
-      groupId: groupId
-    });
+  public getPluginPropertyOptions({
+    plugin,
+    property
+  }: GetPluginPropertyParams): PluginPropertyOption[] | void {
+    const foundProperty = this.getPluginProperty({ plugin, property });
+    if (foundProperty) {
+      return foundProperty.options;
+    }
+  }
+
+  public getPluginPropertySelectedOption({
+    plugin,
+    property
+  }: GetPluginPropertyParams): PluginPropertyOption | void {
+    const options = this.getPluginPropertyOptions({ plugin, property });
     if (options) {
-      for (const option of options) {
-        if (option.selected) {
-          return option;
-        }
-      }
+      return options?.find((option: PluginPropertyOption) => option.selected);
     }
   }
 

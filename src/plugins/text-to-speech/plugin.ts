@@ -1,31 +1,30 @@
-import { Plugin, PluginActionTypes } from '@/enum';
 import {
-  PluginPropertyOptionTypes,
-  PluginPropertyTypes
-} from 'classes/plugin/config';
+  Plugin,
+  PluginActionTypes,
+  PluginPropertyComponentTypes
+} from '@/types';
 import { Ids } from 'plugins/data';
+
+let CLICKED: any;
+let PREVIOUS_CLICKED: any;
+
+/**
+ * Tracks all bubbled blur events in DOM.
+ */
+document.addEventListener(
+  'click',
+  e => {
+    PREVIOUS_CLICKED = undefined;
+    CLICKED = undefined;
+  },
+  { capture: true, passive: true }
+);
 
 export const pluginObject: Plugin = {
   id: Ids.TextToSpeech,
   title: 'Text to Speech',
   enabled: false,
-  options: [
-    {
-      id: 0,
-      name: 'behavior',
-      text: 'All',
-      value: 'all',
-      selected: true
-    },
-    {
-      id: 1,
-      name: 'behavior',
-      text: 'Links',
-      value: 'links'
-    }
-  ],
   optionCustom: true,
-  optionName: 'Behavior',
   customComponent: true,
   tasks: [
     {
@@ -35,86 +34,35 @@ export const pluginObject: Plugin = {
     {
       on: PluginActionTypes.disable,
       func: []
+    },
+    {
+      on: PluginActionTypes.selectPropertyOption,
+      func: []
     }
   ],
   config: {
-    id: Ids.TextToSpeech,
-    stateProps: [
-      {
-        id: 'enabled',
-        key: 'value',
-        type: PluginPropertyTypes.Boolean
-      },
-      {
-        id: 'pitch',
-        key: 'value',
-        type: PluginPropertyTypes.Number
-      },
-      {
-        id: 'volume',
-        key: 'value',
-        type: PluginPropertyTypes.Number
-      },
-      {
-        id: 'voice',
-        key: 'value',
-        type: PluginPropertyTypes.String
-      }
-    ],
     props: [
       {
-        id: 'enabled',
-        optionType: PluginPropertyOptionTypes.Toggleable,
-        value: false
-      },
-      {
-        // type: number
-        id: 'pitch',
-        optionType: PluginPropertyOptionTypes.Scalable,
-        value: 0,
+        id: 'behavior',
+        componentType: PluginPropertyComponentTypes.Radio,
+        enablePluginOnChange: true,
+        name: 'Behavior',
         options: [
           {
-            minimum: -20,
-            step: 1,
-            maximum: 20
-          }
-        ]
-      },
-      {
-        // type: number
-        id: 'volume',
-        optionType: PluginPropertyOptionTypes.Scalable,
-        value: 2,
-        options: [
+            id: 'default',
+            value: 'default',
+            text: 'Default',
+            selected: true
+          },
           {
-            minimum: -96,
-            step: 1,
-            maximum: 16
-          }
-        ]
-      },
-      {
-        // type: number
-        id: 'rate',
-        optionType: PluginPropertyOptionTypes.Scalable,
-        value: 1,
-        options: [
+            id: 'links',
+            value: 'links',
+            text: 'Links'
+          },
           {
-            minimum: 0.25,
-            step: 0.25,
-            maximum: 4
-          }
-        ]
-      },
-      {
-        // type: choose-one
-        id: 'voice',
-        optionType: PluginPropertyOptionTypes.Selectable,
-        value: undefined,
-        options: [
-          {
-            text: 'en-US-Wavenet-A',
-            value: 'en-US-Wavenet-A'
+            id: 'click',
+            value: 'click',
+            text: 'Click'
           }
         ]
       }

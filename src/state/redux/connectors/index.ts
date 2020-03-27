@@ -38,8 +38,21 @@ export const Connector = createConnector({
       actions.reset({ newState });
     },
 
-    selectOption(id: string, value: number | string | undefined) {
-      actions.selectOption({ id, value });
+    selectPropertyOption(
+      pluginId: string,
+      propertyId: string,
+      optionId: string
+    ) {
+      actions.selectPropertyOption({ id: pluginId, propertyId, optionId });
+    },
+
+    setPropertyOption(
+      pluginId: string,
+      propertyId: string,
+      optionId: string,
+      value: any
+    ) {
+      actions.setPropertyOption({ id: pluginId, propertyId, optionId, value });
     },
 
     setActiveTextToSpeechVoice(voice: IGoogleCloudVoice) {

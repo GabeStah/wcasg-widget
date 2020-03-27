@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import { ValueManipulationType } from 'classes/plugin/action';
 import { PluginActionClass } from 'classes/plugin/action/class';
 import { PluginActionStyle } from 'classes/plugin/action/style';
@@ -36,7 +36,6 @@ export const pluginObject: Plugin = {
   id: Ids.BlackAndYellow,
   title: 'Black and Yellow',
   enabled: false,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

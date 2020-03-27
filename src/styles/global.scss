@@ -3,7 +3,7 @@
 
 // Applied to everything that explicitly receives focus through the Widget.
 .#{$widget-prefix}-focused {
-  background-color: rgba($default-highlight-color-secondary, 1) !important;
-  outline: 2px solid rgba($default-highlight-color-primary, 0.5) !important;
+  //background-color: rgba($default-highlight-color-secondary, 1) !important;
+  outline: 4px solid rgba($default-highlight-color-primary, 0.5) !important;
   outline-offset: 1px !important;
 }

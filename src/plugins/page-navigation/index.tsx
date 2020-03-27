@@ -1,4 +1,4 @@
-import { PluginComponentParams, SelectOption } from '@/enum';
+import { PluginComponentParams, SelectOption } from '@/types';
 import Utility from '@/utility';
 import Aria from '@/utility/aria';
 import FormControl from '@material-ui/core/FormControl';
@@ -157,7 +157,6 @@ export const Component = ({
           actions={actions}
           plugin={plugin}
           name={'Select Page'}
-          autoToggle={false}
           showLabel={false}
           onChangeHandler={handleOnChange}
           options={selectOptions()}

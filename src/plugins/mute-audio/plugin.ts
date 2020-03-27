@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import { ValueManipulationType } from 'classes/plugin/action';
 import { PluginActionProperty } from 'classes/plugin/action/property';
 import { Ids } from 'plugins/data';
@@ -18,7 +18,6 @@ export const pluginObject: Plugin = {
   id: Ids.MuteAudio,
   title: 'Mute Sounds',
   enabled: false,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

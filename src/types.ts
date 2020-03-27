@@ -1,9 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 import { ValueManipulationType } from 'classes/plugin/action';
-import { PluginConfig } from 'classes/plugin/config';
-import { Actions } from 'immer-reducer';
 import { Connector } from 'state/redux/connectors';
-import { BaseReducer } from 'state/redux/reducers';
 import { IPluginAction, State } from 'state/redux/state';
 
 export interface DialogComponentParams {
@@ -21,7 +18,13 @@ export enum PluginActionTypes {
   enable = 'enable',
   increment = 'increment',
   reset = 'reset',
-  selectOption = 'selectOption'
+  selectPropertyOption = 'selectPropertyOption'
+}
+
+export enum PluginPropertyComponentTypes {
+  Radio = 'radio',
+  Select = 'select',
+  Switch = 'switch'
 }
 
 export interface PluginScaling {
@@ -31,26 +34,25 @@ export interface PluginScaling {
   type: ValueManipulationType;
 }
 
-export interface OptionGroup {
+export interface PluginPropertyOption {
+  id: string;
+  selected?: boolean;
+  text: string | number | boolean;
+  value: string | number | boolean;
+}
+
+export interface PluginProperty {
+  enablePluginOnChange?: boolean;
+  disablePluginOnValue?: string | number | boolean;
   id: string;
   name?: string;
-  options: PluginOption[] | RadioOption[] | SelectOption[];
-  text?: string;
+  options?: PluginPropertyOption[];
+  componentType?: PluginPropertyComponentTypes;
+  value?: any;
 }
 
-export interface PluginOption {
-  id: number;
-  name: string;
-  selected?: boolean;
-  text: string;
-  value: string | number | boolean;
-}
-
-export interface RadioOption {
-  id?: number;
-  selected?: boolean;
-  text?: string;
-  value: string | number | boolean;
+export interface PluginConfig {
+  props: PluginProperty[];
 }
 
 export interface SelectOption {
@@ -83,21 +85,13 @@ export interface PluginScalableComponentParams {
 
 export interface PluginSelectComponentParams {
   actions: typeof Connector.__actions;
-  autoToggle?: boolean;
   name?: string;
   onChangeHandler?: any;
-  options: PluginOption[] | SelectOption[];
+  options?: SelectOption[];
   plugin: any;
+  property?: PluginProperty;
   showLabel?: boolean;
   state: any;
-}
-
-export interface PluginLocalState {
-  id: string;
-  enabled: boolean;
-  options: PluginOption[];
-  scaling?: PluginScaling;
-  title: string;
 }
 
 export interface Plugin {
@@ -105,9 +99,7 @@ export interface Plugin {
   config?: PluginConfig;
   customComponent?: boolean;
   enabled: boolean;
-  optionName?: string;
   optionCustom?: boolean;
-  options?: OptionGroup[];
   scaling?: PluginScaling;
   tasks: IPluginAction[];
   title: string;

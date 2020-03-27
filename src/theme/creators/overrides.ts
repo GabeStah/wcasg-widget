@@ -58,6 +58,16 @@ export function createOverrides(palette: Palette): Overrides {
         }
       }
     },
+    MuiRadio: {
+      root: {
+        color: palette.primary.main
+      },
+      colorSecondary: {
+        '&$checked': {
+          color: palette.primary.main
+        }
+      }
+    },
     MuiNativeSelect: {
       icon: {
         color: palette.primary.main

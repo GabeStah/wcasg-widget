@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import { Ids } from 'plugins/data';
 import { select } from 'redux-saga/effects';
 import TextNodeType from '../../classes/node-types/TextNodeType';
@@ -31,7 +31,6 @@ export const pluginObject: Plugin = {
   id: Ids.LetterSpacing,
   title: 'Text Spacing',
   enabled: false,
-  options: [],
   scaling: {
     baseFactor: 0,
     factor: 0,

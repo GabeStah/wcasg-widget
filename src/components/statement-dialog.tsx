@@ -1,4 +1,4 @@
-import { StatementDialogComponentParams } from '@/enum';
+import { StatementDialogComponentParams } from '@/types';
 import { SvgIcon } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';

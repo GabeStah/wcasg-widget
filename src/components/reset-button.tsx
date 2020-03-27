@@ -6,7 +6,7 @@ import { ReactComponent as ResetIcon } from 'assets/svg-minified/plugins/reset.s
 import React from 'react';
 import { Connector } from 'state/redux/connectors';
 import { State } from 'state/redux/state';
-import { Plugin } from '@/enum';
+import { Plugin } from '@/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

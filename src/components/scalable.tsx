@@ -1,5 +1,5 @@
 /* tslint:disable:object-literal-key-quotes */
-import { Plugin, PluginScalableComponentParams, PluginScaling } from '@/enum';
+import { Plugin, PluginScalableComponentParams, PluginScaling } from '@/types';
 import { areEqual, greaterThan, lessThan, round } from '@/utility/number';
 import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';

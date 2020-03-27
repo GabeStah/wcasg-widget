@@ -1,75 +1,73 @@
 import {
-  PluginOption,
+  PluginPropertyOption,
   PluginSelectComponentParams,
   SelectOption
-} from '@/enum';
+} from '@/types';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import SelectOptionComponent from 'components/select/select-options';
 import config from 'config';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Selectors } from 'state/redux/selectors';
 
 const SelectComponent = ({
   actions,
-  autoToggle = true,
   name,
   onChangeHandler,
   options,
   plugin,
+  property,
   showLabel = false,
   state
 }: PluginSelectComponentParams) => {
   const statePlugin = new Selectors(state).getPlugin(plugin.id);
-  const selectedOption = new Selectors(state).getPluginSelectedOption({
-    pluginId: plugin.id
-  });
-
-  /**
-   * Toggle based on diff from baseFactor
-   */
-  const handleToggle = () => {
-    if (autoToggle) {
-      if (selectedOption) {
-        // Only change state if necessary
-        if (!statePlugin.enabled) {
-          console.log(`enabling: ${plugin.id}`);
-          actions.enable(plugin.id);
-        }
-      } else {
-        // Only change state if necessary
-        if (statePlugin.enabled) {
-          console.log(`disabling: ${plugin.id}`);
-          actions.disable(plugin.id);
-        }
-      }
-    }
-  };
-
-  // Toggle based on factor
-  useEffect(() => handleToggle(), [selectedOption]);
-
-  const getSelectOptions = (opts: SelectOption[] | PluginOption[]) => {
-    const selectOptionComponents: any[] = [];
-    opts.forEach((option: PluginOption | SelectOption) => {
-      if (!('isGroup' in option && option.isGroup)) {
-        selectOptionComponents.push(
-          <SelectOptionComponent
-            actions={actions}
-            plugin={plugin}
-            isGroup={
-              'isGroup' in option && option.isGroup ? option.isGroup : false
-            }
-            item={option}
-            selected={
-              selectedOption !== undefined &&
-              selectedOption.value === option.value
-            }
-          />
-        );
-      }
+  let selectedPropertyOption: PluginPropertyOption | void;
+  let selectedOption: SelectOption | void;
+  if (property) {
+    selectedPropertyOption = new Selectors(
+      state
+    ).getPluginPropertySelectedOption({
+      plugin,
+      property
     });
+  } else if (options) {
+    selectedOption = options.find((opt: SelectOption) => opt.selected);
+  }
+
+  const getSelectOptions = (
+    opts: PluginPropertyOption[] | SelectOption[] | void
+  ) => {
+    if (!opts) return;
+    const selectOptionComponents: any[] = [];
+    opts.forEach(
+      (option: PluginPropertyOption | SelectOption, index: number) => {
+        if (!('isGroup' in option && option.isGroup)) {
+          let isSelected = false;
+
+          if (
+            selectedPropertyOption &&
+            selectedPropertyOption.value === option.value
+          ) {
+            isSelected = true;
+          } else if (selectedOption && selectedOption.value === option.value) {
+            isSelected = true;
+          }
+
+          selectOptionComponents.push(
+            <SelectOptionComponent
+              actions={actions}
+              plugin={plugin}
+              isGroup={
+                'isGroup' in option && option.isGroup ? option.isGroup : false
+              }
+              item={option}
+              selected={isSelected}
+            />
+          );
+        }
+      }
+    );
     return selectOptionComponents;
   };
 
@@ -82,17 +80,17 @@ const SelectComponent = ({
         id={`${config.widgetId}-${plugin.id}-select`}
         name={`${plugin.id}-select`}
         inputProps={{
-          'aria-label': name
-            ? name
-            : plugin.optionName
-            ? plugin.optionName
-            : plugin.title
+          'aria-label': name ? name : property ? property.name : plugin.title
         }}
         onChange={e => {
           if (onChangeHandler) {
             onChangeHandler(e);
-          } else {
-            actions.selectOption(plugin.id, e.target.value);
+          } else if (property) {
+            actions.selectPropertyOption(
+              plugin.id,
+              property.id,
+              e.target.value
+            );
           }
         }}
       >
@@ -103,9 +101,9 @@ const SelectComponent = ({
           value={undefined}
           selected={!statePlugin.enabled}
         >
-          {name ? name : plugin.optionName ? plugin.optionName : plugin.title}
+          {name ? name : property ? property.name : plugin.title}
         </option>
-        {getSelectOptions(options)}
+        {getSelectOptions(property?.options ?? options)}
         })}
       </NativeSelect>
     </FormControl>

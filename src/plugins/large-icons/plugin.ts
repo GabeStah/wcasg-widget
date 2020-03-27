@@ -1,4 +1,4 @@
-import { Plugin, PluginActionTypes } from '@/enum';
+import { Plugin, PluginActionTypes } from '@/types';
 import Utility from '@/utility';
 import Html from '@/utility/html';
 import { DOMValueType } from 'classes/plugin/action';
@@ -214,7 +214,6 @@ export const pluginObject: Plugin = {
   id: Ids.LargeIcons,
   title: 'Large Icons',
   enabled: false,
-  options: [],
   tasks: [
     {
       on: PluginActionTypes.enable,

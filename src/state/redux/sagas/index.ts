@@ -4,7 +4,6 @@ import Dom from '@/utility/dom';
 import PluginManager from 'classes/plugin/manager';
 import config, { TextToSpeechEngine } from 'config';
 import { isAction, isActionFrom } from 'immer-reducer';
-import pluginObject from 'plugins/contrast/plugin';
 import { Ids } from 'plugins/data';
 import { Action } from 'redux';
 import { buffers, END, eventChannel } from 'redux-saga';
@@ -18,6 +17,7 @@ import {
 } from 'redux-saga/effects';
 import { ActionCreators } from 'state/redux/actions';
 import { BaseReducer } from 'state/redux/reducers';
+import { watchClick } from 'state/redux/sagas/on-click';
 import { watchFocus } from 'state/redux/sagas/on-focus';
 import { watchKeyDown } from 'state/redux/sagas/on-key-down';
 import {
@@ -36,11 +36,17 @@ const getActionTypeFromImmer = (action: Action): string => {
   return '';
 };
 
+/**
+ * Update theme when Contrast plugin is enabled, disabled, or has a 'theme' property option change.
+ *
+ * @param {Action} action
+ * @returns {Generator<<"PUT", PutEffectDescriptor<{type: "setTheme"; payload: FirstOrAll<ArgumentsType<InstanceType<BaseReducer>["setTheme"]>>}>> | <"SELECT", SelectEffectDescriptor>, void, unknown>}
+ */
 export function* updateTheme(action: Action) {
   if (
     !isAction(action, ActionCreators.enable) &&
     !isAction(action, ActionCreators.disable) &&
-    !isAction(action, ActionCreators.selectOption)
+    !isAction(action, ActionCreators.selectPropertyOption)
   ) {
     return;
   }
@@ -51,41 +57,28 @@ export function* updateTheme(action: Action) {
 
   const state = yield select();
   const selectors = new Selectors(state);
-  const themeType = new Selectors(state).getTheme();
   // Get latest state version.
   const plugin = selectors.getPlugin(action.payload.id);
-  const options = selectors.getPluginOptions({ pluginId: action.payload.id });
-
-  if (!options) {
-    return;
-  }
+  const selected = selectors.getPluginPropertySelectedOption({
+    plugin,
+    property: 'theme'
+  });
 
   let newTheme = ThemeTypes.Base;
 
-  if (plugin.enabled) {
-    const selected = options.find(option => option.selected);
-    if (selected && typeof selected.value === 'string') {
-      switch (selected.value) {
-        case 'black-and-yellow':
-          if (themeType !== ThemeTypes.BlackAndYellow) {
-            newTheme = ThemeTypes.BlackAndYellow;
-          }
-          break;
-        case 'dark-contrast':
-          if (themeType !== ThemeTypes.DarkContrast) {
-            newTheme = ThemeTypes.DarkContrast;
-          }
-          break;
-        case 'light-contrast':
-          if (themeType !== ThemeTypes.LightContrast) {
-            newTheme = ThemeTypes.LightContrast;
-          }
-          break;
-        default:
-          if (themeType !== ThemeTypes.Base) {
-            newTheme = ThemeTypes.Base;
-          }
-      }
+  if (plugin.enabled && selected && typeof selected.value === 'string') {
+    switch (selected.value) {
+      case 'black-and-yellow':
+        newTheme = ThemeTypes.BlackAndYellow;
+        break;
+      case 'dark-contrast':
+        newTheme = ThemeTypes.DarkContrast;
+        break;
+      case 'light-contrast':
+        newTheme = ThemeTypes.LightContrast;
+        break;
+      default:
+        newTheme = ThemeTypes.Base;
     }
   }
 
@@ -188,17 +181,23 @@ export function* onFocusNode(action: Action) {
   const textToSpeechPlugin = new Selectors(state).getPlugin(Ids.TextToSpeech);
   if (textToSpeechPlugin.enabled) {
     const linkTags = ['a'];
-    const selectedOption = new Selectors(state).getPluginSelectedOption(
-      Ids.TextToSpeech
+
+    const selectedOption = new Selectors(state).getPluginPropertySelectedOption(
+      {
+        plugin: Ids.TextToSpeech,
+        property: 'behavior'
+      }
     );
 
     // Process if:
     //  No option selected
-    //  'all' selected
+    //  'default' selected
+    //  'click' selected
     //  'links' selected and focused node is among linked tags.
     if (
       !selectedOption ||
-      selectedOption.value === 'all' ||
+      selectedOption.value === 'default' ||
+      selectedOption.value === 'click' ||
       (selectedOption.value === 'links' &&
         linkTags.includes(Dom.getElementTag({ element: action.payload.node })))
     ) {
@@ -206,6 +205,44 @@ export function* onFocusNode(action: Action) {
       if (text) {
         // Perform text-to-speech if enabled
         yield synthesizeSpeech({ text });
+      }
+    }
+  }
+}
+
+function* onSelectPropertyOption(action: Action) {
+  if (!isAction(action, ActionCreators.selectPropertyOption)) {
+    return;
+  }
+  const { id, propertyId, optionId } = action.payload;
+  const state = yield select();
+  const plugin = new Selectors(state).getPlugin(id);
+  const property = new Selectors(state).getPluginProperty({
+    plugin: id,
+    property: propertyId
+  });
+  const option = new Selectors(state).getPluginPropertyOption({
+    plugin: id,
+    property: propertyId,
+    option: optionId
+  });
+
+  if (property && property.enablePluginOnChange) {
+    // Disable if:
+    //  - selected value is undefined or empty
+    //  - selected value is disableOnValue
+    if (
+      !option ||
+      option.value === undefined ||
+      option.value === '' ||
+      (property.disablePluginOnValue !== undefined &&
+        option.value === property.disablePluginOnValue)
+    ) {
+      yield put(ActionCreators.disable({ id: plugin.id }));
+    } else {
+      // Enable if disabled
+      if (!plugin.enabled) {
+        yield put(ActionCreators.enable({ id: plugin.id }));
       }
     }
   }
@@ -285,13 +322,16 @@ export function* rootSagas() {
     takeEvery(ActionCreators.disable, onPluginDisable),
     takeEvery(ActionCreators.enable, updateTheme),
     takeEvery(ActionCreators.disable, updateTheme),
-    takeEvery(ActionCreators.selectOption, updateTheme),
+    takeEvery(ActionCreators.selectPropertyOption, updateTheme),
+    takeEvery(ActionCreators.selectPropertyOption, onSelectPropertyOption),
     takeEvery(ActionCreators.focusNode, onFocusNode),
     takeEvery(
       // Pattern to track all actions from reducer
       (action: Action) => isActionFrom(action, BaseReducer),
       watchPluginTasks
     ),
+    // Track all focus events
+    call(watchClick),
     // Track all focus events
     call(watchFocus),
     // Track all keydown events

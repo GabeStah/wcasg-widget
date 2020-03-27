@@ -1,7 +1,7 @@
-import { PluginOption } from '@/enum';
-import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
+import { Plugin, PluginProperty, PluginPropertyOption } from '@/types';
 import { ImmerReducer } from 'immer-reducer';
 import findIndex from 'lodash/findIndex';
+import { IGoogleCloudVoice } from 'services/google-cloud/text-to-speech/declarations';
 import { defaultState, initialState, State } from 'state/redux/state';
 import { ThemeTypes } from 'theme/types';
 
@@ -62,29 +62,6 @@ export class BaseReducer extends ImmerReducer<State> {
 
   public reset({ newState }: { newState?: State }) {
     if (newState === undefined) {
-      // const state: State = {
-      //   focusedNode: undefined,
-      //   keyboard: {
-      //     enabled: false,
-      //     pressedKeys: {}
-      //   },
-      //   plugins: [],
-      //   services: {
-      //     googleCloud: {
-      //       textToSpeech: {
-      //         activeVoice: GOOGLE_CLOUD_DEFAULT_VOICE,
-      //         audioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
-      //         voices: []
-      //       }
-      //     }
-      //   }
-      // };
-      //
-      // PluginManager.getInstance().plugins.forEach((plugin: Plugin) => )
-      // this.draftState.plugins.forEach(
-      //   (plugin: any) => (plugin.enabled = false)
-      // );
-      // this.draftState = state;
       const services = initialState.services;
       services.googleCloud.textToSpeech.voices = this.draftState.services.googleCloud.textToSpeech.voices;
       this.draftState = newState ? newState : { ...initialState, services };
@@ -93,27 +70,59 @@ export class BaseReducer extends ImmerReducer<State> {
     }
   }
 
-  public selectOption({
+  public selectPropertyOption({
     id,
+    propertyId,
+    optionId
+  }: {
+    id: string;
+    propertyId: string;
+    optionId: string;
+  }) {
+    const i = getPluginIndexById(this.draftState.plugins, id);
+    const plugin: Plugin = this.draftState.plugins[i];
+    if (plugin?.config?.props) {
+      const property = plugin.config.props.find(
+        (prop: PluginProperty) => prop.id === propertyId
+      );
+      if (property && property.options) {
+        // Disable selections
+        for (const opt of property.options) {
+          opt.selected = false;
+        }
+        const option = property.options.find(
+          (opt: PluginPropertyOption) => opt.id === optionId
+        );
+        if (option) {
+          option.selected = true;
+        }
+      }
+    }
+  }
+
+  public setPropertyOption({
+    id,
+    propertyId,
+    optionId,
     value
   }: {
     id: string;
-    value: number | string | undefined;
+    propertyId: string;
+    optionId: string;
+    value: any;
   }) {
     const i = getPluginIndexById(this.draftState.plugins, id);
-    const plugin = this.draftState.plugins[i];
-    if (plugin && plugin.options) {
-      // Reset all
-      for (const option of plugin.options) {
-        option.selected = false;
-      }
-      if (value !== undefined) {
-        const index = findIndex(
-          plugin.options,
-          (option: PluginOption) => option.value === value
+    const plugin: Plugin = this.draftState.plugins[i];
+    if (plugin?.config?.props) {
+      const property = plugin.config.props.find(
+        (prop: PluginProperty) => prop.id === propertyId
+      );
+      if (property && property.options) {
+        const option = property.options.find(
+          (opt: PluginPropertyOption) => opt.id === optionId
         );
-        if (index !== -1) {
-          plugin.options[index].selected = true;
+        if (option) {
+          option.value = value;
         }
       }
     }

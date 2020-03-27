@@ -1,4 +1,4 @@
-import { PluginComponentParams } from '@/enum';
+import { PluginComponentParams } from '@/types';
 import { PluginComponent } from 'components/plugin';
 import Modal from 'plugins/virtual-keyboard/keyboard/modal';
 import React from 'react';
