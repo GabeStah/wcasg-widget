@@ -14,7 +14,8 @@ import RadioComponent from 'components/radio';
 import Scalable from 'components/scalable';
 import SelectComponent from 'components/select';
 import ToggleSwitch from 'components/toggle-switch';
-import { Icons } from 'plugins/data';
+import {Descriptions, Icons} from 'plugins/data';
+import { HelpIcon } from 'components/icons/HelpIcon';
 import React from 'react';
 import { Selectors } from 'state/redux/selectors';
 
@@ -22,7 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       border: `1px solid ${theme.palette.border.main}`,
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.default,
+      height: '100%',
+      position: 'relative'
+
       // boxSizing: 'border-box',
       // textAlign: 'center',
       // '&$enabled': {
@@ -31,7 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     enabled: {
       border: `1px solid ${theme.palette.primary.main}`,
-      backgroundColor: theme.palette.backgroundEnabled.main
+      backgroundColor: theme.palette.backgroundEnabled.main,
+      height: '100%',
+      position: 'relative'
     }
   })
 );
@@ -107,6 +113,7 @@ export const PluginComponent = ({
         )}
         {children}
       </CardContent>
+      <HelpIcon id={plugin.id} text={Descriptions[plugin.id] ? Descriptions[plugin.id] : undefined} theme={theme}/>
     </Card>
   );
 };

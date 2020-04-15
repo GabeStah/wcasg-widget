@@ -1,33 +1,24 @@
-import { StatementDialogComponentParams } from '@/types';
-import { SvgIcon } from '@material-ui/core';
+import { DialogComponentParams } from '@/types';
+import { Link, SvgIcon } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+// @ts-ignore
+import { ReactComponent as CloseIcon } from 'assets/svg-minified/accessibility-icons/close.svg';
+import config from 'config';
+import LZString from 'lz-string';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 // @ts-ignore
-import { ReactComponent as CloseIcon } from 'assets/svg-minified/accessibility-icons/close.svg';
-import AccessibilityIcon from '@material-ui/icons/Accessibility';
-import config from 'config';
-import LZString from 'lz-string';
-import React from 'react';
-// @ts-ignore
-import WcasgAccessibilityStatement from 'WcasgAccessibilityStatement';
+import WcasgDisclaimer from 'WcasgDisclaimer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      color: theme.palette.text.secondary,
-      width: '100%'
-    },
-    startIcon: {
-      fill: theme.palette.text.secondary,
-      padding: '4px'
-    },
     closeIcon: {
       cursor: 'pointer',
       float: 'right',
@@ -51,11 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const StatementDialog = ({
-  state,
-  theme,
-  type = 'iframe'
-}: StatementDialogComponentParams) => {
+export const DisclaimerDialog = ({ state, theme }: DialogComponentParams) => {
   const classes = useStyles(theme);
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
@@ -80,43 +67,21 @@ export const StatementDialog = ({
   }, [open]);
 
   let statementElement;
-
-  if (type === 'iframe') {
+  if (WcasgDisclaimer) {
     statementElement = (
-      // TODO: Dynamically pull token
-      <iframe
-        src={`${config.services.Dashboard.url}/api/statement?token=w9n2HLez927CYdvPanMNLPSQEHAWeZmIyIPF`}
-        className={classes.iframe}
+      <div
+        dangerouslySetInnerHTML={{
+          __html: LZString.decompressFromBase64(WcasgDisclaimer)
+        }}
       />
     );
-  } else if (type === 'inline') {
-    if (WcasgAccessibilityStatement) {
-      statementElement = (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: LZString.decompressFromBase64(WcasgAccessibilityStatement)
-          }}
-        />
-      );
-    } else {
-      statementElement = <p>Accessiblity Statement goes here.</p>;
-    }
+  } else {
+    statementElement = <p>Disclaimer goes here.</p>;
   }
 
   return (
-    <div style={{ flex: 1 }}>
-      <Button
-        aria-label={`Reset`}
-        aria-roledescription={'button'}
-        classes={{ root: classes.root, startIcon: classes.startIcon }}
-        color={'primary'}
-        onClick={handleClickOpen('paper')}
-        role={'button'}
-        startIcon={<AccessibilityIcon />}
-        variant={'contained'}
-      >
-        Accessibility Statement
-      </Button>
+    <div style={{ padding: '0 10px' }}>
+      <Button onClick={handleClickOpen('paper')}>Disclaimer</Button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -128,7 +93,7 @@ export const StatementDialog = ({
           <Grid container spacing={3}>
             <Grid item xs>
               <Typography variant={'h1'} className={classes.headerTypography}>
-                Accessibility Statement
+                Disclaimer
               </Typography>
             </Grid>
             <Grid item xs>
@@ -161,4 +126,4 @@ export const StatementDialog = ({
   );
 };
 
-export default StatementDialog;
+export default DisclaimerDialog;

@@ -6,6 +6,7 @@ declare module '*.svg' {
 }
 declare module 'lodash/mapValues';
 declare module 'WcasgAccessibilityStatement';
+declare module 'WcasgDisclaimer';
 declare module 'WcasgExtensions';
 
 /**

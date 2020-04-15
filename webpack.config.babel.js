@@ -2,11 +2,14 @@ import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import FileManagerPlugin from 'filemanager-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import JavaScriptObfuscator from 'webpack-obfuscator';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
 const environment = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const isDev = environment === 'development';
+const enableObfuscation = false;
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -22,6 +25,7 @@ module.exports = {
 
   externals: {
     WcasgAccessibilityStatement: 'WcasgAccessibilityStatement',
+    WcasgDisclaimer: 'WcasgDisclaimer',
     WcasgExtensions: 'WcasgExtensions'
   },
 
@@ -168,7 +172,14 @@ module.exports = {
 
   optimization: {
     // Disable minification for dev
-    minimize: !isDev
+    minimize: !isDev,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          mangle: { toplevel: true, module: true }
+        }
+      })
+    ]
   },
 
   // Add gzip output
@@ -187,6 +198,7 @@ module.exports = {
       cwd: process.cwd()
     }),
     new CompressionPlugin(),
+    enableObfuscation ? new JavaScriptObfuscator() : { apply: () => true },
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       defaultSizes: 'parsed',

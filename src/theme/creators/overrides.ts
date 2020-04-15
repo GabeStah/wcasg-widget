@@ -1,6 +1,7 @@
 /* tslint:disable:object-literal-key-quotes */
 import { Palette } from '@material-ui/core/styles/createPalette';
 import { Overrides } from '@material-ui/core/styles/overrides';
+import {typographyDefaults} from 'theme/creators/typography';
 
 export function createOverrides(palette: Palette): Overrides {
   return {
@@ -56,6 +57,12 @@ export function createOverrides(palette: Palette): Overrides {
         '&$expanded': {
           margin: '0px'
         }
+      }
+    },
+    MuiPopover: {
+      paper: {
+        fontSize: typographyDefaults.fontSize * 1.5,
+        padding: '4px',
       }
     },
     MuiRadio: {

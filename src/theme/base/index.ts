@@ -12,6 +12,7 @@ const theme = createMuiTheme({
   typography: createTypography(palette),
   zIndex: {
     appBar: 1200,
+    modal: 9998,
     drawer: 1100
   },
   overrides: createOverrides(palette),

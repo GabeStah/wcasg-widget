@@ -10,15 +10,16 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import closeIconUrl, {
-  ReactComponent as CloseIcon
-  // @ts-ignore
-} from 'assets/svg-minified/accessibility-icons/close.svg';
+// import closeIconUrl, {
+//   ReactComponent as CloseIcon
+//   // @ts-ignore
+// } from 'assets/svg-minified/accessibility-icons/chevron-thin-down.svg';
 import chevronIconUrl, {
   ReactComponent as ChevronThinUpIcon
   // @ts-ignore
 } from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
-import DialogComponent from 'components/statement-dialog';
+import DisclaimerDialog from 'components/disclaimer-dialog';
+import StatementDialog from 'components/statement-dialog';
 
 // import LogoComponent from 'components/logo';
 import LogoComponent from 'components/logo-image';
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       bottom: 2 * 2,
       right: 2 * 3,
-      zIndex: 9999
+      zIndex: 9995
     },
     expanded: {},
     expandIcon: {
@@ -54,12 +55,14 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '12px',
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       textTransform: 'uppercase',
-      '&::before': {
-        content: "'ESC'"
-      },
-      '&$expanded': {
-        transform: 'rotate(0deg)'
-      }
+      // X-axis padding is inversed, due to 180degree transform (flip)
+      padding: '12px 1px 12px 8px'
+      // '&::before': {
+      //   content: "'ESC'"
+      // }
+      // '&$expanded': {
+      //   transform: 'rotate(0deg)'
+      // }
     },
     closeIcon: {
       fill: theme.palette.text.secondary,
@@ -68,6 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     closeIconLarge: {
       fill: theme.palette.text.secondary
+    },
+    expansionPanelSummaryContent: {
+      alignItems: 'center'
     },
     expansionPanelSummaryRoot: {
       backgroundColor: theme.palette.primary.main,
@@ -82,7 +88,8 @@ const useStyles = makeStyles((theme: Theme) =>
       fill: theme.palette.text.secondary
     },
     headerTypography: {
-      color: theme.palette.text.secondary
+      color: theme.palette.text.secondary,
+      flex: 1
     },
     gridRoot: {
       flexGrow: 1,
@@ -154,12 +161,16 @@ const DetailedExpansionPanel = ({
         <ExpansionPanelSummary
           classes={{
             root: classes.expansionPanelSummaryRoot,
+            content: classes.expansionPanelSummaryContent,
             expandIcon: isWidgetExpanded ? classes.expandIcon : '',
             expanded: classes.expanded
           }}
           expandIcon={
             isWidgetExpanded ? (
-              <SvgIcon className={classes.closeIcon} component={CloseIcon} />
+              <SvgIcon
+                className={classes.closeIcon}
+                component={ChevronThinUpIcon}
+              />
             ) : (
               <SvgIcon
                 className={classes.closeIconLarge}
@@ -173,6 +184,11 @@ const DetailedExpansionPanel = ({
           <Typography variant={'h1'} className={classes.headerTypography}>
             {config.widgetTitle}
           </Typography>
+          {isWidgetExpanded ? (
+            <Typography color={'textSecondary'}>ESC</Typography>
+          ) : (
+            ''
+          )}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.gridRoot}>
           <Grid container spacing={2}>
@@ -202,10 +218,9 @@ const DetailedExpansionPanel = ({
           </Grid>
         </ExpansionPanelDetails>
         <Divider />
-        <ExpansionPanelActions>
-          <DialogComponent state={state} theme={theme} type={'inline'} />
-          {/*<Button size='small'>Link #1</Button>*/}
-          {/*<Button size='small'>Link #2</Button>*/}
+        <ExpansionPanelActions style={{ display: 'flex' }}>
+          <StatementDialog state={state} theme={theme} type={'inline'} />
+          <DisclaimerDialog state={state} theme={theme} />
         </ExpansionPanelActions>
       </ExpansionPanel>
     </div>
