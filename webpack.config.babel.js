@@ -9,7 +9,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
 const environment = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const isDev = environment === 'development';
-const enableObfuscation = false;
+const enableObfuscation = true;
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),

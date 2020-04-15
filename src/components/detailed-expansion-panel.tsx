@@ -1,7 +1,5 @@
 /* tslint:disable:object-literal-key-quotes */
 import { SvgIcon } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
@@ -10,18 +8,12 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// import closeIconUrl, {
-//   ReactComponent as CloseIcon
-//   // @ts-ignore
-// } from 'assets/svg-minified/accessibility-icons/chevron-thin-down.svg';
 import chevronIconUrl, {
   ReactComponent as ChevronThinUpIcon
   // @ts-ignore
 } from 'assets/svg-minified/accessibility-icons/chevron-thin-up.svg';
 import DisclaimerDialog from 'components/disclaimer-dialog';
 import StatementDialog from 'components/statement-dialog';
-
-// import LogoComponent from 'components/logo';
 import LogoComponent from 'components/logo-image';
 /**
  * Plugin Sets
@@ -33,8 +25,6 @@ import ResetButtonComponent from 'components/reset-button';
 import config from 'config';
 
 import React, { useEffect } from 'react';
-import { select } from 'redux-saga/effects';
-import { ActionCreators } from 'state/redux/actions';
 import { Connector } from 'state/redux/connectors';
 import { Selectors } from 'state/redux/selectors';
 import { State } from 'state/redux/state';
@@ -42,6 +32,7 @@ import { State } from 'state/redux/state';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      maxHeight: '100%',
       position: 'fixed',
       width: 350,
       margin: 0,
