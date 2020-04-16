@@ -16,6 +16,7 @@ import themeBlackAndYellow from 'theme/black-and-yellow';
 import themeDarkContrast from 'theme/dark-contrast';
 import themeLightContrast from 'theme/light-contrast';
 import './load-plugins';
+// @ts-ignore
 import Extensions from 'wcasg-extensions';
 // @ts-ignore
 import WcasgExtensions from 'WcasgExtensions';
@@ -28,7 +29,8 @@ const extensionJson = LZString.decompressFromBase64(WcasgExtensions);
 if (extensionJson) {
   const importedExtensions = JSON.parse(extensionJson);
   console.log(importedExtensions);
-  Extensions.manager.addImports(importedExtensions);
+  // Add imports and purge existing.
+  Extensions.manager.addImports(importedExtensions, true);
   Extensions.manager.processBuiltInImports();
   Extensions.manager.processCustomImports();
   Extensions.manager.executeExtensions();
