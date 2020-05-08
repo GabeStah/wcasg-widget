@@ -5,7 +5,7 @@
 .code
 
 # Env
-.env
+.env*
 
 # Project docs
 docs
