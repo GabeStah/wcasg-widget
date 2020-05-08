@@ -1,6 +1,6 @@
 import Utility from '@/utility/index';
 import { sign } from 'jsonwebtoken';
-import keys from '../../credentials/wcasg-ada-app-dev-c14f778938af.json';
+import keys from '../../credentials/gcp_wcasg_widget__credentials.text-to-speech.json';
 
 export const Auth = {
   GoogleCloud: {

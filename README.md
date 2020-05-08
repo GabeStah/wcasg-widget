@@ -1,8 +1,17 @@
-## WCASG ADA Widget
-
-## !!!ALERT!!!
-
-Much of this document is out of date.  Will update in the near future.
+- [App Architecture](#app-architecture)
+- [Widget Theme](#widget-theme)
+  - [Adding a New Theme](#adding-a-new-theme)
+- [Editing the Widget](#editing-the-widget)
+  - [PluginElement](#pluginelement)
+  - [PluginAction](#pluginaction)
+  - [Adding or Modifying Plugins](#adding-or-modifying-plugins)
+    - [Customizing Actions](#customizing-actions)
+  - [Adjusting State](#adjusting-state)
+  - [Widget Testing](#widget-testing)
+    - [Local Widget + Local Test Site](#local-widget--local-test-site)
+    - [Local Widget + Local API Server](#local-widget--local-api-server)
+- [Using Inline SVGs](#using-inline-svgs)
+- [Known Issues](#known-issues)
 
 ## App Architecture
 
