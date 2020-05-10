@@ -71,6 +71,7 @@ export const DisclaimerDialog = ({ state, theme }: DialogComponentParams) => {
     statementElement = (
       <div
         dangerouslySetInnerHTML={{
+          // @ts-ignore
           __html: LZString.decompressFromBase64(WcasgDisclaimer)
         }}
       />
