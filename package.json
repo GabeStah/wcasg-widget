@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/node": "^7.8.3",
-    "wcasg-extensions": "../extensions"
+    "wcasg-extensions": "./extensions"
   },
   "scripts": {
     "bump": "npm version patch",
