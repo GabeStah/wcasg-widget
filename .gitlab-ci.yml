@@ -47,6 +47,12 @@ variables:
   before_script:
     - *all_before_script
 
+testing:setup:
+  stage: setup
+  <<: *testing_template
+  script:
+    - *all_job_stage_script
+
 testing:build:
   stage: build
   <<: *testing_template
@@ -55,6 +61,7 @@ testing:build:
     paths:
       - build/widget.base.js
   script:
+    - yarn install
     # Build proper file
     - yarn run build:testing
 
@@ -84,6 +91,12 @@ testing:healthcheck:
   before_script:
     - *all_before_script
 
+production:setup:
+  stage: setup
+  <<: *production_template
+  script:
+    - *all_job_stage_script
+
 production:build:
   stage: build
   <<: *production_template
@@ -92,6 +105,7 @@ production:build:
     paths:
       - build/widget.base.js
   script:
+    - yarn install
     # Build proper file
     - yarn run build:production
 
