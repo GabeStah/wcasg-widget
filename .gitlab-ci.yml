@@ -1,6 +1,7 @@
 image: node:alpine
 
 stages:
+  - setup
   - build
   - deploy
   - healthcheck
