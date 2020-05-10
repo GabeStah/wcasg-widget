@@ -40,6 +40,8 @@ variables:
 .testing_template: &testing_template
   only:
     - branches
+  except:
+    - master
   variables:
     DEPLOY_ENDPOINT: 'dashboard.widget.wcasg.solarix.dev'
     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_TESTING
@@ -83,6 +85,7 @@ testing:healthcheck:
 ### Production
 .production_template: &production_template
   only:
+    - master
     - production
   variables:
     DEPLOY_ENDPOINT: 'dashboard.widget.wcasg.solarix.host'
