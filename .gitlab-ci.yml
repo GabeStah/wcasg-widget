@@ -10,6 +10,7 @@ stages:
 # See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1809
 variables:
   # All
+  GIT_SUBMODULE_STRATEGY: recursive
   REPOSITORY_URL: $CI_REPOSITORY_URL
   TARGET_DIRECTORY: '/var/www/dashboard/storage/app/widget'
   WIDGET_PATH: 'build/widget.base.js'

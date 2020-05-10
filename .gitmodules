@@ -1,0 +1,3 @@
+[submodule "wcasg-extensions"]
+  path = wcasg-extensions
+  url = ../extensions

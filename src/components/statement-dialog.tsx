@@ -91,6 +91,8 @@ export const StatementDialog = ({
     );
   } else if (type === 'inline') {
     if (WcasgAccessibilityStatement) {
+      console.error(`WcasgAccessibilityStatement`);
+      console.log(WcasgAccessibilityStatement);
       statementElement = (
         <div
           dangerouslySetInnerHTML={{
