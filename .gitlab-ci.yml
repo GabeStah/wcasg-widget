@@ -1,7 +1,6 @@
 image: node:alpine
 
 stages:
-  - setup
   - build
   - deploy
   - healthcheck
@@ -48,12 +47,6 @@ variables:
   before_script:
     - *all_before_script
 
-testing:setup:
-  stage: setup
-  <<: *testing_template
-  script:
-    - *all_job_stage_script
-
 testing:build:
   stage: build
   <<: *testing_template
@@ -90,12 +83,6 @@ testing:healthcheck:
     url: 'https://dashboard.widget.wcasg.solarix.host'
   before_script:
     - *all_before_script
-
-production:setup:
-  stage: setup
-  <<: *production_template
-  script:
-    - *all_job_stage_script
 
 production:build:
   stage: build
