@@ -5,8 +5,14 @@ declare module '*.svg' {
   export default content;
 }
 declare module 'lodash/mapValues';
-declare module 'WcasgAccessibilityStatement';
-declare module 'WcasgDisclaimer';
+declare module 'WcasgAccessibilityStatement' {
+  const statement: any;
+  export default statement;
+}
+declare module 'WcasgDisclaimer' {
+  const disclaimer: any;
+  export default disclaimer;
+}
 declare module 'WcasgExtensions';
 
 /**

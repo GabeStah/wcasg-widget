@@ -41,6 +41,10 @@ export interface IConfig {
       TextToSpeech: {
         defaultAudioConfig: IGoogleCloudAudioConfig;
         defaultVoice: IGoogleCloudVoiceSelectionParams;
+        endpoints: {
+          standard: string;
+          voices: string;
+        }
       };
     };
   };
@@ -72,7 +76,11 @@ const config: IConfig = {
     GoogleCloud: {
       TextToSpeech: {
         defaultAudioConfig: GOOGLE_CLOUD_DEFAULT_AUDIO_CONFIG,
-        defaultVoice: GOOGLE_CLOUD_DEFAULT_VOICE
+        defaultVoice: GOOGLE_CLOUD_DEFAULT_VOICE,
+        endpoints: {
+          standard: `${process.env.TTS_API_ENDPOINT}/standard`,
+          voices: `${process.env.TTS_API_ENDPOINT}/voices`,
+        }
       }
     }
   },

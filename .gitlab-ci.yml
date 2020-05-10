@@ -1,0 +1,125 @@
+image: node:alpine
+
+stages:
+  - setup
+  - build
+  - deploy
+  - healthcheck
+
+### Variables
+# See: https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1809
+variables:
+  # All
+  GIT_SUBMODULE_STRATEGY: recursive
+  REPOSITORY_URL: $CI_REPOSITORY_URL
+  TARGET_DIRECTORY: '/var/www/dashboard/storage/app/widget'
+  WIDGET_PATH: 'build/widget.base.js'
+### End Variables
+
+### Shared
+# Perform pre-script tasks
+.all_before_script: &all_before_script
+  - chmod +x ./.deploy/all/before_script.sh
+  - . ./.deploy/all/before_script.sh
+
+# Execute job stage script.
+.all_job_stage_script: &all_job_stage_script
+  - chmod +x ./.deploy/all/${CI_JOB_STAGE}.sh
+  - . ./.deploy/all/${CI_JOB_STAGE}.sh
+
+# Run simple health check on final URL
+.all_health_check_script: &all_health_check_script
+  # Delay is unnecessary for this app
+  #when: delayed
+  #start_in: 10 seconds
+  - chmod +x ./.deploy/all/healthcheck.sh
+  - . ./.deploy/all/healthcheck.sh
+### End Shared
+
+### Testing
+.testing_template: &testing_template
+  only:
+    - branches
+  variables:
+    DEPLOY_ENDPOINT: 'dashboard.widget.wcasg.solarix.dev'
+    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_TESTING
+  environment:
+    name: testing
+    url: 'https://dashboard.widget.wcasg.solarix.dev'
+  before_script:
+    - *all_before_script
+
+testing:setup:
+  stage: setup
+  <<: *testing_template
+  script:
+    - *all_job_stage_script
+
+testing:build:
+  stage: build
+  <<: *testing_template
+  artifacts:
+    name: "widget-$CI_ENVIRONMENT_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - build/widget.base.js
+  script:
+    - yarn install
+    # Build proper file
+    - yarn run build:testing
+
+testing:deploy:
+  stage: deploy
+  <<: *testing_template
+  script:
+    - *all_job_stage_script
+
+testing:healthcheck:
+  stage: healthcheck
+  <<: *testing_template
+  script:
+    - *all_health_check_script
+### End Testing
+
+### Production
+.production_template: &production_template
+  only:
+    - production
+  variables:
+    DEPLOY_ENDPOINT: 'dashboard.widget.wcasg.solarix.host'
+    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_PRODUCTION
+  environment:
+    name: production
+    url: 'https://dashboard.widget.wcasg.solarix.host'
+  before_script:
+    - *all_before_script
+
+production:setup:
+  stage: setup
+  <<: *production_template
+  script:
+    - *all_job_stage_script
+
+production:build:
+  stage: build
+  <<: *production_template
+  artifacts:
+    name: "widget-$CI_ENVIRONMENT_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - build/widget.base.js
+  script:
+    - yarn install
+    # Build proper file
+    - yarn run build:production
+
+production:deploy:
+  stage: deploy
+  <<: *production_template
+  script:
+    - *all_job_stage_script
+
+production:healthcheck:
+  stage: healthcheck
+  <<: *production_template
+  script:
+    - *all_health_check_script
+### End Production

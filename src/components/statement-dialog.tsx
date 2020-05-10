@@ -94,6 +94,7 @@ export const StatementDialog = ({
       statementElement = (
         <div
           dangerouslySetInnerHTML={{
+            // @ts-ignore
             __html: LZString.decompressFromBase64(WcasgAccessibilityStatement)
           }}
         />
