@@ -17,7 +17,7 @@ export const AudioUtilities = {
     content: string;
   }): HTMLAudioElement | void => {
     const encoded = `${encoding}, ${content}`;
-    if (config.debug) {
+    if (process.env.NODE_ENV === 'development') {
       console.log(
         `Audio data received: ${Utility.bytesToSize(new Blob([encoded]).size)}.`
       );
@@ -35,15 +35,17 @@ export const AudioUtilities = {
 function* getSpeechToTextVoices(
   params: { languageCode?: string } = { languageCode: 'en-US' }
 ) {
+
   const result = yield Auth.makeFetchRequest({
-    url: `https://texttospeech.googleapis.com/v1/voices?languageCode=${params.languageCode}`,
+    url: config.services.GoogleCloud.TextToSpeech.endpoints.voices,
     options: {
-      method: 'GET',
+      body: JSON.stringify({
+        languageCode: params.languageCode
+      }),
       headers: {
         'Content-Type': 'application/json',
-        // tslint:disable-next-line:object-literal-key-quotes
-        Authorization: `Bearer ${Auth.GoogleCloud.TextToSpeech.generateAuthToken()}`
-      }
+      },
+      method: 'POST',
     }
   });
 
@@ -72,9 +74,8 @@ function* synthesizeSpeechFromText({
   voice?: IGoogleCloudVoiceSelectionParams;
 }) {
   return yield Auth.makeFetchRequest({
-    url: 'https://texttospeech.googleapis.com/v1/text:synthesize',
+    url: config.services.GoogleCloud.TextToSpeech.endpoints.standard,
     options: {
-      method: 'POST',
       body: JSON.stringify({
         audioConfig,
         input: {
@@ -84,9 +85,8 @@ function* synthesizeSpeechFromText({
       }),
       headers: {
         'Content-Type': 'application/json',
-        // tslint:disable-next-line:object-literal-key-quotes
-        Authorization: `Bearer ${Auth.GoogleCloud.TextToSpeech.generateAuthToken()}`
-      }
+      },
+      method: 'POST',
     }
   });
 }

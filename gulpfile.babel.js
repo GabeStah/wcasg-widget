@@ -49,7 +49,7 @@ gulp.task('gcp:tts:test', async () => {
   });
 
   for (const phrase of phrases) {
-    const result = await fetch(process.env.TTS_ENDPOINT, {
+    const result = await fetch(process.env.TTS_API_ENDPOINT, {
         method: 'POST',
         body: JSON.stringify({
           text: phrase.text

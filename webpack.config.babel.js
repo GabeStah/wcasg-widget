@@ -4,6 +4,7 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 import FileManagerPlugin from 'filemanager-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import JavaScriptObfuscator from 'webpack-obfuscator';
+import Dotenv from 'dotenv-webpack';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
@@ -184,6 +185,9 @@ module.exports = {
 
   // Add gzip output
   plugins: [
+    new Dotenv({
+      path: `./.env.${process.env.NODE_ENV}`
+    }),
     new CircularDependencyPlugin({
       // exclude detection of files based on a RegExp
       exclude: /a\.js|node_modules/,
