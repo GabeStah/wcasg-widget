@@ -104,7 +104,6 @@ const SelectComponent = ({
           {name ? name : property ? property.name : plugin.title}
         </option>
         {getSelectOptions(property?.options ?? options)}
-        })}
       </NativeSelect>
     </FormControl>
   );
