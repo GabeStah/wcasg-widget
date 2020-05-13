@@ -3,6 +3,7 @@ image: node:alpine
 stages:
   - setup
   - build
+  - pre_deploy
   - deploy
   - healthcheck
 
@@ -34,6 +35,11 @@ variables:
   #start_in: 10 seconds
   - chmod +x ./.deploy/all/healthcheck.sh
   - . ./.deploy/all/healthcheck.sh
+
+# Update permissions on deployed files
+.all_update_permissions_script: &all_update_permissions_script
+  - chmod +x ./.deploy/all/pre_deploy_update_permissions.sh
+  - . ./.deploy/all/pre_deploy_update_permissions.sh
 ### End Shared
 
 ### Testing
@@ -68,6 +74,12 @@ testing:build:
     - yarn install
     # Build proper file
     - yarn run build:testing
+
+testing:pre_deploy:update-permissions:
+  stage: pre_deploy
+  <<: *testing_template
+  script:
+    - *all_update_permissions_script
 
 testing:deploy:
   stage: deploy
@@ -113,6 +125,12 @@ production:build:
     - yarn install
     # Build proper file
     - yarn run build:production
+
+production:pre_deploy:update-permissions:
+  stage: pre_deploy
+  <<: *production_template
+  script:
+    - *all_update_permissions_script
 
 production:deploy:
   stage: deploy
