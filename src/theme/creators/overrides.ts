@@ -100,8 +100,13 @@ export function createOverrides(palette: Palette): Overrides {
       }
     },
     MuiSwitch: {
+      input: {
+        left: '-100% !important',
+        height: '100% !important',
+        width: '300% !important',
+      },
       switchBase: {
-        color: palette.switch.main
+        color: palette.switch.main,
       },
       track: {
         backgroundColor: palette.border.main
