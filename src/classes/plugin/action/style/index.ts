@@ -181,32 +181,14 @@ export class PluginActionStyle extends PluginAction
       }
     }
 
-    // If percentage scaling and original and base value are zero, report
-    if (
-      this.style.manipulationType === ValueManipulationType.PercentageScaling &&
-      numericValue === 0 &&
-      parseFloat(baseValue) === 0
-    ) {
-      Utility.throwError(
-        `Cannot use 'DOMPropertyScalingType.Percentage' for style: ${this.style.name} which has an original and base value of zero.`
-      );
-    }
-
-    // If percentage scaling and original and base value are zero, report
-    if (this.style.unitType === undefined) {
-      Utility.throwError(
-        `Unable to detect valid unit type for original style value of '${this.style.name}.'  Please explicitly assign expected 'unitType' in configuration.`
-      );
-    }
-
     // Apply scaling
     if (this.style.manipulationType === ValueManipulationType.AbsoluteScaling) {
-      return `${numericValue + scalingFactor}${this.style.unitType}`;
+      return `${numericValue + scalingFactor}${this.style.unitType ? this.style.unitType : ''}`;
     } else if (
       this.style.manipulationType === ValueManipulationType.PercentageScaling
     ) {
       // If value is zero scaling will fail, so use base value
-      return `${numericValue * (1 + scalingFactor)}${this.style.unitType}`;
+      return `${numericValue * (1 + scalingFactor)}${this.style.unitType ? this.style.unitType : ''}`;
     }
   }
 }
