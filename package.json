@@ -1,11 +1,11 @@
 {
   "name": "wcasg-widget",
-  "version": "0.0.1",
-  "author": "Gabe Wyatt <gabe@solarixdigital.com>",
-  "repository": "git@gitlab.solarixdigital.com:solarix/wcasg/widget.git",
+  "version": "1.2.24",
+  "author": "Gabe Wyatt <gabe@gabewyatt.com>",
+  "repository": "git@github.com:GabeStah/wcasg-widget.git",
   "description": "JavaScript widget providing optional accessibility improvements for web pages.",
   "main": "build/widget.base.js",
-  "license": "MIT",
+  "license": "Copyright WCASG 2021",
   "browserslist": [
     "defaults",
     "not IE 11",

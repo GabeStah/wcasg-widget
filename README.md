@@ -1,3 +1,9 @@
+# WCASG ADA Widget
+
+An inline JavaScript accessibility widget dynamically served via single `<script>` tag, as obtained from API request to separate [WCASG Dashboard](https://www.gitlab.com/GabeStah/wcasg-dashboard) app.
+
+![src/assets/images/widget-example.gif](src/assets/images/widget-example.gif)
+
 - [App Architecture](#app-architecture)
 - [Widget Theme](#widget-theme)
   - [Adding a New Theme](#adding-a-new-theme)
@@ -23,7 +29,7 @@
 
 ## Widget Theme
 
-Widget theming provides an easy way to customize the look and feel of the widget with just a few palette color changes, or a total overhaul of element behavior and styling.  Existing themes can be found in the [src/theme](src/theme) directory.  The [base](src/theme/base) theme is the default Widget theme, based on design mockups.
+Widget theming provides an easy way to customize the look and feel of the widget with just a few palette color changes, or a total overhaul of element behavior and styling. Existing themes can be found in the [src/theme](src/theme) directory. The [base](src/theme/base) theme is the default Widget theme, based on design mockups.
 
 ### Adding a New Theme
 
@@ -47,7 +53,7 @@ const colors = {
 4. Add a new entry to the [ThemeTypes](src/theme/types.ts) enum to identify your theme.
 5. Lastly, update the [index.tsx](src/index.tsx) theme section by importing your theme index file and adding it to the theme switch statement matching your new `ThemeTypes` entry.
 
-Now invoke `ActionCreators.setTheme({ theme: ThemeTypes.NewThemeType })` anywhere you wish to dispatch an action to update the theme.  This will disperse the set theme to all Widget components and rerender.  
+Now invoke `ActionCreators.setTheme({ theme: ThemeTypes.NewThemeType })` anywhere you wish to dispatch an action to update the theme. This will disperse the set theme to all Widget components and rerender.
 
 ## Editing the Widget
 
