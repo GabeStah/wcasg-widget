@@ -1,6 +1,6 @@
 # WCASG ADA Widget
 
-An inline JavaScript accessibility widget dynamically served via single `<script>` tag, as obtained from API request to separate [WCASG Dashboard](https://www.gitlab.com/GabeStah/wcasg-dashboard) app.
+An inline JavaScript accessibility widget dynamically served via single `<script>` tag, as obtained from API request to separate [WCASG Dashboard](https://github.com/GabeStah/wcasg-dashboard) app.
 
 ![src/assets/images/widget-example.gif](src/assets/images/widget-example.gif)
 
